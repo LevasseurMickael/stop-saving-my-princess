@@ -1,4 +1,4 @@
-import { enemy } from "./enemy";
+import { enemies } from "./enemy";
 import { GridSize } from "./map";
 import { player } from "./player";
 import { state } from "./state";
@@ -22,7 +22,9 @@ export function loadFloor() {
   state.kills = 0;
   state.hasSecretItem = false;
   state.secretUnlocked = false;
-  enemy.alive = true;
+  for (const enemy of enemies) {
+    enemy.alive = true;
+  }
 
   player.x = 1;
   player.y = 1;

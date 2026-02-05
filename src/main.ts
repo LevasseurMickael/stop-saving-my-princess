@@ -1,6 +1,6 @@
 import { map, TileSize, GridSize } from "./game/map";
 import { player } from "./game/player";
-import { enemy } from "./game/enemy";
+import { enemies } from "./game/enemy";
 import { state } from "./game/state";
 
 const canvas = document.createElement("canvas");
@@ -37,7 +37,8 @@ function render() {
   ctx.fillRect(player.x * TileSize, player.y * TileSize, TileSize, TileSize);
 
   //  enemy
-  if (enemy.alive) {
+  for (const enemy of enemies) {
+    if (!enemy.alive) continue;
     ctx.fillStyle = "red";
     ctx.fillRect(enemy.x * TileSize, enemy.y * TileSize, TileSize, TileSize);
   }

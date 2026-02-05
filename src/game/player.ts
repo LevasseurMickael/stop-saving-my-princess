@@ -1,6 +1,6 @@
 import attack from "./attack";
 import { map } from "./map";
-import { enemy } from "./enemy";
+import { enemies } from "./enemy";
 import { saveGame, setFloorResult } from "./save";
 import { state } from "./state";
 import { loadFloor } from "./floors";
@@ -34,11 +34,13 @@ window.addEventListener("keydown", (e) => {
     acted = true;
   }
 
-  if (enemy.alive && player.x === enemy.x && player.y === enemy.y) {
-    console.log("dead");
-    player.x = 1;
-    player.y = 1;
-    state.deathCount++;
+  for (const enemy of enemies) {
+    if (enemy.alive && player.x === enemy.x && player.y === enemy.y) {
+      console.log("dead");
+      player.x = 1;
+      player.y = 1;
+      state.deathCount++;
+    }
   }
   if (e.key === " ") {
     attack();
