@@ -1,13 +1,17 @@
-import { generateFloor } from "./floorGenerator";
+import { generateDungeon } from "./dungeonGenerator";
 import { state } from "./state";
 
 const TileSize = 32;
-const GridSize = 16;
+const GridSize = 24;
 
-let map = generateFloor(state.currentFloor);
+let dungeon = generateDungeon(state.currentFloor);
+let map = dungeon.map;
+export let spawn = dungeon.spawn;
 
 export function loadMap() {
-  map = generateFloor(state.currentFloor);
+  dungeon = generateDungeon(state.currentFloor);
+  map = dungeon.map;
+  spawn = dungeon.spawn;
 }
 
 export { map, TileSize, GridSize };

@@ -1,5 +1,5 @@
 import attack from "./attack";
-import { map } from "./map";
+import { map, spawn } from "./map";
 import { enemies } from "./enemy";
 import { saveGame, setFloorResult } from "./save";
 import { state } from "./state";
@@ -37,8 +37,8 @@ window.addEventListener("keydown", (e) => {
   for (const enemy of enemies) {
     if (enemy.alive && player.x === enemy.x && player.y === enemy.y) {
       console.log("dead");
-      player.x = 1;
-      player.y = 1;
+      player.x = spawn.x;
+      player.y = spawn.y;
       state.deathCount++;
     }
   }

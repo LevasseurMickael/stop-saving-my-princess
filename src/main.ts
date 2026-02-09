@@ -4,14 +4,14 @@ import { enemies } from "./game/enemy";
 import { state } from "./game/state";
 
 const canvas = document.createElement("canvas");
-canvas.width = 512;
-canvas.height = 512;
+canvas.width = 800;
+canvas.height = 800;
 document.body.appendChild(canvas);
 
 const ctx = canvas.getContext("2d")!;
 
 ctx.fillStyle = "black";
-ctx.fillRect(0, 0, 512, 512);
+ctx.fillRect(0, 0, 800, 800);
 
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);

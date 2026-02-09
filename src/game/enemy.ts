@@ -13,7 +13,7 @@ export let enemies: Enemy[] = [
 ];
 
 export function spawnEnemies() {
-  const count = 1 + (state.currentFloor % 3); // Number of enemies based on floor
+  const count = 2 + (state.currentFloor % 4); // Number of enemies based on floor
 
   return Array.from({ length: count }, (_, i) => ({
     x: 3 + i * 2,
