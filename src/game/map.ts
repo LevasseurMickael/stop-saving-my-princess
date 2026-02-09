@@ -1,12 +1,13 @@
-import { createEmptyFloor } from "./floors";
+import { generateFloor } from "./floorGenerator";
+import { state } from "./state";
 
 const TileSize = 32;
 const GridSize = 16;
 
-let map = createEmptyFloor();
+let map = generateFloor(state.currentFloor);
 
 export function loadMap() {
-  map = createEmptyFloor();
+  map = generateFloor(state.currentFloor);
 }
 
 export { map, TileSize, GridSize };

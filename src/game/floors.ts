@@ -1,4 +1,4 @@
-import { enemies } from "./enemy";
+import { enemies, spawnEnemies } from "./enemy";
 import { GridSize } from "./map";
 import { player } from "./player";
 import { state } from "./state";
@@ -22,9 +22,8 @@ export function loadFloor() {
   state.kills = 0;
   state.hasSecretItem = false;
   state.secretUnlocked = false;
-  for (const enemy of enemies) {
-    enemy.alive = true;
-  }
+  enemies.length = 0; // Clear existing enemies
+  enemies.push(...spawnEnemies()); // Spawn new enemies for the floor
 
   player.x = 1;
   player.y = 1;

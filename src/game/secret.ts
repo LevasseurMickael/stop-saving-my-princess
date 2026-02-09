@@ -1,11 +1,14 @@
 import { state } from "./state";
 
-const secrets = [
-  { kills: 3 }, // floor 0
-  { kills: 2 }, // floor 1
-  { kills: 4 }, // floor 2
-];
-
-export function getSecretKills() {
-  return secrets[state.currentFloor]?.kills ?? 3;
+export function checkSecretCondition() {
+  if (state.currentFloor === 0) {
+    return state.kills >= 3;
+  }
+  if (state.currentFloor === 1) {
+    return state.deathCount === 0;
+  }
+  if (state.currentFloor === 2) {
+    return state.kills >= 1;
+  }
+  return state.kills >= 2;
 }
