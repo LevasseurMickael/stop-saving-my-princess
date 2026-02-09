@@ -1,3 +1,5 @@
+import type { Enemy } from "../lib/type";
+
 const MaxFloors = 25;
 
 export const state = {
@@ -7,4 +9,7 @@ export const state = {
   hasSecretItem: false,
   deathCount: 0,
   secretUnlocked: false,
+  enemies: [] as Enemy[],
+  secrets: [] as { x: number; y: number; unlocked: boolean }[],
+  spawn: { x: 0, y: 0 },
 };

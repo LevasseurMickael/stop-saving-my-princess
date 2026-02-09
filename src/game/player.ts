@@ -1,14 +1,13 @@
 import attack from "./attack";
-import { map, spawn } from "./map";
-import { enemies } from "./enemy";
+import { map } from "./map/map";
 import { saveGame, setFloorResult } from "./save";
 import { state } from "./state";
-import { loadFloor } from "./floors";
-import { enemyTurn } from "./turn";
+import { loadFloor } from "./map/floors";
+import { enemiesTurn } from "./turn";
 
 const player = {
-  x: 1,
-  y: 1,
+  x: 0,
+  y: 0,
 };
 
 let deathCount = 0;
@@ -34,11 +33,11 @@ window.addEventListener("keydown", (e) => {
     acted = true;
   }
 
-  for (const enemy of enemies) {
+  for (const enemy of state.enemies) {
     if (enemy.alive && player.x === enemy.x && player.y === enemy.y) {
       console.log("dead");
-      player.x = spawn.x;
-      player.y = spawn.y;
+      player.x = state.spawn.x;
+      player.y = state.spawn.y;
       state.deathCount++;
     }
   }
@@ -48,7 +47,7 @@ window.addEventListener("keydown", (e) => {
   }
 
   if (acted) {
-    enemyTurn();
+    enemiesTurn();
   }
 
   if (map[newY][newX] === 2 && state.secretUnlocked) {

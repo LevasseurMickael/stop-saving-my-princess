@@ -1,8 +1,7 @@
 import { GridSize } from "./map";
-import { player } from "./player";
-import { rng } from "./rng";
-
-type Room = { x: number; y: number; w: number; h: number };
+import { player } from "../player";
+import { rng } from "../rng";
+import type { Room } from "../../lib/type";
 
 function intersects(a: Room, b: Room) {
   return !(
@@ -84,5 +83,5 @@ export function generateDungeon(seed: number) {
   player.x = spawnPlayerRoom.x + Math.floor(spawnPlayerRoom.w / 2);
   player.y = spawnPlayerRoom.y + Math.floor(spawnPlayerRoom.h / 2);
 
-  return { map, spawn: { x: player.x, y: player.y } };
+  return { map, spawn: { x: player.x, y: player.y }, rooms };
 }

@@ -1,7 +1,7 @@
-import { enemies, spawnEnemies } from "./enemy";
+import { spawnEnemies } from "../enemy";
 import { GridSize } from "./map";
-import { player } from "./player";
-import { state } from "./state";
+import { player } from "../player";
+import { state } from "../state";
 import { loadMap } from "./map";
 
 export function createEmptyFloor() {
@@ -22,8 +22,10 @@ export function loadFloor() {
   state.kills = 0;
   state.hasSecretItem = false;
   state.secretUnlocked = false;
-  enemies.length = 0; // Clear existing enemies
-  enemies.push(...spawnEnemies()); // Spawn new enemies for the floor
+  // Clear existing enemies
+  state.enemies.length = 0;
+  // Spawn new enemies for the floor
+  state.enemies.push(...spawnEnemies(loadMap(), state.spawn));
 
   player.x = 1;
   player.y = 1;

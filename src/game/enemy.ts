@@ -1,24 +1,34 @@
-import { state } from "./state";
+import type { Enemy, Room } from "../lib/type";
 
-export type Enemy = {
-  x: number;
-  y: number;
-  alive: boolean;
-  pattern: string;
-};
+// pattern stationary, patrol, chase
 
-export let enemies: Enemy[] = [
-  { x: 5, y: 5, alive: true, pattern: "chase" },
-  { x: 10, y: 10, alive: true, pattern: "horizontal" },
-];
+export function spawnEnemies(
+  rooms: Room[],
+  spawn: { x: number; y: number },
+): Enemy[] {
+  const enemies: Enemy[] = [];
+  for (let i = 1; i < rooms.length; i++) {
+    const room = rooms[i];
 
-export function spawnEnemies() {
-  const count = 2 + (state.currentFloor % 4); // Number of enemies based on floor
+    // 1-2 enemies per room
+    const enemyCount = 1 + Math.floor(Math.random() * 2);
 
-  return Array.from({ length: count }, (_, i) => ({
-    x: 3 + i * 2,
-    y: 3,
-    alive: true,
-    pattern: i % 2 === 0 ? "chase" : "horizontal",
-  }));
+    for (let j = 0; j < enemyCount; j++) {
+      let x, y;
+      do {
+        x = room.x + Math.floor(Math.random() * room.w);
+        y = room.y + Math.floor(Math.random() * room.h);
+      } while (
+        enemies.some((e) => e.x === x && e.y === y) ||
+        (x === spawn.x && y === spawn.y)
+      );
+      enemies.push({
+        x,
+        y,
+        alive: true,
+        pattern: Math.random() < 0.5 ? "stationary" : "patrol",
+      });
+    }
+  }
+  return enemies;
 }

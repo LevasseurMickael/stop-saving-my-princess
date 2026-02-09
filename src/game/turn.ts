@@ -1,40 +1,52 @@
-import { enemies } from "./enemy";
-import { map } from "./map";
+import type { Enemy } from "../lib/type";
+import { map } from "./map/map";
 import { player } from "./player";
 import { state } from "./state";
 
-export function enemyTurn() {
-  for (const enemy of enemies) {
-    if (!enemy.alive) continue;
-    const dx = player.x - enemy.x;
-    const dy = player.y - enemy.y;
+export function enemiesTurn() {
+  for (const enemy of state.enemies) {
+    enemyTurn(enemy, player, map);
+  }
+}
 
-    let moveX = 0;
-    let moveY = 0;
+export function enemyTurn(
+  enemy: Enemy,
+  player: { x: number; y: number },
+  map: number[][],
+) {
+  if (!enemy.alive) return;
 
-    if (enemy.pattern === "chase") {
-      if (Math.abs(dx) > Math.abs(dy)) {
-        moveX = Math.sign(dx);
-      } else {
-        moveY = Math.sign(dy);
+  switch (enemy.pattern) {
+    case "stationary":
+      // Do nothing
+      break;
+    case "patrol":
+      // Simple random movement
+      const dx = Math.random() < 0.5 ? -1 : 1;
+      const dy = Math.random() < 0.5 ? -1 : 1;
+      if (map[enemy.y + dy][enemy.x + dx] === 0) {
+        enemy.x += dx;
+        enemy.y += dy;
       }
-    } else if (enemy.pattern === "horizontal") {
-      moveX = Math.random() < 0.5 ? -1 : 1;
-    }
-
-    const newX = enemy.x + moveX;
-    const newY = enemy.y + moveY;
-
-    if (map[newY][newX] !== 1) {
-      enemy.x = newX;
-      enemy.y = newY;
-    }
-
-    // collision with player
-    if (enemy.x === player.x && enemy.y === player.y) {
-      player.x = 1;
-      player.y = 1;
-      state.deathCount++;
-    }
+      break;
+    case "chase":
+      // Move towards player
+      const distX = player.x - enemy.x;
+      const distY = player.y - enemy.y;
+      if (Math.abs(distX) + Math.abs(distY) === 1) {
+        // Attack player
+        state.deathCount++;
+      } else {
+        // Move towards player
+        if (
+          Math.abs(distX) > Math.abs(distY) &&
+          map[enemy.y][enemy.x + Math.sign(distX)] === 0
+        ) {
+          enemy.x += Math.sign(distX);
+        } else if (map[enemy.y + Math.sign(distY)][enemy.x] === 0) {
+          enemy.y += Math.sign(distY);
+        }
+      }
+      break;
   }
 }
