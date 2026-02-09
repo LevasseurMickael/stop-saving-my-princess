@@ -10,7 +10,7 @@ export function secretRoom(rooms: Room[], enemies: Enemy[]) {
 
     // 50% chance to have a secret room
     if (Math.random() < 0.5) {
-      let x, y;
+      let x: number, y: number;
       do {
         x = room.x + Math.floor(Math.random() * room.w);
         y = room.y + Math.floor(Math.random() * room.h);

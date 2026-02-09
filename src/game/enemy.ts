@@ -1,4 +1,12 @@
 import type { Enemy, Room } from "../lib/type";
+import { state } from "./state";
+
+// Enemy can't get on the same tile as other enemies
+export function isOccupied(x: number, y: number, self: Enemy) {
+  return state.enemies.some(
+    (e) => e !== self && e.x === x && e.y === y && e.alive,
+  );
+}
 
 // pattern stationary, patrol, chase
 
@@ -14,7 +22,7 @@ export function spawnEnemies(
     const enemyCount = 1 + Math.floor(Math.random() * 2);
 
     for (let j = 0; j < enemyCount; j++) {
-      let x, y;
+      let x: number, y: number;
       do {
         x = room.x + Math.floor(Math.random() * room.w);
         y = room.y + Math.floor(Math.random() * room.h);

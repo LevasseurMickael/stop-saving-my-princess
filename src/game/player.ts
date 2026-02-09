@@ -33,14 +33,6 @@ window.addEventListener("keydown", (e) => {
     acted = true;
   }
 
-  for (const enemy of state.enemies) {
-    if (enemy.alive && player.x === enemy.x && player.y === enemy.y) {
-      console.log("dead");
-      player.x = state.spawn.x;
-      player.y = state.spawn.y;
-      state.deathCount++;
-    }
-  }
   if (e.key === " ") {
     attack();
     acted = true;
