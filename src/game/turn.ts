@@ -15,6 +15,12 @@ export function enemyTurn(
   player: { x: number; y: number },
   map: number[][],
 ) {
+  // Enemy is stunned, skip turn
+  if (enemy.stunnedTurns && enemy.stunnedTurns > 0) {
+    enemy.stunnedTurns--;
+    return;
+  }
+
   // aggro area for patrol pattern
   const dist = Math.abs(enemy.x - player.x) + Math.abs(enemy.y - player.y);
   if (enemy.pattern === "patrol" && dist <= 3) {
@@ -23,6 +29,12 @@ export function enemyTurn(
   // lost interest if player is far away
   if (enemy.pattern === "chase" && dist > 4) {
     enemy.pattern = "patrol";
+  }
+
+  // enemy is stunned, skip turn
+  if (enemy.stunnedTurns && enemy.stunnedTurns > 0) {
+    enemy.stunnedTurns--;
+    return;
   }
 
   if (!enemy.alive) return;
@@ -58,9 +70,15 @@ export function enemyTurn(
 
       // If enemy is adjacent to player and try to enter the player's tile, the player dies
       if (Math.abs(distX) + Math.abs(distY) === 1) {
-        state.deathCount++;
-        player.x = state.spawn.x;
-        player.y = state.spawn.y;
+        // enemy attacks player
+        state.hp--;
+
+        if (state.hp <= 0) {
+          state.deathCount++;
+          state.hp = state.maxHp;
+          player.x = state.spawn.x;
+          player.y = state.spawn.y;
+        }
         return;
       }
 

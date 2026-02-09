@@ -34,6 +34,8 @@ export function spawnEnemies(
         x,
         y,
         alive: true,
+        hp: 2, // Enemies have 2 HP
+        stunnedTurns: 0, // No stun initially
         pattern: Math.random() < 0.5 ? "stationary" : "patrol",
       });
     }

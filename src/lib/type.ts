@@ -1,6 +1,8 @@
 export type Enemy = {
   x: number;
   y: number;
+  stunnedTurns?: number; // number of turns the enemy is stunned
+  hp: number;
   alive: boolean;
   pattern: string;
 };

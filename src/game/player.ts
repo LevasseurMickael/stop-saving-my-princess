@@ -38,8 +38,10 @@ window.addEventListener("keydown", (e) => {
     acted = true;
   }
 
-  if (acted) {
+  if (acted && state.turn === "player") {
+    state.turn = "enemies";
     enemiesTurn();
+    state.turn = "player";
   }
 
   if (map[newY][newX] === 2 && state.secretUnlocked) {
