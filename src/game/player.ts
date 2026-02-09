@@ -4,10 +4,12 @@ import { saveGame, setFloorResult } from "./save";
 import { state } from "./state";
 import { loadFloor } from "./map/floors";
 import { enemiesTurn } from "./turn";
+import type { Direction } from "../lib/type";
 
 const player = {
   x: 0,
   y: 0,
+  facing: "down" as Direction,
 };
 
 let deathCount = 0;
@@ -18,10 +20,19 @@ window.addEventListener("keydown", (e) => {
   let newX = player.x;
   let newY = player.y;
 
-  if (e.key === "ArrowUp" || e.key === "w") newY--;
-  else if (e.key === "ArrowDown" || e.key === "s") newY++;
-  else if (e.key === "ArrowLeft" || e.key === "a") newX--;
-  else if (e.key === "ArrowRight" || e.key === "d") newX++;
+  if (e.key === "ArrowUp" || e.key === "w") {
+    newY--;
+    player.facing = "up";
+  } else if (e.key === "ArrowDown" || e.key === "s") {
+    newY++;
+    player.facing = "down";
+  } else if (e.key === "ArrowLeft" || e.key === "a") {
+    newX--;
+    player.facing = "left";
+  } else if (e.key === "ArrowRight" || e.key === "d") {
+    newX++;
+    player.facing = "right";
+  }
 
   // movement
   if (newX !== player.x || newY !== player.y) {

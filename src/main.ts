@@ -1,4 +1,4 @@
-import { map, TileSize, GridSize } from "./game/map/map";
+import { map, TileSize, GridSize, loadMap } from "./game/map/map";
 import { player } from "./game/player";
 import { state } from "./game/state";
 
@@ -51,6 +51,8 @@ function render() {
   ctx.fillText(`Secret: ${state.hasSecretItem}`, 10, 50);
   ctx.fillText(`Floor: ${state.currentFloor + 1}`, 10, 70);
 }
+
+loadMap();
 
 function gameLoop() {
   render();

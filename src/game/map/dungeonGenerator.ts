@@ -15,6 +15,7 @@ function intersects(a: Room, b: Room) {
 export function generateDungeon(seed: number) {
   // Start with all walls
   const map = Array.from({ length: GridSize }, () => Array(GridSize).fill(1));
+  console.log("Generating dungeon with seed:", seed);
 
   const rand = rng(seed);
   const rooms: Room[] = [];

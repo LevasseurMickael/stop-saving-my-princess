@@ -7,4 +7,6 @@ export type Enemy = {
   pattern: string;
 };
 
+export type Direction = "up" | "down" | "left" | "right";
+
 export type Room = { x: number; y: number; w: number; h: number };

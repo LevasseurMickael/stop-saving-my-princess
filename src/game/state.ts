@@ -6,6 +6,7 @@ export const state = {
   // Dungeon related
   currentFloor: 0,
   floorState: "0".repeat(MaxFloors),
+  runSeed: Date.now(), // Unique seed for each run
 
   // stats and progression
   kills: 0,
