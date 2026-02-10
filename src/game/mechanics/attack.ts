@@ -2,7 +2,6 @@ import { player } from "../entities/player";
 import { map } from "../map/map";
 import { checkSecretCondition } from "../mechanics/secret";
 import { state } from "../state";
-import { isOccupied } from "../entities/enemy";
 import type { Direction } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
 

@@ -28,6 +28,8 @@ function render() {
         ctx.fillStyle = "gold";
       } else if (map[y][x] === 3) {
         ctx.fillStyle = "purple";
+      } else if (map[y][x] === 4) {
+        ctx.fillStyle = "white";
       } else {
         ctx.fillStyle = "black";
       }

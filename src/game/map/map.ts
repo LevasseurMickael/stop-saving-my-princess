@@ -2,7 +2,9 @@ import { generateDungeon } from "./dungeonGenerator";
 import { state } from "../state";
 import { spawnEnemies } from "../entities/enemy";
 import { findSecretRoom } from "./secretRoom";
+import { createHintTile } from "./hintTile";
 
+const hintText = "Le sang appelle le silence";
 const TileSize = 32;
 const GridSize = 24;
 
@@ -15,6 +17,7 @@ export function loadMap() {
 
   // Set global map and spawn points
   map = dungeon.map;
+  createHintTile(state.currentFloor, 1, hintText, dungeon.rooms);
   state.spawn = dungeon.spawn;
   state.enemies = spawnEnemies(dungeon.rooms, state.spawn);
 

@@ -1,4 +1,4 @@
-import type { Enemy } from "../lib/type";
+import type { Enemy, SecretHintWall } from "../lib/type";
 
 const MaxFloors = 25;
 
@@ -26,7 +26,10 @@ export const state = {
   // turn management
   turn: "player" as "player" | "enemies",
 
+  // shield state for managing shield mechanics and interactions
   shield: {
     state: "retracted" as "retracted" | "deploying" | "active" | "retracting",
   },
+
+  hintWall: [] as SecretHintWall[],
 };

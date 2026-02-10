@@ -6,6 +6,7 @@ import { loadFloor } from "../map/floors";
 import { enemiesTurn } from "../mechanics/turn";
 import type { Direction } from "../../lib/type";
 import { updateShieldState } from "../mechanics/shield";
+import { checkHintTile } from "../map/hintTile";
 
 // Player entity with position and facing direction
 const player = {
@@ -89,6 +90,8 @@ window.addEventListener("keydown", (e) => {
       acted = true;
     }
   }
+
+  checkHintTile(player.x, player.y, state.hintWall);
 
   // After player acts, enemies take their turn
   if (acted && state.turn === "player") {
