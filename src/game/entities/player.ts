@@ -48,7 +48,8 @@ window.addEventListener("keydown", (e) => {
 
     // movement
     if (newX !== player.x || newY !== player.y) {
-      if (map[newY][newX] !== 1) {
+      // Check if new position is not a wall (1) or hint wall (4) before moving
+      if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
         player.x = newX;
         player.y = newY;
       }

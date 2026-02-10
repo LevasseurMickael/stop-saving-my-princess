@@ -21,6 +21,7 @@ export function knockbackPlayer(enemy: Enemy) {
   }
 }
 
+// Calculate knockback position for enemy based on player's position and move enemy if valid
 export function knockbackEnemy(enemy: Enemy) {
   const distX = enemy.x - player.x;
   const distY = enemy.y - player.y;
