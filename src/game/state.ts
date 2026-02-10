@@ -1,4 +1,4 @@
-import type { Enemy, SecretHintWall } from "../lib/type";
+import type { Enemy, SecretHintWall, GameEvent } from "../lib/type";
 
 const MaxFloors = 25;
 
@@ -8,28 +8,31 @@ export const state = {
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 
-  // stats and progression
+  // Stats and progression
   kills: 0,
   hasSecretItem: false,
   deathCount: 0,
   secretUnlocked: false,
 
-  // dynamic entities
+  // Dynamic entities
   enemies: [] as Enemy[],
   secrets: [] as { x: number; y: number; unlocked: boolean }[],
 
-  // player related
+  // Player related
   spawn: { x: 0, y: 0 },
   hp: 5,
   maxHp: 5,
 
-  // turn management
+  // Turn management
   turn: "player" as "player" | "enemies",
 
-  // shield state for managing shield mechanics and interactions
+  // Secret related
+  eventHistory: [] as GameEvent[],
+  turnCounter: 0,
+  hintWall: [] as SecretHintWall[],
+
+  // Shield state for managing shield mechanics and interactions
   shield: {
     state: "retracted" as "retracted" | "deploying" | "active" | "retracting",
   },
-
-  hintWall: [] as SecretHintWall[],
 };

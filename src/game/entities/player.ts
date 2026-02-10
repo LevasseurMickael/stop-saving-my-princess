@@ -7,6 +7,7 @@ import { enemiesTurn } from "../mechanics/turn";
 import type { Direction } from "../../lib/type";
 import { updateShieldState } from "../mechanics/shield";
 import { checkHintTile } from "../map/hintTile";
+import { handleGameEvent } from "../mechanics/secret/secretSystem";
 
 // Player entity with position and facing direction
 const player = {
@@ -48,12 +49,15 @@ window.addEventListener("keydown", (e) => {
 
     // movement
     if (newX !== player.x || newY !== player.y) {
-      // Check if new position is not a wall (1) or hint wall (4) before moving
       if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
         player.x = newX;
         player.y = newY;
+        handleGameEvent({ type: "move", x: player.x, y: player.y });
+        acted = true;
+      } else {
+        handleGameEvent({ type: "wait" });
+        acted = true;
       }
-      acted = true;
     }
 
     // directional attack
@@ -78,6 +82,7 @@ window.addEventListener("keydown", (e) => {
       acted = true;
     }
   } else {
+    handleGameEvent({ type: "wait" });
     acted = true; // Player can only toggle shield, so we consider that as acting
   }
 

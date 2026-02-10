@@ -1,9 +1,8 @@
 import { player } from "../entities/player";
-import { map } from "../map/map";
-import { checkSecretCondition } from "./secret/secret";
 import { state } from "../state";
 import type { Direction } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
+import { handleGameEvent } from "./secret/secretSystem";
 
 // Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {
@@ -32,8 +31,8 @@ export default function attack() {
   const targetY = player.y + dy;
 
   // Check if attack hits any enemy
-  for (const enemy of state.enemies) {
-    if (!enemy.alive) continue;
+  const hitEnemy = state.enemies.some((enemy) => {
+    if (!enemy.alive) return false;
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
@@ -51,17 +50,14 @@ export default function attack() {
         state.kills++;
       }
 
-      // Check if secret condition is met after the attack and unlock secret area if so
-      if (checkSecretCondition() && !state.secretUnlocked) {
-        state.secretUnlocked = true;
-        if (state.secrets.length > 0) {
-          const secret = state.secrets[0];
-          secret.unlocked = true;
-          map[secret.y][secret.x] = 2; // Unlock secret area
-        }
-      }
+      // Check if secret condition is met after attack and handle event
+      handleGameEvent({ type: "attack", direction: player.facing });
       return true; // Attack hit an enemy
     }
+  });
+
+  if (!hitEnemy) {
+    // If attack missed, still handle the attack event for secret conditions
+    handleGameEvent({ type: "wait" });
   }
-  return false; // Attack missed
 }
