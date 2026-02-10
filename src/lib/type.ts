@@ -42,27 +42,41 @@ export type GameEvent =
 
 // Conditions for unlocking secrets based on player actions, positions, and game events
 export type PositionCondition =
-  | { kind: "on_tile"; x: number; y: number }
-  | { kind: "adjacent_to"; x: number; y: number }
-  | { kind: "facing_wall"; x: number; y: number };
+  | { kind: "on_tile"; tile: number }
+  | { kind: "adjacent_to"; tile: number }
+  | { kind: "facing_tile"; tile: number };
+
+export type TargetCondition = "wall" | "enemy" | "empty" | "stair";
 
 // Action conditions for secrets based on player actions and states
 export type ActionCondition =
-  | { kind: "attack"; direction?: Direction }
-  | { kind: "shield"; state: "deploying" | "active" | "retracting" }
-  | { kind: "wait" };
+  | { kind: "attack"; direction?: Direction; target?: TargetCondition }
+  | {
+      kind: "shield";
+      state: "deploying" | "active" | "retracting";
+      facing?: TargetCondition;
+    }
+  | { kind: "wait"; turns: number }
+  | { kind: "move"; steps: number; along?: TargetCondition };
 
 // Context conditions for secrets that depend on specific game contexts or interactions
 export type ContextCondition =
-  | { kind: "block_hit" }
-  | { kind: "knockback_into_wall" };
+  | { kind: "enemy_present" }
+  | { kind: "enemy_killed_last" }
+  | { kind: "no_enemy_alive" }
+  | { kind: "took_damage"; blocked?: boolean }
+  | { kind: "did_not_move"; turns: number };
+
+// Meta conditions for secrets that depend on broader game states or progression
+export type MetaCondition = { kind: "repeat_floor_condition"; floor: number };
 
 // General condition type that encompasses all specific condition types for secrets
 export type SecretCondition =
   | PositionCondition
   | ActionCondition
   | SequenceCondition
-  | ContextCondition;
+  | ContextCondition
+  | MetaCondition;
 
 // Sequence conditions for secrets that require a specific sequence of actions or events
 export type SequenceCondition = {
