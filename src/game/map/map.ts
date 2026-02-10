@@ -1,7 +1,7 @@
 import { generateDungeon } from "./dungeonGenerator";
 import { state } from "../state";
-import { spawnEnemies } from "../enemy";
-import { secretRoom } from "./secretRoom";
+import { spawnEnemies } from "../entities/enemy";
+import { findSecretRoom } from "./secretRoom";
 
 const TileSize = 32;
 const GridSize = 24;
@@ -9,14 +9,18 @@ const GridSize = 24;
 let map: number[][] = [];
 
 export function loadMap() {
-  // Génère un seed entier unique pour cette floor
+  // Generate a new dungeon layout for the current floor
   const floorSeed = Math.floor(Math.random() * 1000000);
   const dungeon = generateDungeon(floorSeed);
 
+  // Set global map and spawn points
   map = dungeon.map;
   state.spawn = dungeon.spawn;
   state.enemies = spawnEnemies(dungeon.rooms, state.spawn);
-  state.secrets = secretRoom(dungeon.rooms, state.enemies);
+
+  // Find secret room and add to state
+  const secretRoom = findSecretRoom(map);
+  state.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];
 
   return dungeon.rooms;
 }

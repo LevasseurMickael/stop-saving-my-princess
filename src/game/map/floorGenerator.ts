@@ -1,5 +1,6 @@
 import { GridSize } from "./map";
 
+// Simple procedural floor generator using a seed
 export function generateFloor(seed: number) {
   const map = Array.from({ length: GridSize }, () => Array(GridSize).fill(0));
 

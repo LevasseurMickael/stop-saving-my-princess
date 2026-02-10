@@ -1,8 +1,9 @@
 import { GridSize } from "./map";
-import { player } from "../player";
+import { player } from "../entities/player";
 import { rng } from "../rng";
 import type { Room } from "../../lib/type";
 
+// Check if two rooms intersect (including a 1-tile buffer)
 function intersects(a: Room, b: Room) {
   return !(
     a.x + a.w <= b.x ||
@@ -12,17 +13,20 @@ function intersects(a: Room, b: Room) {
   );
 }
 
+// Generate a random dungeon layout with rooms and corridors
 export function generateDungeon(seed: number) {
   // Start with all walls
   const map = Array.from({ length: GridSize }, () => Array(GridSize).fill(1));
   console.log("Generating dungeon with seed:", seed);
 
+  // Use a seeded RNG for consistent generation
   const rand = rng(seed);
   const rooms: Room[] = [];
 
   // 3-5 rooms
   const roomCount = 5 + Math.floor(rand() * 3);
 
+  // Try to place rooms without overlap
   for (let i = 0; i < roomCount; i++) {
     let placed = false;
     let attempts = 0;
@@ -35,6 +39,7 @@ export function generateDungeon(seed: number) {
 
       const room = { x, y, w, h };
 
+      // Expand room by 1 tile in all directions for buffer
       const expanded: Room = {
         x: room.x - 1,
         y: room.y - 1,
@@ -42,8 +47,10 @@ export function generateDungeon(seed: number) {
         h: room.h + 2,
       };
 
+      // Check for intersection with existing rooms
       if (!rooms.some((r) => intersects(expanded, r))) {
         rooms.push(room);
+
         // Carve out the room
         for (let ry = y; ry < y + h; ry++) {
           for (let rx = x; rx < x + w; rx++) {
@@ -61,6 +68,7 @@ export function generateDungeon(seed: number) {
     const a = rooms[i - 1];
     const b = rooms[i];
 
+    // Get center points of rooms
     const ax = a.x + Math.floor(a.w / 2);
     const ay = a.y + Math.floor(a.h / 2);
     const bx = b.x + Math.floor(b.w / 2);
@@ -80,6 +88,7 @@ export function generateDungeon(seed: number) {
   const lastRoom = rooms[rooms.length - 1];
   map[lastRoom.y + 1][lastRoom.x + 1] = 3;
 
+  // Place player in the first room
   const spawnPlayerRoom = rooms[0];
   player.x = spawnPlayerRoom.x + Math.floor(spawnPlayerRoom.w / 2);
   player.y = spawnPlayerRoom.y + Math.floor(spawnPlayerRoom.h / 2);

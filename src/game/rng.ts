@@ -1,3 +1,4 @@
+// Simple seeded random number generator for random dungeon generation and enemy spawning
 export function rng(seed: number) {
   let random = seed * 99991;
   return () => {

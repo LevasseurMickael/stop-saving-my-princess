@@ -1,5 +1,5 @@
-import type { Enemy, Room } from "../lib/type";
-import { state } from "./state";
+import type { Enemy, Room } from "../../lib/type";
+import { state } from "../state";
 
 // Enemy can't get on the same tile as other enemies
 export function isOccupied(x: number, y: number, self: Enemy) {
@@ -31,12 +31,12 @@ export function spawnEnemies(
         (x === spawn.x && y === spawn.y)
       );
       enemies.push({
-        x,
-        y,
-        alive: true,
+        x, // Enemy position on x-axis
+        y, // Enemy position on y-axis
+        alive: true, // Enemy is alive
         hp: 2, // Enemies have 2 HP
         stunnedTurns: 0, // No stun initially
-        pattern: Math.random() < 0.5 ? "stationary" : "patrol",
+        pattern: Math.random() < 0.5 ? "stationary" : "patrol", // Randomly assign pattern
       });
     }
   }

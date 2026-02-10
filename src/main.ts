@@ -1,21 +1,25 @@
 import { map, TileSize, GridSize, loadMap } from "./game/map/map";
-import { player } from "./game/player";
+import { player } from "./game/entities/player";
 import { state } from "./game/state";
 
+// Initialize canvas and rendering context
 const canvas = document.createElement("canvas");
 canvas.width = 800;
 canvas.height = 800;
 document.body.appendChild(canvas);
 
+// Render the game state to the canvas
 const ctx = canvas.getContext("2d")!;
 
+// Initial clear
 ctx.fillStyle = "black";
 ctx.fillRect(0, 0, 800, 800);
 
+// Render function to draw the map, player, enemies, and HUD
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // map
+  // Draw map tiles
   for (let y = 0; y < GridSize; y++) {
     for (let x = 0; x < GridSize; x++) {
       if (map[y][x] === 1) {
@@ -31,18 +35,18 @@ function render() {
     }
   }
 
-  // player
+  // Draw player
   ctx.fillStyle = "blue";
   ctx.fillRect(player.x * TileSize, player.y * TileSize, TileSize, TileSize);
 
-  //  enemy
+  // Draw enemies
   for (const enemy of state.enemies) {
     if (!enemy.alive) continue;
     ctx.fillStyle = "red";
     ctx.fillRect(enemy.x * TileSize, enemy.y * TileSize, TileSize, TileSize);
   }
 
-  // HUD
+  // Draw HUD
   ctx.font = "16px Arial";
   ctx.textBaseline = "top";
   ctx.fillStyle = "white";
@@ -52,8 +56,10 @@ function render() {
   ctx.fillText(`Floor: ${state.currentFloor + 1}`, 10, 70);
 }
 
+// Load initial floor and start game loop
 loadMap();
 
+// Main game loop using requestAnimationFrame for smooth rendering
 function gameLoop() {
   render();
   requestAnimationFrame(gameLoop);

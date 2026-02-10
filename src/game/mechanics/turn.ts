@@ -1,15 +1,17 @@
-import type { Enemy } from "../lib/type";
-import { isOccupied } from "./enemy";
-import { map } from "./map/map";
-import { player } from "./player";
-import { state } from "./state";
+import type { Enemy } from "../../lib/type";
+import { isOccupied } from "../entities/enemy";
+import { map } from "../map/map";
+import { player } from "../entities/player";
+import { state } from "../state";
 
+// Process all enemies' turns
 export function enemiesTurn() {
   for (const enemy of state.enemies) {
     enemyTurn(enemy, player, map);
   }
 }
 
+// Process a single enemy's turn based on its behavior pattern
 export function enemyTurn(
   enemy: Enemy,
   player: { x: number; y: number },
@@ -37,13 +39,17 @@ export function enemyTurn(
     return;
   }
 
+  // Enemy is dead, skip turn
   if (!enemy.alive) return;
 
+  // Handle enemy behavior based on its pattern
   switch (enemy.pattern) {
+    // Stationary pattern: enemy does not move
     case "stationary":
       // Do nothing
       break;
 
+    // Patrol pattern: move randomly within the room
     case "patrol":
       const directions = [
         { dx: 0, dy: -1 },
@@ -56,6 +62,7 @@ export function enemyTurn(
       const newX = enemy.x + dir.dx;
       const newY = enemy.y + dir.dy;
 
+      // Check if the new position is valid (not a wall and not occupied by another enemy)
       if (map[newY]?.[newX] === 0 && !isOccupied(newX, newY, enemy)) {
         enemy.x = newX;
         enemy.y = newY;
@@ -73,6 +80,7 @@ export function enemyTurn(
         // enemy attacks player
         state.hp--;
 
+        // Check if player dies from the attack and reset position and HP if so
         if (state.hp <= 0) {
           state.deathCount++;
           state.hp = state.maxHp;
@@ -82,25 +90,29 @@ export function enemyTurn(
         return;
       }
 
+      // Move in the direction that reduces distance to player, prioritizing horizontal movement if distances are equal
       if (Math.abs(distX) > Math.abs(distY)) {
         const stepX = enemy.x + Math.sign(distX);
 
+        // Check if enemy tries to move onto player's tile, which would result in player death
         if (stepX === player.x && enemy.y === player.y) {
           state.deathCount++;
           return;
         }
 
+        // Check if the new position is valid (not a wall and not occupied by another enemy)
         if (map[enemy.y]?.[stepX] === 0 && !isOccupied(stepX, enemy.y, enemy)) {
           enemy.x = stepX;
         }
       } else {
+        // Prioritize vertical movement if distances are equal
         const stepY = enemy.y + Math.sign(distY);
-
         if (enemy.x === player.x && stepY === player.y) {
           state.deathCount++;
           return;
         }
 
+        // Check if the new position is valid (not a wall and not occupied by another enemy)
         if (map[stepY]?.[enemy.x] === 0 && !isOccupied(enemy.x, stepY, enemy)) {
           enemy.y = stepY;
         }

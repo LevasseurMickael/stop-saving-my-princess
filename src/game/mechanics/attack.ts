@@ -1,10 +1,11 @@
-import { player } from "./player";
-import { map } from "./map/map";
-import { checkSecretCondition } from "./secret";
-import { state } from "./state";
-import { isOccupied } from "./enemy";
-import type { Direction } from "../lib/type";
+import { player } from "../entities/player";
+import { map } from "../map/map";
+import { checkSecretCondition } from "../mechanics/secret";
+import { state } from "../state";
+import { isOccupied } from "../entities/enemy";
+import type { Direction } from "../../lib/type";
 
+// Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {
   switch (facing) {
     case "up":
@@ -18,11 +19,14 @@ function getAttackOffset(facing: Direction) {
   }
 }
 
+// Handle player attack action
 export default function attack() {
+  // Calculate target tile based on player's facing direction
   const { dx, dy } = getAttackOffset(player.facing);
   const targetX = player.x + dx;
   const targetY = player.y + dy;
 
+  // Check if attack hits any enemy
   for (const enemy of state.enemies) {
     if (!enemy.alive) continue;
 
@@ -37,6 +41,7 @@ export default function attack() {
       const knockbackX = enemy.x + dx;
       const knockbackY = enemy.y + dy;
 
+      // Check if knockback position is valid (not a wall and not occupied)
       if (
         map[knockbackY]?.[knockbackX] === 0 &&
         !isOccupied(knockbackX, knockbackY, enemy)
@@ -51,9 +56,14 @@ export default function attack() {
         state.kills++;
       }
 
+      // Check if secret condition is met after the attack and unlock secret area if so
       if (checkSecretCondition() && !state.secretUnlocked) {
         state.secretUnlocked = true;
-        map[7][7] = 2; // Unlock secret area
+        if (state.secrets.length > 0) {
+          const secret = state.secrets[0];
+          secret.unlocked = true;
+          map[secret.y][secret.x] = 2; // Unlock secret area
+        }
       }
       return true; // Attack hit an enemy
     }
