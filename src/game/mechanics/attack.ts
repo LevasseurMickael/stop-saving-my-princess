@@ -4,6 +4,7 @@ import { checkSecretCondition } from "../mechanics/secret";
 import { state } from "../state";
 import { isOccupied } from "../entities/enemy";
 import type { Direction } from "../../lib/type";
+import { knockbackEnemy } from "./knockback";
 
 // Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {
@@ -21,6 +22,11 @@ function getAttackOffset(facing: Direction) {
 
 // Handle player attack action
 export default function attack() {
+  // Cannot attack while shield is not retracted
+  if (state.shield.state !== "retracted") {
+    return;
+  }
+
   // Calculate target tile based on player's facing direction
   const { dx, dy } = getAttackOffset(player.facing);
   const targetX = player.x + dx;
@@ -38,17 +44,7 @@ export default function attack() {
       enemy.stunnedTurns = 1;
 
       // Enemy is knocked back if possible
-      const knockbackX = enemy.x + dx;
-      const knockbackY = enemy.y + dy;
-
-      // Check if knockback position is valid (not a wall and not occupied)
-      if (
-        map[knockbackY]?.[knockbackX] === 0 &&
-        !isOccupied(knockbackX, knockbackY, enemy)
-      ) {
-        enemy.x = knockbackX;
-        enemy.y = knockbackY;
-      }
+      knockbackEnemy(enemy);
 
       // Enemy dies if HP reaches 0
       if (enemy.hp <= 0) {

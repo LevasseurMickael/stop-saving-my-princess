@@ -39,6 +39,19 @@ function render() {
   ctx.fillStyle = "blue";
   ctx.fillRect(player.x * TileSize, player.y * TileSize, TileSize, TileSize);
 
+  // Draw radius where the player attack is effective
+  ctx.fillStyle = "rgba(134, 106, 11, 0.97)";
+  ctx.fillRect(
+    (player.x +
+      (player.facing === "right" ? 1 : player.facing === "left" ? -1 : 0)) *
+      TileSize,
+    (player.y +
+      (player.facing === "down" ? 1 : player.facing === "up" ? -1 : 0)) *
+      TileSize,
+    TileSize,
+    TileSize,
+  );
+
   // Draw enemies
   for (const enemy of state.enemies) {
     if (!enemy.alive) continue;

@@ -25,4 +25,8 @@ export const state = {
 
   // turn management
   turn: "player" as "player" | "enemies",
+
+  shield: {
+    state: "retracted" as "retracted" | "deploying" | "active" | "retracting",
+  },
 };

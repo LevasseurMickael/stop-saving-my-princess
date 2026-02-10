@@ -3,6 +3,8 @@ import { isOccupied } from "../entities/enemy";
 import { map } from "../map/map";
 import { player } from "../entities/player";
 import { state } from "../state";
+import { isBlockedByShield } from "./shield";
+import { knockbackPlayer } from "./knockback";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -77,6 +79,10 @@ export function enemyTurn(
 
       // If enemy is adjacent to player and try to enter the player's tile, the player dies
       if (Math.abs(distX) + Math.abs(distY) === 1) {
+        if (isBlockedByShield(enemy)) {
+          knockbackPlayer(enemy);
+          return;
+        }
         // enemy attacks player
         state.hp--;
 
