@@ -16,6 +16,8 @@ export const stateSecret = {
   eventHistory: [] as GameEvent[],
   turnCounter: 0,
   hintWall: [] as SecretHintWall[],
+  completedFloors: [] as number[],
+  enemies: [] as Enemy[],
 };
 
 // Player related state, separated for clarity and potential future expansion

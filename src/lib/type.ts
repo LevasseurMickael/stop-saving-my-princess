@@ -44,14 +44,13 @@ export type SaveGame = {
 // Event types for game actions and conditions for secrets
 export type GameEvent =
   | { type: "move"; x: number; y: number }
-  | { type: "attack"; direction: Direction }
+  | { type: "attack"; direction: Direction; target: TargetCondition }
   | { type: "shield_deploy" }
   | { type: "shield_retract" }
   | { type: "shield_active" }
   | { type: "wait" }
   | { type: "enemy_hit"; blocker: boolean }
-  | { type: "enemy_kill" }
-  | { type: "turn_end" };
+  | { type: "enemy_kill" };
 
 // =======================
 // Secret conditions
