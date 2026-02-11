@@ -9,13 +9,11 @@ import {
   stateStats,
   stateTurn,
 } from "../state";
-import { loadFloor } from "../map/floors";
 import { enemiesTurn } from "../mechanics/turn";
 import { updateShieldState } from "../mechanics/shield";
 import { checkHintTile } from "../map/hintTile";
 import { handleGameEvent } from "../mechanics/secret/secretSystem";
-
-let deathCount = 0;
+import { enterNextFloor } from "../map/floor";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -117,10 +115,7 @@ window.addEventListener("keydown", (e) => {
       stateDungeon.currentFloor,
       stateStats.hasSecretItem ? "1" : "2",
     );
-    stateDungeon.currentFloor++;
     saveGame();
-    loadFloor();
+    enterNextFloor();
   }
 });
-
-export { deathCount };

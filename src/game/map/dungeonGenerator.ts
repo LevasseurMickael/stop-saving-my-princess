@@ -90,8 +90,12 @@ export function generateDungeon(seed: number) {
 
   // Place player in the first room
   const spawnPlayerRoom = rooms[0];
-  statePlayer.x = spawnPlayerRoom.x + Math.floor(spawnPlayerRoom.w / 2);
-  statePlayer.y = spawnPlayerRoom.y + Math.floor(spawnPlayerRoom.h / 2);
+  const spawnX = spawnPlayerRoom.x + Math.floor(spawnPlayerRoom.w / 2);
+  const spawnY = spawnPlayerRoom.y + Math.floor(spawnPlayerRoom.h / 2);
+
+  statePlayer.x = spawnX;
+  statePlayer.y = spawnY;
+  statePlayer.spawn = { x: spawnX, y: spawnY };
 
   return { map, spawn: { x: statePlayer.x, y: statePlayer.y }, rooms };
 }

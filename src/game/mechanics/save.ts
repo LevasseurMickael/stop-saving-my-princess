@@ -1,4 +1,5 @@
-import { state, stateDungeon } from "../state";
+import type { SaveGame } from "../../lib/type";
+import { stateDungeon, statePlayer, stateStats } from "../state";
 
 export function setFloorResult(floor: number, value: "1" | "2") {
   stateDungeon.floorState =
@@ -14,16 +15,38 @@ export function getFloorResult(floor: number) {
 
 // Save and load game state to/from localStorage
 export function saveGame() {
-  localStorage.setItem(
-    "save",
-    JSON.stringify({
-      state,
-    }),
-  );
+  const save: SaveGame = {
+    dungeon: {
+      currentFloor: stateDungeon.currentFloor,
+      floorState: stateDungeon.floorState,
+      runSeed: stateDungeon.runSeed,
+    },
+    player: {
+      hp: statePlayer.hp,
+      maxHp: statePlayer.maxHp,
+      deathCount: statePlayer.deathCount,
+    },
+    stats: {
+      kills: stateStats.kills,
+      hasSecretItem: stateStats.hasSecretItem,
+    },
+  };
+  localStorage.setItem("save", JSON.stringify(save));
 }
 
 export function loadGame() {
-  const s = localStorage.getItem("save");
-  if (!s) return;
-  Object.assign(state, JSON.parse(s));
+  const raw = localStorage.getItem("save");
+  if (!raw) return;
+  const save: SaveGame = JSON.parse(raw);
+
+  stateDungeon.currentFloor = save.dungeon.currentFloor;
+  stateDungeon.floorState = save.dungeon.floorState;
+  stateDungeon.runSeed = save.dungeon.runSeed;
+
+  statePlayer.hp = save.player.hp;
+  statePlayer.maxHp = save.player.maxHp;
+  statePlayer.deathCount = save.player.deathCount;
+
+  stateStats.kills = save.stats.kills;
+  stateStats.hasSecretItem = save.stats.hasSecretItem;
 }

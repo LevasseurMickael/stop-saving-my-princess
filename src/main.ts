@@ -5,6 +5,7 @@ import {
   statePlayer,
   stateStats,
 } from "./game/state";
+import "./game/entities/player";
 
 // Initialize canvas and rendering context
 const canvas = document.createElement("canvas");

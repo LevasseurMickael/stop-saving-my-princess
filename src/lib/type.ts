@@ -20,6 +20,23 @@ export type Room = { x: number; y: number; w: number; h: number };
 
 export type SecretWall = { x: number; y: number; revealed: boolean };
 
+export type SaveGame = {
+  dungeon: {
+    currentFloor: number;
+    floorState: string;
+    runSeed: number;
+  };
+  player: {
+    hp: number;
+    maxHp: number;
+    deathCount: number;
+  };
+  stats: {
+    kills: number;
+    hasSecretItem: boolean;
+  };
+};
+
 // =======================
 // Core gameplay types
 // =======================
