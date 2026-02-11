@@ -43,6 +43,8 @@ export default function attack() {
   const targetX = statePlayer.x + dx;
   const targetY = statePlayer.y + dy;
 
+  const target = getAttackTarget(targetX, targetY);
+
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {
     if (!enemy.alive) return false;
@@ -61,13 +63,16 @@ export default function attack() {
       if (enemy.hp <= 0) {
         enemy.alive = false;
         stateStats.kills++;
+        handleGameEvent({ type: "enemy_kill" });
       }
 
       // Check if secret condition is met after attack and handle event
       handleGameEvent({
         type: "attack",
         direction: statePlayer.facing,
-        target: getAttackTarget(targetX, targetY),
+        target: "enemy",
+        targetX,
+        targetY,
       });
       return true; // Attack hit an enemy
     }
@@ -78,7 +83,9 @@ export default function attack() {
     handleGameEvent({
       type: "attack",
       direction: statePlayer.facing,
-      target: getAttackTarget(targetX, targetY),
+      target,
+      targetX,
+      targetY,
     });
   }
 }

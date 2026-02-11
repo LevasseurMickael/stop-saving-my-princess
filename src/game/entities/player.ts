@@ -87,7 +87,25 @@ window.addEventListener("keydown", (e) => {
   if (e.key === " ") {
     if (stateShield.shield.state === "retracted") {
       stateShield.shield.state = "deploying";
-      handleGameEvent({ type: "shield_deploying" });
+      const dx =
+        statePlayer.facing === "right"
+          ? 1
+          : statePlayer.facing === "left"
+            ? -1
+            : 0;
+      const dy =
+        statePlayer.facing === "down"
+          ? 1
+          : statePlayer.facing === "up"
+            ? -1
+            : 0;
+      const shieldX = statePlayer.x + dx;
+      const shieldY = statePlayer.y + dy;
+      handleGameEvent({
+        type: "shield_deploying",
+        facingX: shieldX,
+        facingY: shieldY,
+      });
       acted = true;
     } else if (stateShield.shield.state === "active") {
       stateShield.shield.state = "retracting";

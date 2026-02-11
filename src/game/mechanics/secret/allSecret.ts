@@ -86,7 +86,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo fix the sequence
+    // Todo sequence requier a wait after the attack, it should not be the case
     floor: 7,
     tier: 1,
     hint: "« La patience donne du poids au geste. »",
@@ -110,7 +110,6 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    //Todo add an area around the player to check if at least one enemy is 3 tiles or less around the player
     floor: 9,
     tier: 1,
     hint: "« Le danger révèle parfois ce qu’on cache. »",
@@ -118,7 +117,7 @@ export const allSecretConditions: FloorSecret[] = [
     condition: {
       kind: "sequence",
       steps: [
-        { kind: "enemy_present" },
+        { kind: "enemy_nearby", distance: 3 },
         { kind: "facing_tile", tile: 1 },
         { kind: "wait", turns: 1 },
       ],
@@ -126,7 +125,6 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo works even when attacking an enemy
     floor: 10,
     tier: 1,
     hint: "« Frapper le vide attire parfois l’attention. »",
@@ -152,14 +150,12 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo activate when leaving the spawn point because this is where the check is done, the condition should be met twice
     floor: 12,
     tier: 1,
     hint: "« Là où tout commence, rien n’est jamais fini. »",
     unlocked: false,
     condition: {
-      kind: "on_tile",
-      tile: 0, // spawn
+      kind: "on_spawn",
     },
   },
 
@@ -178,17 +174,13 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo should not work if the player face the same wall twice, need to add a condition to check if the player face another wall in between
     floor: 14,
     tier: 1,
     hint: "« Tous les murs ne racontent pas la même histoire. »",
     unlocked: false,
     condition: {
       kind: "sequence",
-      steps: [
-        { kind: "attack", target: "wall" },
-        { kind: "attack", target: "wall" },
-      ],
+      steps: [{ kind: "different_walls_attacked", count: 2 }],
     },
   },
 
@@ -223,7 +215,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo sequence is attack -> wait -> attack -> for unknown reason, not necessarily a bad thing but to investigate
+    // Todo sequence is attack -> wait -> attack -> wait for unknown reason, not necessarily a bad thing but to investigate
     floor: 17,
     tier: 2,
     hint: "« Le rythme importe plus que la force. »",
@@ -282,7 +274,6 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo secret is shown when attacking an enemy, should only appear if attacking an empty place
     floor: 21,
     tier: 2,
     hint: "« Regarder ailleurs ouvre parfois le bon chemin. »",
@@ -294,7 +285,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    //Todo the first tile should not be 1 but the player spawn, secret should appear if player wait on spawn and next to the stair, whatever turn has passed on this floor
+    //Todo do not seem to work, eventHistory may be the cause or wrong way to wait used
     floor: 22,
     tier: 2,
     hint: "« Les secrets vivent entre les transitions. »",
@@ -302,7 +293,7 @@ export const allSecretConditions: FloorSecret[] = [
     condition: {
       kind: "sequence",
       steps: [
-        { kind: "adjacent_to", tile: 1 },
+        { kind: "on_spawn" },
         { kind: "wait", turns: 1 },
         { kind: "adjacent_to", tile: 3 },
         { kind: "wait", turns: 1 },

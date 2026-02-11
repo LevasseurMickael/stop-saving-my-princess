@@ -44,8 +44,14 @@ export type SaveGame = {
 // Event types for game actions and conditions for secrets
 export type GameEvent =
   | { type: "move"; x: number; y: number }
-  | { type: "attack"; direction: Direction; target: TargetCondition }
-  | { type: "shield_deploying" }
+  | {
+      type: "attack";
+      direction: Direction;
+      target: TargetCondition;
+      targetX: number;
+      targetY: number;
+    }
+  | { type: "shield_deploying"; facingX: number; facingY: number }
   | { type: "shield_retracting" }
   | { type: "shield_active" }
   | { type: "wait" }
@@ -59,8 +65,10 @@ export type GameEvent =
 // Conditions for unlocking secrets based on player actions, positions, and game events
 export type PositionCondition =
   | { kind: "on_tile"; tile: number }
+  | { kind: "on_spawn" }
   | { kind: "adjacent_to"; tile: number }
-  | { kind: "facing_tile"; tile: number };
+  | { kind: "facing_tile"; tile: number }
+  | { kind: "enemy_nearby"; distance: number };
 
 export type TargetCondition = "wall" | "enemy" | "empty" | "stair";
 
@@ -81,7 +89,8 @@ export type ContextCondition =
   | { kind: "enemy_killed_last" }
   | { kind: "no_enemy_alive" }
   | { kind: "took_damage"; blocked?: boolean }
-  | { kind: "did_not_move"; turns: number };
+  | { kind: "did_not_move"; turns: number }
+  | { kind: "different_walls_attacked"; count: number };
 
 // Meta conditions for secrets that depend on broader game states or progression
 export type MetaCondition = { kind: "repeat_floor_condition"; floor: number };

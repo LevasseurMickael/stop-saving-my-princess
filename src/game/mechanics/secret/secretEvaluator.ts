@@ -23,8 +23,10 @@ export function evaluateCondition(condition: SecretCondition): boolean {
     case "repeat_floor_condition":
       return evaluateRepeat(condition.floor);
     case "on_tile":
+    case "on_spawn":
     case "adjacent_to":
     case "facing_tile":
+    case "enemy_nearby":
       return evaluatePosition(condition);
 
     case "enemy_present":
@@ -32,6 +34,7 @@ export function evaluateCondition(condition: SecretCondition): boolean {
     case "no_enemy_alive":
     case "took_damage":
     case "did_not_move":
+    case "different_walls_attacked":
       return evaluateContext(condition);
 
     default:
@@ -219,6 +222,12 @@ function evaluatePosition(condition: PositionCondition): boolean {
   switch (condition.kind) {
     case "on_tile":
       return map[player.y][player.x] === condition.tile;
+
+    case "on_spawn":
+      return (
+        player.x === statePlayer.spawn.x && player.y === statePlayer.spawn.y
+      );
+
     case "adjacent_to":
       const adjacentTiles = [
         { x: player.x, y: player.y - 1 },
@@ -240,6 +249,15 @@ function evaluatePosition(condition: PositionCondition): boolean {
       const facingY = player.y + dy;
       const facingTile = map[facingY]?.[facingX];
       return facingTile === condition.tile;
+
+    case "enemy_nearby":
+      return stateSecret.enemies.some((enemy) => {
+        if (!enemy.alive) return false;
+        const distance =
+          Math.abs(enemy.x - player.x) + Math.abs(enemy.y - player.y);
+        return distance <= condition.distance;
+      });
+
     default:
       return false;
   }
@@ -253,10 +271,13 @@ function evaluateContext(condition: ContextCondition): boolean {
   switch (condition.kind) {
     case "enemy_present":
       return stateSecret.enemies.some((e) => e.alive);
+
     case "enemy_killed_last":
       return stateSecret.eventHistory.at(-1)?.type === "enemy_kill";
+
     case "no_enemy_alive":
       return stateSecret.enemies.every((e) => !e.alive);
+
     case "took_damage":
       const lastHit = stateSecret.eventHistory
         .slice()
@@ -264,6 +285,7 @@ function evaluateContext(condition: ContextCondition): boolean {
         .find((e) => e.type === "enemy_hit");
       if (!lastHit) return false;
       return condition.blocked ? lastHit.blocker === true : true;
+
     case "did_not_move":
       let count = 0;
       for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
@@ -273,6 +295,19 @@ function evaluateContext(condition: ContextCondition): boolean {
         } else break;
       }
       return false;
+
+    case "different_walls_attacked":
+      const attackedWalls = new Set<string>();
+      for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
+        const event = stateSecret.eventHistory[i];
+        if (event.type === "attack" && event.target === "wall") {
+          const key = `${event.targetX},${event.targetY}`;
+          attackedWalls.add(key);
+          if (attackedWalls.size >= condition.count) return true;
+        }
+      }
+      return false;
+
     default:
       return false;
   }
@@ -319,8 +354,10 @@ function eventMatchesCondition(
       return true;
 
     case "on_tile":
+    case "on_spawn":
     case "adjacent_to":
     case "facing_tile":
+    case "enemy_nearby":
       return evaluatePosition(condition);
 
     case "enemy_present":
@@ -328,6 +365,7 @@ function eventMatchesCondition(
     case "no_enemy_alive":
     case "took_damage":
     case "did_not_move":
+    case "different_walls_attacked":
       return evaluateContext(condition);
 
     default:
