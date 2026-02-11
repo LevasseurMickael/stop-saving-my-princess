@@ -6,6 +6,7 @@ export const allSecretConditions: FloorSecret[] = [
   // =====================
 
   {
+    // Todo now it require one turn to wait instead of 3
     floor: 1,
     tier: 1,
     hint: "« L’impatience empêche de voir. »",
@@ -17,7 +18,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    floor: 2,
+    floor: 50,
     tier: 1,
     hint: "« Tout chemin mérite un regard avant d’être suivi. »",
     unlocked: false,
@@ -86,7 +87,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo sequence requier a wait after the attack, it should not be the case
+    // Todo the whole shield sequence should be counted as wait
     floor: 7,
     tier: 1,
     hint: "« La patience donne du poids au geste. »",
@@ -179,8 +180,8 @@ export const allSecretConditions: FloorSecret[] = [
     hint: "« Tous les murs ne racontent pas la même histoire. »",
     unlocked: false,
     condition: {
-      kind: "sequence",
-      steps: [{ kind: "different_walls_attacked", count: 2 }],
+      kind: "different_walls_attacked",
+      count: 2,
     },
   },
 
@@ -215,7 +216,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo sequence is attack -> wait -> attack -> wait for unknown reason, not necessarily a bad thing but to investigate
+    // Todo the whole shield sequence should be counted as wait
     floor: 17,
     tier: 2,
     hint: "« Le rythme importe plus que la force. »",
@@ -243,7 +244,6 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo secret is shown if we activate the shield in a room and then get to a wall, should not happen, need to add a condition to check if the player was not adjacent to a wall in the previous turn
     floor: 19,
     tier: 2,
     hint: "« Ce qui est montré puis caché laisse une trace. »",
@@ -258,8 +258,7 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    // Todo it requier to wait again after attack on wall, the secret should show right after the attack, need to investigate
-    floor: 20,
+    floor: 17,
     tier: 2,
     hint: "« L’intention précède l’impact. »",
     unlocked: false,
@@ -285,19 +284,14 @@ export const allSecretConditions: FloorSecret[] = [
   },
 
   {
-    //Todo do not seem to work, eventHistory may be the cause or wrong way to wait used
+    //Todo do not seem to work, eventHistory may be the cause or wrong way to wait used, stair can be over 20 tiles from spawn point too
     floor: 22,
     tier: 2,
     hint: "« Les secrets vivent entre les transitions. »",
     unlocked: false,
     condition: {
       kind: "sequence",
-      steps: [
-        { kind: "on_spawn" },
-        { kind: "wait", turns: 1 },
-        { kind: "adjacent_to", tile: 3 },
-        { kind: "wait", turns: 1 },
-      ],
+      steps: [{ kind: "on_spawn" }, { kind: "adjacent_to", tile: 3 }],
     },
   },
 
@@ -329,7 +323,7 @@ export const allSecretConditions: FloorSecret[] = [
 
   {
     //Todo secret appear at the first action done
-    floor: 25,
+    floor: 2,
     tier: 2,
     hint: "« Ceux qui survivent comprennent ce qu’ils ont déjà vu. »",
     unlocked: false,

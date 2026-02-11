@@ -48,25 +48,58 @@ export function evaluateCondition(condition: SecretCondition): boolean {
 
 // Evaluate a sequence of conditions by checking the event history in reverse order to find matches for each step in the sequence
 function evaluateSequence(steps: SecretCondition[]): boolean {
-  let index = stateSecret.eventHistory.length - 1;
+  // Séparer les conditions d'état (évaluées maintenant)
+  // des conditions d'événements (dans l'historique)
+  const eventSteps: SecretCondition[] = [];
+  const stateSteps: SecretCondition[] = [];
 
-  for (let i = steps.length - 1; i >= 0; i--) {
-    const step = steps[i];
-    let found = false;
-
-    while (index >= 0) {
-      if (eventMatchesCondition(stateSecret.eventHistory[index], step)) {
-        found = true;
-        index--;
-        break;
-      }
-      index--;
+  for (const step of steps) {
+    if (isStateCondition(step)) {
+      stateSteps.push(step);
+    } else {
+      eventSteps.push(step);
     }
+  }
 
-    if (!found) return false;
+  // Vérifier toutes les conditions d'état
+  for (const step of stateSteps) {
+    if (!evaluateCondition(step)) {
+      return false;
+    }
+  }
+
+  // Vérifier que les N derniers événements matchent EXACTEMENT
+  const history = stateSecret.eventHistory;
+  if (history.length < eventSteps.length) {
+    return false;
+  }
+
+  const startIndex = history.length - eventSteps.length;
+  for (let i = 0; i < eventSteps.length; i++) {
+    const event = history[startIndex + i];
+    const step = eventSteps[i];
+
+    if (!eventMatchesCondition(event, step)) {
+      return false;
+    }
   }
 
   return true;
+}
+
+function isStateCondition(condition: SecretCondition): boolean {
+  switch (condition.kind) {
+    case "on_tile":
+    case "on_spawn":
+    case "adjacent_to":
+    case "facing_tile":
+    case "enemy_nearby":
+    case "enemy_present":
+    case "no_enemy_alive":
+      return true;
+    default:
+      return false;
+  }
 }
 
 // =======================
@@ -108,6 +141,14 @@ function evaluateShield(
   const expectedType = `shield_${condition.state}` as GameEvent["type"];
   const lastEvent = stateSecret.eventHistory.at(-1);
   if (!lastEvent || lastEvent.type !== expectedType) return false;
+
+  if (condition.facing) {
+    if (lastEvent.type === "shield_deploying" && "facingX" in lastEvent) {
+      const tile = map[lastEvent.facingY]?.[lastEvent.facingX];
+      const targetType = getTileTargetType(tile);
+      if (targetType !== condition.facing) return false;
+    }
+  }
   return true;
 }
 
@@ -123,11 +164,21 @@ function getFacingTarget(): TargetCondition {
 
   const tile = map[facingY]?.[facingX];
 
-  const hasEnemy = stateSecret.enemies.some(
-    (enemy) => enemy.alive && enemy.x === facingX && enemy.y === facingY,
-  );
+  return getTileTargetType(tile, facingX, facingY);
+}
 
-  if (hasEnemy) return "enemy";
+function getTileTargetType(
+  tile: number | undefined,
+  x?: number,
+  y?: number,
+): TargetCondition {
+  if (x !== undefined && y !== undefined) {
+    const hasEnemy = stateSecret.enemies.some(
+      (enemy) => enemy.alive && enemy.x === x && enemy.y === y,
+    );
+    if (hasEnemy) return "enemy";
+  }
+
   if (tile === 3) return "stair";
   if (tile === 4 || tile === 1) return "wall";
   return "empty";
@@ -324,11 +375,7 @@ function eventMatchesCondition(
 ): boolean {
   switch (condition.kind) {
     case "wait":
-      const lastEvent = stateSecret.eventHistory.slice(-condition.turns);
-      return (
-        lastEvent.length === condition.turns &&
-        lastEvent.every((e) => e.type === "wait")
-      );
+      return event.type === "wait";
 
     case "attack":
       if (event.type !== "attack") return false;
@@ -340,8 +387,13 @@ function eventMatchesCondition(
     case "shield":
       const expectedType = `shield_${condition.state}` as GameEvent["type"];
       if (event.type !== expectedType) return false;
-      if (condition.facing) {
-        const facingTarget = getFacingTarget();
+      if (
+        condition.facing &&
+        event.type === "shield_deploying" &&
+        "facingX" in event
+      ) {
+        const tile = map[event.facingY]?.[event.facingX];
+        const facingTarget = getTileTargetType(tile);
         return facingTarget === condition.facing;
       }
       return true;
