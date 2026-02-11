@@ -45,8 +45,8 @@ export type SaveGame = {
 export type GameEvent =
   | { type: "move"; x: number; y: number }
   | { type: "attack"; direction: Direction; target: TargetCondition }
-  | { type: "shield_deploy" }
-  | { type: "shield_retract" }
+  | { type: "shield_deploying" }
+  | { type: "shield_retracting" }
   | { type: "shield_active" }
   | { type: "wait" }
   | { type: "enemy_hit"; blocker: boolean }

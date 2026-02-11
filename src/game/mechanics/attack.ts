@@ -1,7 +1,8 @@
 import { stateDynamic, statePlayer, stateShield, stateStats } from "../state";
-import type { Direction } from "../../lib/type";
+import type { Direction, TargetCondition } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
 import { handleGameEvent } from "./secret/secretSystem";
+import { map } from "../map/map";
 
 // Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {
@@ -15,6 +16,19 @@ function getAttackOffset(facing: Direction) {
     case "right":
       return { dx: 1, dy: 0 };
   }
+}
+
+function getAttackTarget(x: number, y: number): TargetCondition {
+  const tile = map[y]?.[x];
+
+  const hasEnemy = stateDynamic.enemies.some(
+    (enemy) => enemy.alive && enemy.x === x && enemy.y === y,
+  );
+
+  if (hasEnemy) return "enemy";
+  if (tile === 3) return "stair";
+  if (tile === 4 || tile === 1) return "wall";
+  return "empty";
 }
 
 // Handle player attack action
@@ -50,13 +64,21 @@ export default function attack() {
       }
 
       // Check if secret condition is met after attack and handle event
-      handleGameEvent({ type: "attack", direction: statePlayer.facing });
+      handleGameEvent({
+        type: "attack",
+        direction: statePlayer.facing,
+        target: getAttackTarget(targetX, targetY),
+      });
       return true; // Attack hit an enemy
     }
   });
 
   if (!hitEnemy) {
     // If attack missed, still handle the attack event for secret conditions
-    handleGameEvent({ type: "wait" });
+    handleGameEvent({
+      type: "attack",
+      direction: statePlayer.facing,
+      target: getAttackTarget(targetX, targetY),
+    });
   }
 }

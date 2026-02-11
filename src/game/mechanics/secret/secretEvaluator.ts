@@ -3,9 +3,10 @@ import type {
   GameEvent,
   PositionCondition,
   SecretCondition,
+  TargetCondition,
 } from "../../../lib/type";
 import { map } from "../../map/map";
-import { statePlayer, stateSecret } from "../../state";
+import { statePlayer, stateSecret, stateShield } from "../../state";
 
 export function evaluateCondition(condition: SecretCondition): boolean {
   switch (condition.kind) {
@@ -92,10 +93,41 @@ function evaluateAttack(
 function evaluateShield(
   condition: Extract<SecretCondition, { kind: "shield" }>,
 ): boolean {
+  if (condition.state === "active") {
+    if (stateShield.shield.state !== "active") return false;
+
+    if (condition.facing) {
+      const facingTarget = getFacingTarget();
+      if (facingTarget !== condition.facing) return false;
+    }
+    return true;
+  }
   const expectedType = `shield_${condition.state}` as GameEvent["type"];
   const lastEvent = stateSecret.eventHistory.at(-1);
   if (!lastEvent || lastEvent.type !== expectedType) return false;
   return true;
+}
+
+// Check if the player is adjacent to a tile of a specific type by checking the four cardinal directions around the player's current position for the specified tile type
+function getFacingTarget(): TargetCondition {
+  const dx =
+    statePlayer.facing === "right" ? 1 : statePlayer.facing === "left" ? -1 : 0;
+  const dy =
+    statePlayer.facing === "down" ? 1 : statePlayer.facing === "up" ? -1 : 0;
+
+  const facingX = statePlayer.x + dx;
+  const facingY = statePlayer.y + dy;
+
+  const tile = map[facingY]?.[facingX];
+
+  const hasEnemy = stateSecret.enemies.some(
+    (enemy) => enemy.alive && enemy.x === facingX && enemy.y === facingY,
+  );
+
+  if (hasEnemy) return "enemy";
+  if (tile === 3) return "stair";
+  if (tile === 4 || tile === 1) return "wall";
+  return "empty";
 }
 
 // Evaluate move conditions by counting consecutive move events from the end of the event history to see if it meets the required number of steps for the condition
@@ -103,14 +135,52 @@ function evaluateMove(
   condition: Extract<SecretCondition, { kind: "move" }>,
 ): boolean {
   let count = 0;
-  for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
-    const event = stateSecret.eventHistory[i];
-    if (event.type === "move") {
-      count++;
-      if (count >= condition.steps) return true;
-    } else {
-      break;
+  if (condition.along) {
+    for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
+      const event = stateSecret.eventHistory[i];
+      if (event.type === "move") {
+        if (isAdjacentToTileType(event.x, event.y, condition.along)) {
+          count++;
+          if (count >= condition.steps) return true;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
     }
+  } else {
+    for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
+      const event = stateSecret.eventHistory[i];
+      if (event.type === "move") {
+        count++;
+        if (count >= condition.steps) return true;
+      } else {
+        break;
+      }
+    }
+  }
+  return false;
+}
+
+function isAdjacentToTileType(
+  x: number,
+  y: number,
+  tileType?: TargetCondition,
+): boolean {
+  const adjacentTiles = [
+    map[y - 1]?.[x],
+    map[y + 1]?.[x],
+    map[y]?.[x - 1],
+    map[y]?.[x + 1],
+  ];
+
+  if (tileType === "wall") {
+    return adjacentTiles.some((tile) => tile === 4 || tile === 1);
+  } else if (tileType === "stair") {
+    return adjacentTiles.some((tile) => tile === 3);
+  } else if (tileType === "empty") {
+    return adjacentTiles.some((tile) => tile === 0);
   }
   return false;
 }
@@ -149,27 +219,27 @@ function evaluatePosition(condition: PositionCondition): boolean {
   switch (condition.kind) {
     case "on_tile":
       return map[player.y][player.x] === condition.tile;
-    case "adjacent_to": //Todo: change condition.tile to {x,y} and update all secrets accordingly
-      return (
-        Math.abs(player.x - condition.tile) +
-          Math.abs(player.y - condition.tile) ===
-        1
-      );
-    case "facing_tile": //Todo: change condition.tile to {x,y} and update all secrets accordingly
-      return (
-        (player.facing === "up" &&
-          player.x === condition.tile &&
-          player.y - 1 === condition.tile) ||
-        (player.facing === "down" &&
-          player.x === condition.tile &&
-          player.y + 1 === condition.tile) ||
-        (player.facing === "left" &&
-          player.x - 1 === condition.tile &&
-          player.y === condition.tile) ||
-        (player.facing === "right" &&
-          player.x + 1 === condition.tile &&
-          player.y === condition.tile)
-      );
+    case "adjacent_to":
+      const adjacentTiles = [
+        { x: player.x, y: player.y - 1 },
+        { x: player.x, y: player.y + 1 },
+        { x: player.x - 1, y: player.y },
+        { x: player.x + 1, y: player.y },
+      ];
+      return adjacentTiles.some((pos) => {
+        const tile = map[pos.y]?.[pos.x];
+        return tile === condition.tile;
+      });
+
+    case "facing_tile":
+      const dx =
+        player.facing === "right" ? 1 : player.facing === "left" ? -1 : 0;
+      const dy = player.facing === "down" ? 1 : player.facing === "up" ? -1 : 0;
+
+      const facingX = player.x + dx;
+      const facingY = player.y + dy;
+      const facingTile = map[facingY]?.[facingX];
+      return facingTile === condition.tile;
     default:
       return false;
   }
@@ -233,10 +303,32 @@ function eventMatchesCondition(
       return true;
 
     case "shield":
-      return event.type === `shield_${condition.state}`;
+      const expectedType = `shield_${condition.state}` as GameEvent["type"];
+      if (event.type !== expectedType) return false;
+      if (condition.facing) {
+        const facingTarget = getFacingTarget();
+        return facingTarget === condition.facing;
+      }
+      return true;
 
     case "move":
-      return event.type === "move";
+      if (event.type !== "move") return false;
+      if (condition.along && "x" in event && "y" in event) {
+        return isAdjacentToTileType(event.x, event.y, condition.along);
+      }
+      return true;
+
+    case "on_tile":
+    case "adjacent_to":
+    case "facing_tile":
+      return evaluatePosition(condition);
+
+    case "enemy_present":
+    case "enemy_killed_last":
+    case "no_enemy_alive":
+    case "took_damage":
+    case "did_not_move":
+      return evaluateContext(condition);
 
     default:
       return false;

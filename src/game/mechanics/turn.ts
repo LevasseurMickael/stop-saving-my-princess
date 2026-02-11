@@ -4,6 +4,7 @@ import { map } from "../map/map";
 import { stateDynamic, statePlayer } from "../state";
 import { isBlockedByShield } from "./shield";
 import { knockbackPlayer } from "./knockback";
+import { handleGameEvent } from "./secret/secretSystem";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -79,10 +80,12 @@ export function enemyTurn(
       // If enemy is adjacent to player and try to enter the player's tile, the player dies
       if (Math.abs(distX) + Math.abs(distY) === 1) {
         if (isBlockedByShield(enemy)) {
+          handleGameEvent({ type: "enemy_hit", blocker: true });
           knockbackPlayer(enemy);
           return;
         }
         // enemy attacks player
+        handleGameEvent({ type: "enemy_hit", blocker: false });
         statePlayer.hp--;
 
         // Check if player dies from the attack and reset position and HP if so

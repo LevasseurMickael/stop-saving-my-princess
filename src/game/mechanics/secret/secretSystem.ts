@@ -35,6 +35,11 @@ function unlockSecret(secret: FloorSecret) {
   stateStats.secretUnlocked = true;
   secret.unlocked = true;
 
+  const currentFloor = stateDungeon.currentFloor + 1;
+  if (!stateSecret.completedFloors.includes(currentFloor)) {
+    stateSecret.completedFloors.push(currentFloor);
+  }
+
   if (stateDynamic.secrets.length > 0) {
     const room = stateDynamic.secrets[0];
     map[room.y][room.x] = 2; // Unlock secret area on the map

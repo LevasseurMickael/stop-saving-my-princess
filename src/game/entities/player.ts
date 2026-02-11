@@ -87,9 +87,11 @@ window.addEventListener("keydown", (e) => {
   if (e.key === " ") {
     if (stateShield.shield.state === "retracted") {
       stateShield.shield.state = "deploying";
+      handleGameEvent({ type: "shield_deploying" });
       acted = true;
     } else if (stateShield.shield.state === "active") {
       stateShield.shield.state = "retracting";
+      handleGameEvent({ type: "shield_retracting" });
       acted = true;
     }
   }

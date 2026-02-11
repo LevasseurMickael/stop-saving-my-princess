@@ -50,6 +50,9 @@ export function loadMap() {
     y: statePlayer.y,
   });
 
+  // Synchronize stateSecret.enemies with stateDynamic.enemies for secret conditions
+  stateSecret.enemies = stateDynamic.enemies;
+
   // Find secret room and add to state
   const secretRoom = findSecretRoom(map);
   stateDynamic.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];

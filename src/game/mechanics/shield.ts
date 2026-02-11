@@ -1,10 +1,12 @@
 import type { Enemy } from "../../lib/type";
 import { statePlayer, stateShield } from "../state";
+import { handleGameEvent } from "./secret/secretSystem";
 
 // Update shield state based on current state
 export function updateShieldState() {
   if (stateShield.shield.state === "deploying") {
     stateShield.shield.state = "active";
+    handleGameEvent({ type: "shield_active" });
   } else if (stateShield.shield.state === "retracting") {
     stateShield.shield.state = "retracted";
   }
