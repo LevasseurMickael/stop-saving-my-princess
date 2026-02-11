@@ -1,7 +1,7 @@
 import { GridSize } from "./map";
-import { player } from "../entities/player";
 import { rng } from "../rng";
 import type { Room } from "../../lib/type";
+import { statePlayer } from "../state";
 
 // Check if two rooms intersect (including a 1-tile buffer)
 function intersects(a: Room, b: Room) {
@@ -90,8 +90,8 @@ export function generateDungeon(seed: number) {
 
   // Place player in the first room
   const spawnPlayerRoom = rooms[0];
-  player.x = spawnPlayerRoom.x + Math.floor(spawnPlayerRoom.w / 2);
-  player.y = spawnPlayerRoom.y + Math.floor(spawnPlayerRoom.h / 2);
+  statePlayer.x = spawnPlayerRoom.x + Math.floor(spawnPlayerRoom.w / 2);
+  statePlayer.y = spawnPlayerRoom.y + Math.floor(spawnPlayerRoom.h / 2);
 
-  return { map, spawn: { x: player.x, y: player.y }, rooms };
+  return { map, spawn: { x: statePlayer.x, y: statePlayer.y }, rooms };
 }

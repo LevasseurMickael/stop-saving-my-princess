@@ -1,20 +1,19 @@
 import attack from "../mechanics/attack";
 import { map } from "../map/map";
 import { saveGame, setFloorResult } from "../mechanics/save";
-import { state } from "../state";
+import {
+  stateDungeon,
+  statePlayer,
+  stateSecret,
+  stateShield,
+  stateStats,
+  stateTurn,
+} from "../state";
 import { loadFloor } from "../map/floors";
 import { enemiesTurn } from "../mechanics/turn";
-import type { Direction } from "../../lib/type";
 import { updateShieldState } from "../mechanics/shield";
 import { checkHintTile } from "../map/hintTile";
 import { handleGameEvent } from "../mechanics/secret/secretSystem";
-
-// Player entity with position and facing direction
-const player = {
-  x: 0,
-  y: 0,
-  facing: "down" as Direction,
-};
 
 let deathCount = 0;
 
@@ -24,35 +23,35 @@ window.addEventListener("keydown", (e) => {
   let acted = false;
 
   // Calculate new position based on input and current facing direction
-  const shieldBlocking = state.shield.state !== "retracted";
+  const shieldBlocking = stateShield.shield.state !== "retracted";
 
   // Initialize newX and newY to current position
-  let newX = player.x;
-  let newY = player.y;
+  let newX = statePlayer.x;
+  let newY = statePlayer.y;
 
   // Cannot move while shield is blocking
   if (!shieldBlocking) {
     // Movement input (ZQSD for movement, Arrow keys for attack)
     if (e.key === "z") {
       newY--;
-      player.facing = "up";
+      statePlayer.facing = "up";
     } else if (e.key === "s") {
       newY++;
-      player.facing = "down";
+      statePlayer.facing = "down";
     } else if (e.key === "q") {
       newX--;
-      player.facing = "left";
+      statePlayer.facing = "left";
     } else if (e.key === "d") {
       newX++;
-      player.facing = "right";
+      statePlayer.facing = "right";
     }
 
     // movement
-    if (newX !== player.x || newY !== player.y) {
+    if (newX !== statePlayer.x || newY !== statePlayer.y) {
       if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
-        player.x = newX;
-        player.y = newY;
-        handleGameEvent({ type: "move", x: player.x, y: player.y });
+        statePlayer.x = newX;
+        statePlayer.y = newY;
+        handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
         acted = true;
       } else {
         handleGameEvent({ type: "wait" });
@@ -62,22 +61,22 @@ window.addEventListener("keydown", (e) => {
 
     // directional attack
     if (e.key === "ArrowUp") {
-      player.facing = "up";
+      statePlayer.facing = "up";
       attack();
       acted = true;
     }
     if (e.key === "ArrowDown") {
-      player.facing = "down";
+      statePlayer.facing = "down";
       attack();
       acted = true;
     }
     if (e.key === "ArrowLeft") {
-      player.facing = "left";
+      statePlayer.facing = "left";
       attack();
       acted = true;
     }
     if (e.key === "ArrowRight") {
-      player.facing = "right";
+      statePlayer.facing = "right";
       attack();
       acted = true;
     }
@@ -88,37 +87,40 @@ window.addEventListener("keydown", (e) => {
 
   // Getting out the shield to block enemy attacks
   if (e.key === " ") {
-    if (state.shield.state === "retracted") {
-      state.shield.state = "deploying";
+    if (stateShield.shield.state === "retracted") {
+      stateShield.shield.state = "deploying";
       acted = true;
-    } else if (state.shield.state === "active") {
-      state.shield.state = "retracting";
+    } else if (stateShield.shield.state === "active") {
+      stateShield.shield.state = "retracting";
       acted = true;
     }
   }
 
-  checkHintTile(player.x, player.y, state.hintWall);
+  checkHintTile(statePlayer.x, statePlayer.y, stateSecret.hintWall);
 
   // After player acts, enemies take their turn
-  if (acted && state.turn === "player") {
-    state.turn = "enemies";
+  if (acted && stateTurn.turn === "player") {
+    stateTurn.turn = "enemies";
     updateShieldState();
     enemiesTurn();
-    state.turn = "player";
+    stateTurn.turn = "player";
   }
 
   // Check for secret item or floor transition after moving
-  if (map[newY][newX] === 2 && state.secretUnlocked) {
-    state.hasSecretItem = true;
+  if (map[newY][newX] === 2 && stateStats.secretUnlocked) {
+    stateStats.hasSecretItem = true;
     map[newY][newX] = 0; // Remove secret item from map
   }
   // Floor transition
   if (map[newY][newX] === 3) {
-    setFloorResult(state.currentFloor, state.hasSecretItem ? "1" : "2");
-    state.currentFloor++;
+    setFloorResult(
+      stateDungeon.currentFloor,
+      stateStats.hasSecretItem ? "1" : "2",
+    );
+    stateDungeon.currentFloor++;
     saveGame();
     loadFloor();
   }
 });
 
-export { player, deathCount };
+export { deathCount };

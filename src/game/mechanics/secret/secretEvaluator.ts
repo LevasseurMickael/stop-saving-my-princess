@@ -1,5 +1,5 @@
 import type { GameEvent, SecretCondition } from "../../../lib/type";
-import { state } from "../../state";
+import { stateSecret } from "../../state";
 
 export function evaluateCondition(condition: SecretCondition): boolean {
   switch (condition.kind) {
@@ -21,14 +21,14 @@ export function evaluateCondition(condition: SecretCondition): boolean {
 }
 
 function evaluateSequence(steps: SecretCondition[]): boolean {
-  let index = state.eventHistory.length - 1;
+  let index = stateSecret.eventHistory.length - 1;
 
   for (let i = steps.length - 1; i >= 0; i--) {
     const step = steps[i];
     let found = false;
 
     while (index >= 0) {
-      if (eventMatchesCondition(state.eventHistory[index], step)) {
+      if (eventMatchesCondition(stateSecret.eventHistory[index], step)) {
         found = true;
         index--;
         break;
@@ -44,8 +44,8 @@ function evaluateSequence(steps: SecretCondition[]): boolean {
 
 function evaluateWait(turns: number): boolean {
   let count = 0;
-  for (let i = state.eventHistory.length - 1; i >= 0; i--) {
-    if (state.eventHistory[i].type === "wait") {
+  for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
+    if (stateSecret.eventHistory[i].type === "wait") {
       count++;
       if (count >= turns) return true;
     } else {
@@ -58,7 +58,8 @@ function evaluateWait(turns: number): boolean {
 function evaluateAttack(
   condition: Extract<SecretCondition, { kind: "attack" }>,
 ) {
-  const lastEvent = state.eventHistory[state.eventHistory.length - 1];
+  const lastEvent =
+    stateSecret.eventHistory[stateSecret.eventHistory.length - 1];
   if (!lastEvent || lastEvent.type !== "attack") return false;
   if (condition.direction && lastEvent.direction !== condition.direction)
     return false;
@@ -70,15 +71,15 @@ function evaluateShield(
   condition: Extract<SecretCondition, { kind: "shield" }>,
 ) {
   const expectedType = `shield_${condition.state}` as GameEvent["type"];
-  return state.eventHistory.some((e) => e.type === expectedType);
+  return stateSecret.eventHistory.some((e) => e.type === expectedType);
 }
 
 function eventMatchesCondition(event: GameEvent, condition: SecretCondition) {
   if (condition.kind === "wait") {
-    const lastIndex = state.eventHistory.length - 1;
+    const lastIndex = stateSecret.eventHistory.length - 1;
     let count = 0;
     for (let i = lastIndex; i >= 0; i--) {
-      if (state.eventHistory[i].type === "wait") {
+      if (stateSecret.eventHistory[i].type === "wait") {
         count++;
         if (count >= condition.turns) return true;
       } else {

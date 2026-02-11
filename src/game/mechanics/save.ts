@@ -1,15 +1,15 @@
-import { state } from "../state";
+import { state, stateDungeon } from "../state";
 
 export function setFloorResult(floor: number, value: "1" | "2") {
-  state.floorState =
-    state.floorState.substring(0, floor) +
+  stateDungeon.floorState =
+    stateDungeon.floorState.substring(0, floor) +
     value +
-    state.floorState.substring(floor + 1);
+    stateDungeon.floorState.substring(floor + 1);
 }
 
 // Get the result for a specific floor (e.g., "1" for secret item obtained, "2" for not obtained)
 export function getFloorResult(floor: number) {
-  return state.floorState[floor];
+  return stateDungeon.floorState[floor];
 }
 
 // Save and load game state to/from localStorage

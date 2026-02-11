@@ -1,5 +1,5 @@
 import type { Room, SecretHintWall } from "../../lib/type";
-import { state } from "../state";
+import { stateSecret } from "../state";
 import { map } from "./map";
 
 export function createHintTile(
@@ -42,7 +42,7 @@ export function createHintTile(
     tier,
     revealed: false,
   };
-  state.hintWall.push(newWall);
+  stateSecret.hintWall.push(newWall);
   return newWall;
 }
 

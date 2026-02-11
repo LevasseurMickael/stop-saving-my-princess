@@ -1,5 +1,5 @@
 import { generateDungeon } from "./dungeonGenerator";
-import { state } from "../state";
+import { stateDungeon, stateDynamic, statePlayer } from "../state";
 import { spawnEnemies } from "../entities/enemy";
 import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
@@ -18,18 +18,22 @@ export function loadMap() {
   // Set global map and spawn points
   map = dungeon.map;
   const secret = allSecretConditions.find(
-    (s) => s.floor === state.currentFloor + 1,
+    (s) => s.floor === stateDungeon.currentFloor + 1,
   );
   if (secret) {
-    createHintTile(state.currentFloor, secret.tier, secret.hint, dungeon.rooms);
+    createHintTile(
+      stateDungeon.currentFloor,
+      secret.tier,
+      secret.hint,
+      dungeon.rooms,
+    );
   }
-  state.spawn = dungeon.spawn;
-  state.enemies = spawnEnemies(dungeon.rooms, state.spawn);
+  statePlayer.spawn = dungeon.spawn;
+  stateDynamic.enemies = spawnEnemies(dungeon.rooms, statePlayer.spawn);
 
   // Find secret room and add to state
   const secretRoom = findSecretRoom(map);
-  state.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];
-
+  stateDynamic.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];
   return dungeon.rooms;
 }
 

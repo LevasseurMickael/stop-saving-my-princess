@@ -1,7 +1,6 @@
 import { spawnEnemies } from "../entities/enemy";
 import { GridSize } from "./map";
-import { player } from "../entities/player";
-import { state } from "../state";
+import { stateDynamic, statePlayer, stateStats } from "../state";
 import { loadMap } from "./map";
 
 // Functions related to floor generation and management
@@ -21,16 +20,16 @@ export function createEmptyFloor() {
 
 // Load the current floor, reset player and enemies
 export function loadFloor() {
-  state.kills = 0;
-  state.hasSecretItem = false;
-  state.secretUnlocked = false;
+  stateStats.kills = 0;
+  stateStats.hasSecretItem = false;
+  stateStats.secretUnlocked = false;
   // Clear existing enemies
-  state.enemies.length = 0;
+  stateDynamic.enemies.length = 0;
   // Spawn new enemies for the floor
-  state.enemies.push(...spawnEnemies(loadMap(), state.spawn));
+  stateDynamic.enemies.push(...spawnEnemies(loadMap(), statePlayer.spawn));
 
-  player.x = 1;
-  player.y = 1;
+  statePlayer.x = 1;
+  statePlayer.y = 1;
 
   loadMap();
 }

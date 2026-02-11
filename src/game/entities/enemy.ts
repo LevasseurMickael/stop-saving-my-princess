@@ -1,9 +1,9 @@
 import type { Enemy, Room } from "../../lib/type";
-import { state } from "../state";
+import { stateDynamic } from "../state";
 
 // Enemy can't get on the same tile as other enemies
 export function isOccupied(x: number, y: number, self: Enemy) {
-  return state.enemies.some(
+  return stateDynamic.enemies.some(
     (e) => e !== self && e.x === x && e.y === y && e.alive,
   );
 }

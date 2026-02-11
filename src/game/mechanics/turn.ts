@@ -1,15 +1,14 @@
 import type { Enemy } from "../../lib/type";
 import { isOccupied } from "../entities/enemy";
 import { map } from "../map/map";
-import { player } from "../entities/player";
-import { state } from "../state";
+import { stateDynamic, statePlayer } from "../state";
 import { isBlockedByShield } from "./shield";
 import { knockbackPlayer } from "./knockback";
 
 // Process all enemies' turns
 export function enemiesTurn() {
-  for (const enemy of state.enemies) {
-    enemyTurn(enemy, player, map);
+  for (const enemy of stateDynamic.enemies) {
+    enemyTurn(enemy, statePlayer, map);
   }
 }
 
@@ -84,14 +83,14 @@ export function enemyTurn(
           return;
         }
         // enemy attacks player
-        state.hp--;
+        statePlayer.hp--;
 
         // Check if player dies from the attack and reset position and HP if so
-        if (state.hp <= 0) {
-          state.deathCount++;
-          state.hp = state.maxHp;
-          player.x = state.spawn.x;
-          player.y = state.spawn.y;
+        if (statePlayer.hp <= 0) {
+          statePlayer.deathCount++;
+          statePlayer.hp = statePlayer.maxHp;
+          player.x = statePlayer.spawn.x;
+          player.y = statePlayer.spawn.y;
         }
         return;
       }
@@ -102,7 +101,7 @@ export function enemyTurn(
 
         // Check if enemy tries to move onto player's tile, which would result in player death
         if (stepX === player.x && enemy.y === player.y) {
-          state.deathCount++;
+          statePlayer.deathCount++;
           return;
         }
 
@@ -114,7 +113,7 @@ export function enemyTurn(
         // Prioritize vertical movement if distances are equal
         const stepY = enemy.y + Math.sign(distY);
         if (enemy.x === player.x && stepY === player.y) {
-          state.deathCount++;
+          statePlayer.deathCount++;
           return;
         }
 

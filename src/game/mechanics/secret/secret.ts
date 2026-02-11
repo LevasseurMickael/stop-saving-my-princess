@@ -1,15 +1,15 @@
-import { state } from "../../state";
+import { stateDungeon, statePlayer, stateStats } from "../../state";
 
 // Conditions for unlocking the secret area on each floor
 export function checkSecretCondition() {
-  if (state.currentFloor === 0) {
-    return state.kills >= 3;
+  if (stateDungeon.currentFloor === 0) {
+    return stateStats.kills >= 3;
   }
-  if (state.currentFloor === 1) {
-    return state.deathCount === 0;
+  if (stateDungeon.currentFloor === 1) {
+    return statePlayer.deathCount === 0;
   }
-  if (state.currentFloor === 2) {
-    return state.kills >= 1;
+  if (stateDungeon.currentFloor === 2) {
+    return stateStats.kills >= 1;
   }
-  return state.kills >= 2;
+  return stateStats.kills >= 2;
 }

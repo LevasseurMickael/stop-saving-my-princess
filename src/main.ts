@@ -1,6 +1,10 @@
 import { map, TileSize, GridSize, loadMap } from "./game/map/map";
-import { player } from "./game/entities/player";
-import { state } from "./game/state";
+import {
+  stateDungeon,
+  stateDynamic,
+  statePlayer,
+  stateStats,
+} from "./game/state";
 
 // Initialize canvas and rendering context
 const canvas = document.createElement("canvas");
@@ -39,23 +43,36 @@ function render() {
 
   // Draw player
   ctx.fillStyle = "blue";
-  ctx.fillRect(player.x * TileSize, player.y * TileSize, TileSize, TileSize);
+  ctx.fillRect(
+    statePlayer.x * TileSize,
+    statePlayer.y * TileSize,
+    TileSize,
+    TileSize,
+  );
 
   // Draw radius where the player attack is effective
   ctx.fillStyle = "rgba(134, 106, 11, 0.97)";
   ctx.fillRect(
-    (player.x +
-      (player.facing === "right" ? 1 : player.facing === "left" ? -1 : 0)) *
+    (statePlayer.x +
+      (statePlayer.facing === "right"
+        ? 1
+        : statePlayer.facing === "left"
+          ? -1
+          : 0)) *
       TileSize,
-    (player.y +
-      (player.facing === "down" ? 1 : player.facing === "up" ? -1 : 0)) *
+    (statePlayer.y +
+      (statePlayer.facing === "down"
+        ? 1
+        : statePlayer.facing === "up"
+          ? -1
+          : 0)) *
       TileSize,
     TileSize,
     TileSize,
   );
 
   // Draw enemies
-  for (const enemy of state.enemies) {
+  for (const enemy of stateDynamic.enemies) {
     if (!enemy.alive) continue;
     ctx.fillStyle = "red";
     ctx.fillRect(enemy.x * TileSize, enemy.y * TileSize, TileSize, TileSize);
@@ -65,10 +82,10 @@ function render() {
   ctx.font = "16px Arial";
   ctx.textBaseline = "top";
   ctx.fillStyle = "white";
-  ctx.fillText(`Deaths: ${state.deathCount}`, 10, 10);
-  ctx.fillText(`Kills: ${state.kills}`, 10, 30);
-  ctx.fillText(`Secret: ${state.hasSecretItem}`, 10, 50);
-  ctx.fillText(`Floor: ${state.currentFloor + 1}`, 10, 70);
+  ctx.fillText(`Deaths: ${statePlayer.deathCount}`, 10, 10);
+  ctx.fillText(`Kills: ${stateStats.kills}`, 10, 30);
+  ctx.fillText(`Secret: ${stateStats.hasSecretItem}`, 10, 50);
+  ctx.fillText(`Floor: ${stateDungeon.currentFloor + 1}`, 10, 70);
 }
 
 // Load initial floor and start game loop
