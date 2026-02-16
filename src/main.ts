@@ -1,15 +1,15 @@
-import { map, TileSize, GridSize, loadMap } from "./game/map/map";
+import { map, TileSize, GridSize, GridSizeWidth, loadMap } from "./game/map/map";
 import {
   stateDungeon,
   stateDynamic,
   statePlayer,
   stateStats,
 } from "./game/state";
-import "./game/entities/player";
+import "./game/player/player";
 
 // Initialize canvas and rendering context
 const canvas = document.createElement("canvas");
-canvas.width = 800;
+canvas.width = 1200;
 canvas.height = 800;
 document.body.appendChild(canvas);
 
@@ -18,7 +18,7 @@ const ctx = canvas.getContext("2d")!;
 
 // Initial clear
 ctx.fillStyle = "black";
-ctx.fillRect(0, 0, 800, 800);
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 // Render function to draw the map, player, enemies, and HUD
 function render() {
@@ -26,7 +26,7 @@ function render() {
 
   // Draw map tiles
   for (let y = 0; y < GridSize; y++) {
-    for (let x = 0; x < GridSize; x++) {
+    for (let x = 0; x < GridSizeWidth; x++) {
       if (map[y][x] === 1) {
         ctx.fillStyle = "gray";
       } else if (map[y][x] === 2) {

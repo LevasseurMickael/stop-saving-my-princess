@@ -1,5 +1,5 @@
 import type { Enemy } from "../../lib/type";
-import { isOccupied } from "../entities/enemy";
+import { isOccupied } from "../enemy/enemy";
 
 import { map } from "../map/map";
 import { statePlayer } from "../state";

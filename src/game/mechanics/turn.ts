@@ -1,5 +1,5 @@
 import type { Enemy } from "../../lib/type";
-import { isOccupied } from "../entities/enemy";
+import { isOccupied } from "../enemy/enemy";
 import { map } from "../map/map";
 import { stateDynamic, statePlayer } from "../state";
 import { isBlockedByShield } from "./shield";
@@ -54,10 +54,10 @@ export function enemyTurn(
     // Patrol pattern: move randomly within the room
     case "patrol":
       const directions = [
-        { dx: 0, dy: -1 },
-        { dx: 0, dy: 1 },
-        { dx: -1, dy: 0 },
-        { dx: 1, dy: 0 },
+        { dx: 0, dy: -(enemy.actionPerTurn) },
+        { dx: 0, dy: enemy.actionPerTurn },
+        { dx: -(enemy.actionPerTurn), dy: 0 },
+        { dx: enemy.actionPerTurn, dy: 0 },
       ];
       // Simple random movement
       const dir = directions[Math.floor(Math.random() * directions.length)];
@@ -86,7 +86,7 @@ export function enemyTurn(
         }
         // enemy attacks player
         handleGameEvent({ type: "enemy_hit", blocker: false });
-        statePlayer.hp--;
+        statePlayer.hp = Math.max(0, statePlayer.hp - enemy.attack);
 
         // Check if player dies from the attack and reset position and HP if so
         if (statePlayer.hp <= 0) {

@@ -1,4 +1,4 @@
-import { GridSize } from "./map";
+import { GridSize, GridSizeWidth } from "./map";
 import { rng } from "../rng";
 import type { Room } from "../../lib/type";
 import { statePlayer } from "../state";
@@ -16,7 +16,7 @@ function intersects(a: Room, b: Room) {
 // Generate a random dungeon layout with rooms and corridors
 export function generateDungeon(seed: number) {
   // Start with all walls
-  const map = Array.from({ length: GridSize }, () => Array(GridSize).fill(1));
+  const map = Array.from({ length: GridSizeWidth }, () => Array(GridSizeWidth).fill(1));
   console.log("Generating dungeon with seed:", seed);
 
   // Use a seeded RNG for consistent generation
@@ -24,7 +24,7 @@ export function generateDungeon(seed: number) {
   const rooms: Room[] = [];
 
   // 3-5 rooms
-  const roomCount = 5 + Math.floor(rand() * 3);
+  const roomCount = 100 + Math.floor(rand() * 3);
 
   // Try to place rooms without overlap
   for (let i = 0; i < roomCount; i++) {
@@ -32,9 +32,9 @@ export function generateDungeon(seed: number) {
     let attempts = 0;
 
     while (!placed && attempts < 10) {
-      const w = 3 + Math.floor(rand() * 4); // Room width 3-6
-      const h = 3 + Math.floor(rand() * 4); // Room height 3-6
-      const x = 2 + Math.floor(rand() * (GridSize - w - 4)); // Ensure room fits within borders
+      const w = 4 + Math.floor(rand() * 4); // Room width 4-7
+      const h = 4 + Math.floor(rand() * 4); // Room height 4-7
+      const x = 2 + Math.floor(rand() * (GridSizeWidth - w - 4)); // Ensure room fits within borders
       const y = 2 + Math.floor(rand() * (GridSize - h - 4));
 
       const room = { x, y, w, h };

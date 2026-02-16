@@ -8,9 +8,27 @@ export type Enemy = {
   y: number;
   stunnedTurns?: number; // number of turns the enemy is stunned
   hp: number;
+  attack: number;
+  attackRange: number;
+  attackWeapon: string;
+  facing: Direction;
+  actionPerTurn: number;
   alive: boolean;
   pattern: string;
 };
+
+export type Monster = {
+  name: string;
+  monsterFamilly: string;
+  difficulty: number;
+  hp: number;
+  attack: number;
+  attackRange: number;
+  attackWeapon: string;
+  specialFloor: string;
+  facing: Direction;
+  actionPerTurn: number;
+}
 
 // Player type is defined in player.ts to avoid circular dependencies
 export type Direction = "up" | "down" | "left" | "right";

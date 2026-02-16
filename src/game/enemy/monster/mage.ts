@@ -1,0 +1,40 @@
+import type { Monster } from "../../../lib/type";
+
+export const mage: Monster[] = [
+    {
+    name: "Cult Mage",
+    monsterFamilly: "cult",
+    difficulty: 12,
+    hp: 4,
+    attack: 3,
+    attackRange: 4,
+    attackWeapon: "magic",
+    specialFloor: "arcane",
+    facing: "down",
+    actionPerTurn: 1
+  },
+  {
+    name: "Arcane Sentinel",
+    monsterFamilly: "construct",
+    difficulty: 25,
+    hp: 10,
+    attack: 3,
+    attackRange: 3,
+    attackWeapon: "magic",
+    specialFloor: "arcane",
+    facing: "down",
+    actionPerTurn: 2
+  },
+  {
+    name: "Hex Binder",
+    monsterFamilly: "cult",
+    difficulty: 30,
+    hp: 6,
+    attack: 3,
+    attackRange: 4,
+    attackWeapon: "curse",
+    specialFloor: "arcane",
+    facing: "down",
+    actionPerTurn: 1
+  },
+]

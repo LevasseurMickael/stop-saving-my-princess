@@ -6,13 +6,14 @@ import {
   stateSecret,
   stateStats,
 } from "../state";
-import { spawnEnemies } from "../entities/enemy";
+import { spawnEnemies } from "../enemy/enemy";
 import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
 import { allSecretConditions } from "../mechanics/secret/allSecret";
 
-const TileSize = 32;
+const TileSize = 30;
 const GridSize = 24;
+const GridSizeWidth = 40; // For wider maps in later floors
 
 let map: number[][] = [];
 
@@ -59,4 +60,4 @@ export function loadMap() {
   return dungeon.rooms;
 }
 
-export { map, TileSize, GridSize };
+export { map, TileSize, GridSize, GridSizeWidth };

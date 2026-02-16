@@ -1,0 +1,52 @@
+import type { Monster } from "../../../lib/type";
+
+export const royalForce: Monster[] = [
+    {
+    name: "Knight Recruit",
+    monsterFamilly: "royal",
+    difficulty: 10,
+    hp: 6,
+    attack: 2,
+    attackRange: 1,
+    attackWeapon: "sword",
+    specialFloor: "barracks",
+    facing: "down",
+    actionPerTurn: 1
+  },
+  {
+    name: "Royal Archer",
+    monsterFamilly: "royal",
+    difficulty: 16,
+    hp: 5,
+    attack: 3,
+    attackRange: 6,
+    attackWeapon: "bow",
+    specialFloor: "barracks",
+    facing: "down",
+    actionPerTurn: 1
+  },
+  {
+    name: "Royal Spearmaster",
+    monsterFamilly: "royal",
+    difficulty: 32,
+    hp: 9,
+    attack: 3,
+    attackRange: 2,
+    attackWeapon: "spear",
+    specialFloor: "barracks",
+    facing: "down",
+    actionPerTurn: 2
+  },
+  {
+    name: "Templar Captain",
+    monsterFamilly: "royal",
+    difficulty: 45,
+    hp: 18,
+    attack: 4,
+    attackRange: 1,
+    attackWeapon: "greatsword",
+    specialFloor: "castle",
+    facing: "down",
+    actionPerTurn: 1
+  },
+];
