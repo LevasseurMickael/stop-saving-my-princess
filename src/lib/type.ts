@@ -15,6 +15,10 @@ export type Enemy = {
   actionPerTurn: number;
   alive: boolean;
   pattern: string;
+  name?: string;
+  monsterFamilly?: string;
+  difficulty?: number;
+  specialFloor?: string;
 };
 
 export type Monster = {
@@ -28,7 +32,7 @@ export type Monster = {
   specialFloor: string;
   facing: Direction;
   actionPerTurn: number;
-}
+};
 
 export type SecretItem = {
   floor: number;

@@ -46,10 +46,14 @@ export function loadMap() {
   }
   statePlayer.x = dungeon.spawn.x;
   statePlayer.y = dungeon.spawn.y;
-  stateDynamic.enemies = spawnEnemies(dungeon.rooms, {
-    x: statePlayer.x,
-    y: statePlayer.y,
-  });
+  stateDynamic.enemies = spawnEnemies(
+    dungeon.rooms,
+    {
+      x: statePlayer.x,
+      y: statePlayer.y,
+    },
+    stateDungeon.currentFloor + 1,
+  );
 
   // Synchronize stateSecret.enemies with stateDynamic.enemies for secret conditions
   stateSecret.enemies = stateDynamic.enemies;

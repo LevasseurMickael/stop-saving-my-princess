@@ -1,7 +1,7 @@
 import type { Monster } from "../../../lib/type";
 
 export const royalForce: Monster[] = [
-    {
+  {
     name: "Knight Recruit",
     monsterFamilly: "royal",
     difficulty: 10,
@@ -11,7 +11,7 @@ export const royalForce: Monster[] = [
     attackWeapon: "sword",
     specialFloor: "barracks",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Royal Archer",
@@ -23,7 +23,7 @@ export const royalForce: Monster[] = [
     attackWeapon: "bow",
     specialFloor: "barracks",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Royal Spearmaster",
@@ -35,18 +35,18 @@ export const royalForce: Monster[] = [
     attackWeapon: "spear",
     specialFloor: "barracks",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Templar Captain",
     monsterFamilly: "royal",
-    difficulty: 45,
+    difficulty: 47,
     hp: 18,
     attack: 4,
     attackRange: 1,
     attackWeapon: "greatsword",
     specialFloor: "castle",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
 ];

@@ -1,7 +1,7 @@
 import type { Monster } from "../../../lib/type";
 
 export const vermin: Monster[] = [
-    {
+  {
     name: "Cave Rat",
     monsterFamilly: "vermin",
     difficulty: 3,
@@ -11,7 +11,7 @@ export const vermin: Monster[] = [
     attackWeapon: "bite",
     specialFloor: "rat",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Shadow Bat",
@@ -23,7 +23,7 @@ export const vermin: Monster[] = [
     attackWeapon: "bite",
     specialFloor: "dark",
     facing: "down",
-    actionPerTurn: 3
+    actionPerTurn: 3,
   },
   {
     name: "Fire Beetle",
@@ -35,7 +35,7 @@ export const vermin: Monster[] = [
     attackWeapon: "burn",
     specialFloor: "lava",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Tunnel Spider",
@@ -47,6 +47,6 @@ export const vermin: Monster[] = [
     attackWeapon: "web",
     specialFloor: "cave",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
-]
+];

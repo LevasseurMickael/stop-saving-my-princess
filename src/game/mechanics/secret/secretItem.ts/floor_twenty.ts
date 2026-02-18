@@ -22,7 +22,7 @@ export const items_11_to_20: SecretItem[] = [
     name: "Forge Ember",
     type: "passive",
     effect: "living_armor_minus_two_hp",
-    value: 2,
+    value: 3,
     description: "Living armors spawn weakened.",
   },
   {
