@@ -1,4 +1,10 @@
-import { map, TileSize, GridSize, GridSizeWidth, loadMap } from "./game/map/map";
+import {
+  map,
+  TileSize,
+  GridSize,
+  GridSizeWidth,
+  loadMap,
+} from "./game/map/map";
 import {
   stateDungeon,
   stateDynamic,
@@ -6,6 +12,13 @@ import {
   stateStats,
 } from "./game/state";
 import "./game/player/player";
+import {
+  getPlayerAttackSprite,
+  getPlayerSprite,
+} from "./graphicContext/playerContext";
+import { getEnemiesSprite } from "./graphicContext/enemiesContext";
+import { getHudSprite } from "./graphicContext/hudContext";
+import { getMapSprite } from "./graphicContext/mapContext";
 
 // Initialize canvas and rendering context
 const canvas = document.createElement("canvas");
@@ -25,68 +38,19 @@ function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw map tiles
-  for (let y = 0; y < GridSize; y++) {
-    for (let x = 0; x < GridSizeWidth; x++) {
-      if (map[y][x] === 1) {
-        ctx.fillStyle = "gray";
-      } else if (map[y][x] === 2) {
-        ctx.fillStyle = "gold";
-      } else if (map[y][x] === 3) {
-        ctx.fillStyle = "purple";
-      } else if (map[y][x] === 4) {
-        ctx.fillStyle = "white";
-      } else {
-        ctx.fillStyle = "black";
-      }
-      ctx.fillRect(x * TileSize, y * TileSize, TileSize, TileSize);
-    }
-  }
+  getMapSprite(ctx, map, GridSize, GridSizeWidth, TileSize);
 
   // Draw player
-  ctx.fillStyle = "blue";
-  ctx.fillRect(
-    statePlayer.x * TileSize,
-    statePlayer.y * TileSize,
-    TileSize,
-    TileSize,
-  );
+  getPlayerSprite(ctx, statePlayer, TileSize);
 
   // Draw radius where the player attack is effective
-  ctx.fillStyle = "rgba(134, 106, 11, 0.97)";
-  ctx.fillRect(
-    (statePlayer.x +
-      (statePlayer.facing === "right"
-        ? 1
-        : statePlayer.facing === "left"
-          ? -1
-          : 0)) *
-      TileSize,
-    (statePlayer.y +
-      (statePlayer.facing === "down"
-        ? 1
-        : statePlayer.facing === "up"
-          ? -1
-          : 0)) *
-      TileSize,
-    TileSize,
-    TileSize,
-  );
+  getPlayerAttackSprite(ctx, statePlayer, TileSize);
 
   // Draw enemies
-  for (const enemy of stateDynamic.enemies) {
-    if (!enemy.alive) continue;
-    ctx.fillStyle = "red";
-    ctx.fillRect(enemy.x * TileSize, enemy.y * TileSize, TileSize, TileSize);
-  }
+  getEnemiesSprite(ctx, stateDynamic, TileSize);
 
   // Draw HUD
-  ctx.font = "16px Arial";
-  ctx.textBaseline = "top";
-  ctx.fillStyle = "white";
-  ctx.fillText(`Deaths: ${statePlayer.deathCount}`, 10, 10);
-  ctx.fillText(`Kills: ${stateStats.kills}`, 10, 30);
-  ctx.fillText(`Secret: ${stateStats.hasSecretItem}`, 10, 50);
-  ctx.fillText(`Floor: ${stateDungeon.currentFloor + 1}`, 10, 70);
+  getHudSprite(ctx, statePlayer, stateStats, stateDungeon);
 }
 
 // Load initial floor and start game loop
