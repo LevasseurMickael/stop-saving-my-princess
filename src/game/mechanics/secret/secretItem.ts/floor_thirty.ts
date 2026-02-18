@@ -22,7 +22,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "Runic Scale",
     type: "passive",
     effect: "reduce_magic_damage",
-    value: null,
+    value: 1,
     description: "Reduces magic damage taken.",
   },
   {
@@ -38,7 +38,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "Silver Key",
     type: "key",
     effect: "unlock_silver_doors",
-    value: null,
+    value: 3,
     description: "Opens silver gates.",
   },
   {
@@ -62,15 +62,15 @@ export const items_21_to_30: SecretItem[] = [
     name: "Elder Scale",
     type: "passive",
     effect: "reduce_physical_damage",
-    value: null,
+    value: 1,
     description: "Reduces physical damage taken.",
   },
   {
     floor: 29,
-    name: "Guardian Flame",
+    name: "Vengeful Spirit",
     type: "passive",
     effect: "damage_attacker_once",
-    value: null,
+    value: 3,
     description: "First attacker takes damage.",
   },
   {
