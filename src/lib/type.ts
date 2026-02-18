@@ -30,6 +30,15 @@ export type Monster = {
   actionPerTurn: number;
 }
 
+export type SecretItem = {
+  floor: number;
+  name: string;
+  type: "passive" | "usable" | "key" | "stat" | "utility" | "vision";
+  effect: string;
+  value: number | null;
+  description: string;
+};
+
 // Player type is defined in player.ts to avoid circular dependencies
 export type Direction = "up" | "down" | "left" | "right";
 
