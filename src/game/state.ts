@@ -23,9 +23,9 @@ export const stateSecret = {
 // Player related state, separated for clarity and potential future expansion
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
-  hp: 99999,
-  maxHp: 99999,
-  attack: 99999,
+  hp: 5,
+  maxHp: 5,
+  attack: 1,
   attackRange: 1,
   resurectionCount: 0,
 
