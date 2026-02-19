@@ -1,7 +1,16 @@
 import type { Room, SecretHintWall } from "../../lib/type";
-import { stateSecret } from "../state";
+import { stateDynamic, stateSecret } from "../state";
 import { map } from "./map";
 
+function isInHealingRoom(x: number, y: number): boolean {
+  const healingRoom = stateDynamic.healingRoom;
+  if (!healingRoom) return false;
+
+  const distance = Math.abs(x - healingRoom.x) + Math.abs(y - healingRoom.y);
+  return distance <= 4; // Player is on or adjacent to the healing room center
+}
+
+// Create a hint tile in a random valid location within the given rooms
 export function createHintTile(
   floor: number,
   tier: 1 | 2 | 3,
@@ -9,6 +18,7 @@ export function createHintTile(
   rooms: Room[],
 ): SecretHintWall | null {
   const candidates: { x: number; y: number }[] = [];
+
   for (const room of rooms) {
     for (let x = room.x - 1; x <= room.x + room.w; x++) {
       for (let y = room.y - 1; y <= room.y + room.h; y++) {
@@ -19,8 +29,12 @@ export function createHintTile(
             map[y]?.[x - 1],
             map[y]?.[x + 1],
           ].some((tile) => tile === 0);
+
           if (adjacentEmpty) {
-            candidates.push({ x, y });
+            // Vérifier qu'on n'est pas proche de la healing room
+            if (!isInHealingRoom(x, y)) {
+              candidates.push({ x, y });
+            }
           }
         }
       }
@@ -31,9 +45,10 @@ export function createHintTile(
 
   const choice = candidates[Math.floor(Math.random() * candidates.length)];
 
-  // Mark hint tile on the map
+  // Mark the chosen tile as a hint wall (using tile type 4) on the map
   map[choice.y][choice.x] = 4;
 
+  // Create a new SecretHintWall object with the chosen coordinates, floor, hint text, tier, and revealed state, and add it to the stateSecret.hintWall array for tracking
   const newWall: SecretHintWall = {
     x: choice.x,
     y: choice.y,
@@ -46,13 +61,17 @@ export function createHintTile(
   return newWall;
 }
 
+// Hint is shown if the player is adjacent to the hint wall
 export function checkHintTile(
   playerX: number,
   playerY: number,
   hintTiles: SecretHintWall[],
 ) {
   for (const wall of hintTiles) {
-    if (Math.abs(playerX - wall.x) <= 1 && Math.abs(playerY - wall.y) === 1) {
+    if (
+      (playerX === wall.x && Math.abs(playerY - wall.y) === 1) ||
+      (playerY === wall.y && Math.abs(playerX - wall.x) === 1)
+    ) {
       if (!wall.revealed) {
         wall.revealed = true;
         console.log(`Hint: ${wall.hint}`);

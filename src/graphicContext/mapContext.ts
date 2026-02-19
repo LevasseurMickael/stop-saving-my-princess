@@ -17,6 +17,10 @@ export function getMapSprite(
         ctx.fillStyle = "purple";
       } else if (map[y][x] === 4) {
         ctx.fillStyle = "white";
+      } else if (map[y][x] === 5) {
+        ctx.fillStyle = "teal";
+      } else if (map[y][x] === 6) {
+        ctx.fillStyle = "green";
       } else {
         ctx.fillStyle = "black";
       }

@@ -70,6 +70,15 @@ export type SaveGame = {
   };
 };
 
+export type HealingRoom = {
+  x: number; //
+  y: number;
+  roomIndex: number;
+  doorX: number;
+  doorY: number;
+  isUnlocked: boolean;
+};
+
 // =======================
 // Core gameplay types
 // =======================
@@ -87,7 +96,6 @@ export type GameEvent =
   | { type: "shield_deploying"; facingX: number; facingY: number }
   | { type: "shield_retracting" }
   | { type: "shield_active" }
-  | { type: "wait" }
   | { type: "enemy_hit"; blocker: boolean }
   | { type: "enemy_kill" };
 
@@ -113,7 +121,6 @@ export type ActionCondition =
       state: "deploying" | "active" | "retracting";
       facing?: TargetCondition;
     }
-  | { kind: "wait"; turns: number }
   | { kind: "move"; steps: number; along?: TargetCondition };
 
 // Context conditions for secrets that depend on specific game contexts or interactions

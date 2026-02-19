@@ -1,4 +1,10 @@
-import type { Enemy, SecretHintWall, GameEvent, Direction } from "../lib/type";
+import type {
+  Enemy,
+  SecretHintWall,
+  GameEvent,
+  Direction,
+  HealingRoom,
+} from "../lib/type";
 
 const MaxFloors = 25;
 
@@ -80,6 +86,7 @@ export const stateShield = {
 export const stateDynamic = {
   enemies: [] as Enemy[],
   secrets: [] as { x: number; y: number; unlocked: boolean }[],
+  healingRoom: null as HealingRoom | null,
 };
 
 // Turn management state to control flow between player and enemy actions

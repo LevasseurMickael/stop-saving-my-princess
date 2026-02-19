@@ -32,6 +32,13 @@ export function loadMap() {
   // Set global map and spawn points
   map = dungeon.map;
 
+  if (dungeon.healingRoom) {
+    stateDynamic.healingRoom = dungeon.healingRoom;
+
+    map[dungeon.healingRoom.doorY][dungeon.healingRoom.doorX] = 5; // Mark healing room door on the map
+    map[dungeon.healingRoom.y][dungeon.healingRoom.x] = 6; // Mark healing room center on the map
+  }
+
   // Check if there's a secret condition for this floor and create hint tile if so
   const secret = allSecretConditions.find(
     (s) => s.floor === stateDungeon.currentFloor + 1,
