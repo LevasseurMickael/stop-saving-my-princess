@@ -93,46 +93,47 @@ export const stateStats = {
     reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
     livingArmorHp: 0,
   },
-  enemyKillCount: {
-    // Slime family kill counts for tracking progression towards certain unlocks or achievements
-    greenSlime: 0,
-    redSlime: 0,
-    crystalSlime: 0,
-    venomSlime: 0,
-
-    // Vermin family kill counts for tracking progression towards certain unlocks or achievements
-    caveRat: 0,
-    shadowBat: 0,
-    fireBeetle: 0,
-    tunnelSpider: 0,
-
-    // Undead family kill counts for tracking progression towards certain unlocks or achievements
-    skeleton: 0,
-    wraith: 0,
-    boneArcher: 0,
-    rottingChampion: 0,
-
-    // Ghost family kill counts for tracking progression towards certain unlocks or achievements
-    lostSpirit: 0,
-    cryingSpecter: 0,
-    phantomKnight: 0,
-
-    // Mage family kill counts for tracking progression towards certain unlocks or achievements
-    cultMage: 0,
-    arcaneSentinel: 0,
-    hexBinder: 0,
-
-    // Living armor kill counts for tracking progression towards certain unlocks or achievements
-    rustyArmor: 0,
-    royalGuardArmor: 0,
-    cursedHalberdArmor: 0,
-
-    // Royal family kill counts for tracking progression towards certain unlocks or achievements
-    knightRecruit: 0,
-    royalArcher: 0,
-    royalSpearmaster: 0,
-    templarCaptain: 0,
-  },
   hasSecretItem: false,
   secretUnlocked: false,
+};
+
+export const stateKillCount: Record<string, number> = {
+  // Slime family kill counts for tracking progression towards certain unlocks or achievements
+  "green-slime": 0,
+  "red-slime": 0,
+  "crystal-slime": 0,
+  "venom-slime": 0,
+
+  // Vermin family kill counts for tracking progression towards certain unlocks or achievements
+  "cave-rat": 0,
+  "shadow-bat": 0,
+  "fire-beetle": 0,
+  "tunnel-spider": 0,
+
+  // Undead family kill counts for tracking progression towards certain unlocks or achievements
+  skeleton: 0,
+  wraith: 0,
+  "bone-archer": 0,
+  "rotting-champion": 0,
+
+  // Ghost family kill counts for tracking progression towards certain unlocks or achievements
+  "lost-spirit": 0,
+  "crying-specter": 0,
+  "phantom-knight": 0,
+
+  // Mage family kill counts for tracking progression towards certain unlocks or achievements
+  "cult-mage": 0,
+  "arcane-sentinel": 0,
+  "hex-binder": 0,
+
+  // Living armor kill counts for tracking progression towards certain unlocks or achievements
+  "rusty-armor": 0,
+  "royal-guard-armor": 0,
+  "cursed-halberd-armor": 0,
+
+  // Royal family kill counts for tracking progression towards certain unlocks or achievements
+  "knight-recruit": 0,
+  "royal-archer": 0,
+  "royal-spearmaster": 0,
+  "templar-captain": 0,
 };

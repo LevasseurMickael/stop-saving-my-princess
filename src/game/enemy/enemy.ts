@@ -60,6 +60,7 @@ export function spawnEnemies(
         stunnedTurns: 0, // No stun initially
         pattern: Math.random() < 0.5 ? "stationary" : "patrol", // Randomly assign pattern
         name: monster.name, // Name of the monster
+        slug: monster.slug, // Slug identifier for the monster
         monsterFamilly: monster.monsterFamilly, // Familly of the monster
         difficulty: monster.difficulty, // Difficulty rating of the monster
         specialFloor: monster.specialFloor, // Special floor type for the monster

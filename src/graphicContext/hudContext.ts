@@ -3,7 +3,10 @@
 export function getHudSprite(
   ctx: CanvasRenderingContext2D,
   statePlayer: { deathCount: number; hp: number; maxHp: number },
-  stateStats: { hasSecretItem: boolean },
+  stateStats: {
+    hasSecretItem: boolean;
+  },
+  stateKillCount: Record<string, number>,
   stateDungeon: { currentFloor: number },
 ) {
   ctx.font = "16px Arial";
@@ -13,4 +16,5 @@ export function getHudSprite(
   ctx.fillText(`HP: ${statePlayer.hp}/${statePlayer.maxHp}`, 10, 30);
   ctx.fillText(`Secret: ${stateStats.hasSecretItem}`, 10, 50);
   ctx.fillText(`Floor: ${stateDungeon.currentFloor + 1}`, 10, 70);
+  ctx.fillText(`Green-slime killed: ${stateKillCount["green-slime"]}`, 10, 90);
 }

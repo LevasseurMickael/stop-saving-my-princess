@@ -3,6 +3,7 @@ import type { Monster } from "../../../lib/type";
 export const slime: Monster[] = [
   {
     name: "Green Slime",
+    slug: "green-slime",
     monsterFamilly: "slime",
     difficulty: 1,
     hp: 2,
@@ -11,10 +12,11 @@ export const slime: Monster[] = [
     attackWeapon: "body",
     specialFloor: "slime",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Red Slime",
+    slug: "red-slime",
     monsterFamilly: "slime",
     difficulty: 5,
     hp: 4,
@@ -23,10 +25,11 @@ export const slime: Monster[] = [
     attackWeapon: "body",
     specialFloor: "slime",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Crystal Slime",
+    slug: "crystal-slime",
     monsterFamilly: "slime",
     difficulty: 15,
     hp: 6,
@@ -35,10 +38,11 @@ export const slime: Monster[] = [
     attackWeapon: "body",
     specialFloor: "slime",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Venom Slime",
+    slug: "venom-slime",
     monsterFamilly: "slime",
     difficulty: 18,
     hp: 5,
@@ -47,6 +51,6 @@ export const slime: Monster[] = [
     attackWeapon: "poison body",
     specialFloor: "slime",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
-]
+];

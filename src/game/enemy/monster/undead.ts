@@ -1,8 +1,9 @@
 import type { Monster } from "../../../lib/type";
 
 export const undead: Monster[] = [
-    {
+  {
     name: "Skeleton",
+    slug: "skeleton",
     monsterFamilly: "undead",
     difficulty: 6,
     hp: 5,
@@ -11,10 +12,11 @@ export const undead: Monster[] = [
     attackWeapon: "sword",
     specialFloor: "crypt",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Wraith",
+    slug: "wraith",
     monsterFamilly: "undead",
     difficulty: 18,
     hp: 6,
@@ -23,10 +25,11 @@ export const undead: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "crypt",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Bone Archer",
+    slug: "bone-archer",
     monsterFamilly: "undead",
     difficulty: 24,
     hp: 5,
@@ -35,10 +38,11 @@ export const undead: Monster[] = [
     attackWeapon: "bow",
     specialFloor: "crypt",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Rotting Champion",
+    slug: "rotting-champion",
     monsterFamilly: "undead",
     difficulty: 40,
     hp: 15,
@@ -47,6 +51,6 @@ export const undead: Monster[] = [
     attackWeapon: "axe",
     specialFloor: "crypt",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
-]
+];

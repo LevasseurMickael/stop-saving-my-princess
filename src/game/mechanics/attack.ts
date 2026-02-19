@@ -1,4 +1,9 @@
-import { stateDynamic, statePlayer, stateShield, stateStats } from "../state";
+import {
+  stateDynamic,
+  stateKillCount,
+  statePlayer,
+  stateShield,
+} from "../state";
 import type { Direction, TargetCondition } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
 import { handleGameEvent } from "./secret/secretSystem";
@@ -51,7 +56,7 @@ export default function attack() {
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
-      enemy.hp--;
+      enemy.hp = Math.max(0, enemy.hp - statePlayer.attack);
 
       // Enemy is stunned for 1 turn
       enemy.stunnedTurns = 1;
@@ -62,7 +67,9 @@ export default function attack() {
       // Enemy dies if HP reaches 0
       if (enemy.hp <= 0) {
         enemy.alive = false;
-        stateStats.kills++;
+        // Increment kill count for the enemy's slug, defaulting to 0 if slug is undefined
+        stateKillCount[enemy.slug || ""] =
+          (stateKillCount[enemy.slug || ""] || 0) + 1;
         handleGameEvent({ type: "enemy_kill" });
       }
 

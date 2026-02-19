@@ -1,8 +1,9 @@
 import type { Monster } from "../../../lib/type";
 
 export const ghost: Monster[] = [
-    {
+  {
     name: "Lost Spirit",
+    slug: "lost-spirit",
     monsterFamilly: "ghost",
     difficulty: 14,
     hp: 4,
@@ -11,10 +12,11 @@ export const ghost: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "haunted",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Crying Specter",
+    slug: "crying-specter",
     monsterFamilly: "ghost",
     difficulty: 22,
     hp: 6,
@@ -23,10 +25,11 @@ export const ghost: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "haunted",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Phantom Knight",
+    slug: "phantom-knight",
     monsterFamilly: "ghost",
     difficulty: 35,
     hp: 10,
@@ -35,6 +38,6 @@ export const ghost: Monster[] = [
     attackWeapon: "spectral blade",
     specialFloor: "haunted",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
-]
+];

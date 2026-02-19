@@ -3,6 +3,7 @@ import type { Monster } from "../../../lib/type";
 export const vermin: Monster[] = [
   {
     name: "Cave Rat",
+    slug: "cave-rat",
     monsterFamilly: "vermin",
     difficulty: 3,
     hp: 2,
@@ -15,6 +16,7 @@ export const vermin: Monster[] = [
   },
   {
     name: "Shadow Bat",
+    slug: "shadow-bat",
     monsterFamilly: "vermin",
     difficulty: 10,
     hp: 3,
@@ -27,6 +29,7 @@ export const vermin: Monster[] = [
   },
   {
     name: "Fire Beetle",
+    slug: "fire-beetle",
     monsterFamilly: "vermin",
     difficulty: 20,
     hp: 4,
@@ -39,6 +42,7 @@ export const vermin: Monster[] = [
   },
   {
     name: "Tunnel Spider",
+    slug: "tunnel-spider",
     monsterFamilly: "vermin",
     difficulty: 25,
     hp: 6,

@@ -1,8 +1,9 @@
 import type { Monster } from "../../../lib/type";
 
 export const livingArmor: Monster[] = [
-    {
+  {
     name: "Rusty Armor",
+    slug: "rusty-armor",
     monsterFamilly: "living armor",
     difficulty: 8,
     hp: 8,
@@ -11,10 +12,11 @@ export const livingArmor: Monster[] = [
     attackWeapon: "sword",
     specialFloor: "forge",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Royal Guard Armor",
+    slug: "royal-guard-armor",
     monsterFamilly: "living armor",
     difficulty: 20,
     hp: 12,
@@ -23,10 +25,11 @@ export const livingArmor: Monster[] = [
     attackWeapon: "lance",
     specialFloor: "castle",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Cursed Halberd Armor",
+    slug: "cursed-halberd-armor",
     monsterFamilly: "living armor",
     difficulty: 28,
     hp: 14,
@@ -35,6 +38,6 @@ export const livingArmor: Monster[] = [
     attackWeapon: "halberd",
     specialFloor: "forge",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
-]
+];

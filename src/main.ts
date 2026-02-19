@@ -8,6 +8,7 @@ import {
 import {
   stateDungeon,
   stateDynamic,
+  stateKillCount,
   statePlayer,
   stateStats,
 } from "./game/state";
@@ -50,7 +51,7 @@ function render() {
   getEnemiesSprite(ctx, stateDynamic, TileSize);
 
   // Draw HUD
-  getHudSprite(ctx, statePlayer, stateStats, stateDungeon);
+  getHudSprite(ctx, statePlayer, stateStats, stateKillCount, stateDungeon);
 }
 
 // Load initial floor and start game loop

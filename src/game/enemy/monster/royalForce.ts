@@ -3,6 +3,7 @@ import type { Monster } from "../../../lib/type";
 export const royalForce: Monster[] = [
   {
     name: "Knight Recruit",
+    slug: "knight-recruit",
     monsterFamilly: "royal",
     difficulty: 10,
     hp: 6,
@@ -15,6 +16,7 @@ export const royalForce: Monster[] = [
   },
   {
     name: "Royal Archer",
+    slug: "royal-archer",
     monsterFamilly: "royal",
     difficulty: 16,
     hp: 5,
@@ -27,6 +29,7 @@ export const royalForce: Monster[] = [
   },
   {
     name: "Royal Spearmaster",
+    slug: "royal-spearmaster",
     monsterFamilly: "royal",
     difficulty: 32,
     hp: 9,
@@ -39,6 +42,7 @@ export const royalForce: Monster[] = [
   },
   {
     name: "Templar Captain",
+    slug: "templar-captain",
     monsterFamilly: "royal",
     difficulty: 47,
     hp: 18,

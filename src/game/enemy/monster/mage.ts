@@ -1,8 +1,9 @@
 import type { Monster } from "../../../lib/type";
 
 export const mage: Monster[] = [
-    {
+  {
     name: "Cult Mage",
+    slug: "cult-mage",
     monsterFamilly: "cult",
     difficulty: 12,
     hp: 4,
@@ -11,10 +12,11 @@ export const mage: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "arcane",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
   {
     name: "Arcane Sentinel",
+    slug: "arcane-sentinel",
     monsterFamilly: "construct",
     difficulty: 25,
     hp: 10,
@@ -23,10 +25,11 @@ export const mage: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "arcane",
     facing: "down",
-    actionPerTurn: 2
+    actionPerTurn: 2,
   },
   {
     name: "Hex Binder",
+    slug: "hex-binder",
     monsterFamilly: "cult",
     difficulty: 30,
     hp: 6,
@@ -35,6 +38,6 @@ export const mage: Monster[] = [
     attackWeapon: "curse",
     specialFloor: "arcane",
     facing: "down",
-    actionPerTurn: 1
+    actionPerTurn: 1,
   },
-]
+];

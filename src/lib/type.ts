@@ -16,6 +16,7 @@ export type Enemy = {
   alive: boolean;
   pattern: string;
   name?: string;
+  slug?: string;
   monsterFamilly?: string;
   difficulty?: number;
   specialFloor?: string;
@@ -23,6 +24,7 @@ export type Enemy = {
 
 export type Monster = {
   name: string;
+  slug: string;
   monsterFamilly: string;
   difficulty: number;
   hp: number;

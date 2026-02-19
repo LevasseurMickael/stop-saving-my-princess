@@ -1,6 +1,7 @@
 import {
   stateDungeon,
   stateDynamic,
+  stateKillCount,
   statePlayer,
   stateSecret,
   stateStats,
@@ -10,7 +11,11 @@ import { loadMap } from "./map";
 export function enterNextFloor() {
   stateDungeon.currentFloor++;
 
-  stateStats.kills = 0;
+  for (const key in stateKillCount) {
+    if (Object.prototype.hasOwnProperty.call(stateKillCount, key)) {
+      stateKillCount[key] = 0;
+    }
+  }
   stateStats.hasSecretItem = false;
   stateStats.secretUnlocked = false;
 
