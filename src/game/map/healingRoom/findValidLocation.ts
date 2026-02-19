@@ -1,3 +1,6 @@
+// This file contains the logic to find valid locations for placing a healing room in the dungeon map.
+
+// Healing room location criteria
 export function findValidHealingRoomLocation(
   map: number[][],
   rand: () => number,
@@ -52,6 +55,7 @@ export function findValidHealingRoomLocation(
   return roomCandidates[Math.floor(rand() * roomCandidates.length)];
 }
 
+// Check if a room can be placed at the given coordinates without overlapping existing rooms or going out of bounds
 export function canPlaceRoom(
   map: number[][],
   x: number,

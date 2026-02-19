@@ -6,7 +6,7 @@ import type {
   HealingRoom,
 } from "../lib/type";
 
-const MaxFloors = 25;
+const MaxFloors = 50; // Maximum number of floors in the game, used for initializing floor state
 
 export const state = {};
 

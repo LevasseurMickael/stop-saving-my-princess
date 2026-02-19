@@ -2,12 +2,13 @@ import type { Room, SecretHintWall } from "../../lib/type";
 import { stateDynamic, stateSecret } from "../state";
 import { map } from "./map";
 
+// Check if the hint tile is in or adjacent to the healing room to avoid placing it in a confusing location for the player
 function isInHealingRoom(x: number, y: number): boolean {
   const healingRoom = stateDynamic.healingRoom;
   if (!healingRoom) return false;
 
   const distance = Math.abs(x - healingRoom.x) + Math.abs(y - healingRoom.y);
-  return distance <= 4; // Player is on or adjacent to the healing room center
+  return distance <= 4;
 }
 
 // Create a hint tile in a random valid location within the given rooms
@@ -31,7 +32,7 @@ export function createHintTile(
           ].some((tile) => tile === 0);
 
           if (adjacentEmpty) {
-            // Vérifier qu'on n'est pas proche de la healing room
+            // Exclude candidates that are in or adjacent to the healing room to avoid confusion for the player
             if (!isInHealingRoom(x, y)) {
               candidates.push({ x, y });
             }

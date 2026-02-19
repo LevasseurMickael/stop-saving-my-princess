@@ -1,6 +1,10 @@
 import type { HealingRoom } from "../../../lib/type";
 import { findValidHealingRoomLocation } from "./findValidLocation";
 
+// Healing room generation logic:
+// 1. Scan the map for valid locations to place a healing room (a small 2x3 room connected to a corridor).
+// 2. Randomly select one of the valid locations.
+// 3. Carve out the healing room in the map and return its details for later use (like placing the healing tile).
 export function createHealingRoom(
   map: number[][],
   rand: () => number,
@@ -15,6 +19,7 @@ export function createHealingRoom(
 
   let roomX: number, roomY: number, healX: number, healY: number;
 
+  // Calculate the position of the healing room based on the direction of the corridor it's attached to
   switch (direction) {
     case "up":
       roomX = doorX - 1;
