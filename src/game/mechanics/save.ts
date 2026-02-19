@@ -27,7 +27,6 @@ export function saveGame() {
       deathCount: statePlayer.deathCount,
     },
     stats: {
-      kills: stateStats.kills,
       hasSecretItem: stateStats.hasSecretItem,
     },
   };
@@ -47,6 +46,5 @@ export function loadGame() {
   statePlayer.maxHp = save.player.maxHp;
   statePlayer.deathCount = save.player.deathCount;
 
-  stateStats.kills = save.stats.kills;
   stateStats.hasSecretItem = save.stats.hasSecretItem;
 }

@@ -65,7 +65,6 @@ export type SaveGame = {
     deathCount: number;
   };
   stats: {
-    kills: number;
     hasSecretItem: boolean;
   };
 };
@@ -128,6 +127,7 @@ export type ActionCondition =
 export type ContextCondition =
   | { kind: "enemy_present" }
   | { kind: "enemy_killed_last" }
+  | { kind: "enemy_kill"; slug: string; count: number }
   | { kind: "no_enemy_alive" }
   | { kind: "took_damage"; blocked?: boolean }
   | { kind: "did_not_move"; turns: number }

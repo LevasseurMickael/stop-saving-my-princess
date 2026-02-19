@@ -6,14 +6,17 @@ import type {
   TargetCondition,
 } from "../../../lib/type";
 import { map } from "../../map/map";
-import { statePlayer, stateSecret, stateShield } from "../../state";
+import {
+  stateKillCount,
+  statePlayer,
+  stateSecret,
+  stateShield,
+} from "../../state";
 
 export function evaluateCondition(condition: SecretCondition): boolean {
   switch (condition.kind) {
     case "sequence":
       return evaluateSequence(condition.steps);
-    case "wait":
-      return evaluateWait(condition.turns ?? 1);
     case "attack":
       return evaluateAttack(condition);
     case "shield":
@@ -31,6 +34,7 @@ export function evaluateCondition(condition: SecretCondition): boolean {
 
     case "enemy_present":
     case "enemy_killed_last":
+    case "enemy_kill":
     case "no_enemy_alive":
     case "took_damage":
     case "did_not_move":
@@ -239,22 +243,6 @@ function isAdjacentToTileType(
   return false;
 }
 
-// Evaluate wait conditions by counting consecutive wait events from the end of the event history
-function evaluateWait(turns: number): boolean {
-  let count = 0;
-
-  for (let i = stateSecret.eventHistory.length - 1; i >= 0; i--) {
-    const e = stateSecret.eventHistory[i];
-    if (e.type === "wait") {
-      count++;
-      if (count >= turns) return true;
-    } else {
-      break;
-    }
-  }
-  return false;
-}
-
 // Evaluate repeat floor conditions by checking if the specified floor number is included in the list of completed floors in the secret state
 function evaluateRepeat(floor: number): boolean {
   return stateSecret.completedFloors?.includes(floor) ?? false;
@@ -326,6 +314,12 @@ function evaluateContext(condition: ContextCondition): boolean {
     case "enemy_killed_last":
       return stateSecret.eventHistory.at(-1)?.type === "enemy_kill";
 
+    case "enemy_kill":
+      if (stateKillCount[condition.slug] === condition.count) {
+        return true;
+      }
+      return false;
+
     case "no_enemy_alive":
       return stateSecret.enemies.every((e) => !e.alive);
 
@@ -374,9 +368,6 @@ function eventMatchesCondition(
   condition: SecretCondition,
 ): boolean {
   switch (condition.kind) {
-    case "wait":
-      return event.type === "wait";
-
     case "attack":
       if (event.type !== "attack") return false;
       if (condition.direction && event.direction !== condition.direction)

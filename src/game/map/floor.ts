@@ -18,6 +18,7 @@ export function enterNextFloor() {
   }
   stateStats.hasSecretItem = false;
   stateStats.secretUnlocked = false;
+  stateDynamic.healingRoom!.isUnlocked = false;
 
   stateSecret.eventHistory.length = 0;
   stateSecret.turnCounter = 0;

@@ -1,7 +1,10 @@
 import type { Enemy, Room } from "../../lib/type";
 import { stateDynamic } from "../state";
 import { monsters } from "./monsters";
-import { getMonsterSpawnForFloor } from "./spawnRule";
+import {
+  getMonsterForSpecialFloor,
+  getMonsterSpawnForFloor,
+} from "./spawnRule";
 
 // Enemy can't get on the same tile as other enemies
 export function isOccupied(x: number, y: number, self: Enemy) {
@@ -66,6 +69,7 @@ export function spawnEnemies(
         specialFloor: monster.specialFloor, // Special floor type for the monster
       });
     }
+    getMonsterForSpecialFloor(floor, monsters, enemies);
   }
   return enemies;
 }
