@@ -6,7 +6,7 @@ import {
   stateSecret,
   stateStats,
 } from "../../state";
-import { allSecretConditions } from "./allSecret";
+import { allSecretConditions } from "./allSecretCondition";
 import { evaluateCondition } from "./secretEvaluator";
 
 export function handleGameEvent(event: GameEvent) {

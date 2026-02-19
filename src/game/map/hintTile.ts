@@ -14,7 +14,7 @@ function isInHealingRoom(x: number, y: number): boolean {
 // Create a hint tile in a random valid location within the given rooms
 export function createHintTile(
   floor: number,
-  tier: 1 | 2 | 3,
+  tier: 1 | 2 | 3 | 4,
   hint: string,
   rooms: Room[],
 ): SecretHintWall | null {

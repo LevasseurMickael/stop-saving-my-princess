@@ -8,8 +8,6 @@ import type {
 
 const MaxFloors = 50; // Maximum number of floors in the game, used for initializing floor state
 
-export const state = {};
-
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
   currentFloor: 0,
@@ -24,6 +22,10 @@ export const stateSecret = {
   hintWall: [] as SecretHintWall[],
   completedFloors: [] as number[],
   enemies: [] as Enemy[],
+  damageFromFamily: {} as Record<string, number>, // Track damage taken from each enemy family for conditions that require it
+  healedAtFullHp: false, // Track if the player has healed at full HP for conditions that require it
+  visitedRooms: new Set<number>(), // Track visited rooms for conditions that require it
+  cornersVisited: new Set<string>(), // Track visited corners for conditions that require it, stored as "x,y"
 };
 
 // Player related state, separated for clarity and potential future expansion
@@ -48,6 +50,11 @@ export const statePlayer = {
     damageEnemyOnFirstDamageTakenPerFloor: false, // from Vengeful Spirit
     fearLowLevelEnemies: false, // from Ancient Roar
     extraDamageWhenLowHp: false, // from Ancient Dominance
+  },
+
+  skillUsedThisFloor: {
+    stunEnemyOncePerFloor: false,
+    fireBreathOncePerFloor: false,
   },
 
   // Track unlocked items and their effects separately for clarity and potential future mechanics that interact with specific unlocks

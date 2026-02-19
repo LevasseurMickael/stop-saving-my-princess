@@ -2,6 +2,8 @@
 // Core gameplay types
 // =======================
 
+import type { statePlayer } from "../game/state";
+
 // Types for game entities and mechanics
 export type Enemy = {
   x: number;
@@ -133,6 +135,35 @@ export type ContextCondition =
   | { kind: "did_not_move"; turns: number }
   | { kind: "different_walls_attacked"; count: number };
 
+export type SkillCondition =
+  | { kind: "has_skill"; skill: keyof typeof statePlayer.unlockedSkills }
+  | { kind: "use_skill"; skill: keyof typeof statePlayer.skillUsedThisFloor }
+  | {
+      kind: "kill_with_skill";
+      skill: keyof typeof statePlayer.unlockedSkills;
+      count: number;
+    };
+
+export type HealingRoomCondition =
+  | { kind: "find_healing_room" }
+  | { kind: "heal_at_full_hp" }
+  | { kind: "unlock_healing_door"; doorLevel: number };
+
+export type ItemCondition =
+  | { kind: "has_key_level"; level: number }
+  | { kind: "has_ghost_vision"; level: number }
+  | { kind: "open_door_with_key"; keyLevel: number };
+
+export type PatternCondition =
+  | { kind: "move_pattern"; pattern: "square" | "cross" | "circle" }
+  | { kind: "attack_corners"; count: number }
+  | { kind: "visit_all_rooms" };
+
+export type FamilyCondition =
+  | { kind: "kill_family"; family: string; count: number }
+  | { kind: "kill_all_family_types"; family: string }
+  | { kind: "no_damage_from_family"; family: string };
+
 // Meta conditions for secrets that depend on broader game states or progression
 export type MetaCondition = { kind: "repeat_floor_condition"; floor: number };
 
@@ -142,7 +173,12 @@ export type SecretCondition =
   | ActionCondition
   | SequenceCondition
   | ContextCondition
-  | MetaCondition;
+  | MetaCondition
+  | HealingRoomCondition
+  | ItemCondition
+  | PatternCondition
+  | FamilyCondition
+  | SkillCondition;
 
 // Sequence conditions for secrets that require a specific sequence of actions or events
 export type SequenceCondition = {
@@ -157,7 +193,7 @@ export type SequenceCondition = {
 // Type for floor secrets that includes the floor number, tier, hint, condition for unlocking, and unlocked state
 export type FloorSecret = {
   floor: number;
-  tier: 1 | 2 | 3;
+  tier: 1 | 2 | 3 | 4;
   hint: string;
   condition: SecretCondition;
   unlocked: boolean;
@@ -169,6 +205,6 @@ export type SecretHintWall = {
   y: number;
   floor: number;
   hint: string;
-  tier: 1 | 2 | 3;
+  tier: 1 | 2 | 3 | 4;
   revealed: boolean;
 };

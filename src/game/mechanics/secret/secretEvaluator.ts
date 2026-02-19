@@ -1,12 +1,18 @@
 import type {
   ContextCondition,
+  FamilyCondition,
   GameEvent,
+  HealingRoomCondition,
+  ItemCondition,
   PositionCondition,
   SecretCondition,
+  SkillCondition,
   TargetCondition,
 } from "../../../lib/type";
+import { monsters } from "../../enemy/monsters";
 import { map } from "../../map/map";
 import {
+  stateDynamic,
   stateKillCount,
   statePlayer,
   stateSecret,
@@ -41,6 +47,89 @@ export function evaluateCondition(condition: SecretCondition): boolean {
     case "different_walls_attacked":
       return evaluateContext(condition);
 
+    case "has_skill":
+    case "use_skill":
+      return evaluateSkill(condition);
+
+    case "has_key_level":
+    case "has_ghost_vision":
+      return evaluateItem(condition);
+
+    case "kill_family":
+    case "kill_all_family_types":
+    case "no_damage_from_family":
+      return evaluateFamily(condition);
+
+    case "find_healing_room":
+    case "heal_at_full_hp":
+    case "unlock_healing_door":
+      return evaluateHealingRoom(condition);
+
+    default:
+      return false;
+  }
+}
+
+// =======================
+// Skills, Items, Healing Rooms, Patterns, Families
+// =======================
+
+function evaluateSkill(condition: SkillCondition): boolean {
+  switch (condition.kind) {
+    case "has_skill":
+      return statePlayer.unlockedSkills[condition.skill] === true;
+    case "use_skill":
+      return statePlayer.skillUsedThisFloor[condition.skill] === true;
+  }
+  return false;
+}
+
+function evaluateItem(condition: ItemCondition): boolean {
+  switch (condition.kind) {
+    case "has_key_level":
+      return statePlayer.unlockedItems.keyLevel >= condition.level;
+    case "has_ghost_vision":
+      return statePlayer.unlockedItems.ghostVisionLevel >= condition.level;
+  }
+  return false;
+}
+
+function evaluateFamily(condition: FamilyCondition): boolean {
+  switch (condition.kind) {
+    case "kill_family":
+      const familyKills = Object.entries(stateKillCount)
+        .filter(([slug]) => {
+          const enemy = stateSecret.enemies.find((e) => e.slug === slug);
+          return enemy?.monsterFamilly === condition.family;
+        })
+        .reduce((sum, [, count]) => sum + count, 0);
+      return familyKills >= condition.count;
+
+    case "kill_all_family_types":
+      const familyType = monsters
+        .filter((m) => m.monsterFamilly === condition.family)
+        .map((m) => m.slug);
+      return familyType.every((slug) => stateKillCount[slug] > 0);
+
+    case "no_damage_from_family":
+      return stateSecret.damageFromFamily[condition.family] === 0;
+    default:
+      return false;
+  }
+}
+
+function evaluateHealingRoom(condition: HealingRoomCondition): boolean {
+  switch (condition.kind) {
+    case "find_healing_room":
+      return stateDynamic.healingRoom !== null;
+    case "heal_at_full_hp":
+      return stateSecret.healedAtFullHp === true;
+    case "unlock_healing_door":
+      if (!stateDynamic.healingRoom) return false;
+      return (
+        stateDynamic.healingRoom?.isUnlocked &&
+        stateDynamic.healingRoom.doorLevel >= condition.doorLevel
+      );
     default:
       return false;
   }

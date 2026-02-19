@@ -26,6 +26,9 @@ export function enterNextFloor() {
   stateDynamic.enemies.length = 0;
   stateDynamic.secrets.length = 0;
 
+  statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = false;
+  statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = false;
+
   loadMap();
 
   statePlayer.x = statePlayer.spawn.x;
