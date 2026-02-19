@@ -54,22 +54,23 @@ export function enemyTurn(
     // Patrol pattern: move randomly within the room
     case "patrol":
       const directions = [
-        { dx: 0, dy: -(enemy.actionPerTurn) },
-        { dx: 0, dy: enemy.actionPerTurn },
-        { dx: -(enemy.actionPerTurn), dy: 0 },
-        { dx: enemy.actionPerTurn, dy: 0 },
+        { dx: 0, dy: -1 },
+        { dx: 0, dy: 1 },
+        { dx: -1, dy: 0 },
+        { dx: 1, dy: 0 },
       ];
-      // Simple random movement
-      const dir = directions[Math.floor(Math.random() * directions.length)];
-      const newX = enemy.x + dir.dx;
-      const newY = enemy.y + dir.dy;
 
-      // Check if the new position is valid (not a wall and not occupied by another enemy)
-      if (map[newY]?.[newX] === 0 && !isOccupied(newX, newY, enemy)) {
-        enemy.x = newX;
-        enemy.y = newY;
+      for (let i = 0; i < enemy.actionPerTurn; i++) {
+        const dir = directions[Math.floor(Math.random() * directions.length)];
+        const newX = enemy.x + dir.dx;
+        const newY = enemy.y + dir.dy;
+
+        // Check if the new position is valid (not a wall and not occupied by another enemy)
+        if (map[newY]?.[newX] === 0 && !isOccupied(newX, newY, enemy)) {
+          enemy.x = newX;
+          enemy.y = newY;
+        }
       }
-
       break;
 
     case "chase":
