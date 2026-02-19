@@ -63,5 +63,6 @@ export function createHealingRoom(
     doorY,
     roomIndex: -1, // Will be set later when we find which room this is adjacent to
     isUnlocked: false,
+    doorLevel: 0,
   };
 }

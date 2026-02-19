@@ -77,6 +77,7 @@ export type HealingRoom = {
   doorX: number;
   doorY: number;
   isUnlocked: boolean;
+  doorLevel: number; // 0 = no door, 1 = basic door, 2 = iron door, 3 = silver door, 4 = arcane seal, 5 = royal lock
 };
 
 // =======================

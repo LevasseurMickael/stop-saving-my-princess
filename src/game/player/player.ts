@@ -2,7 +2,9 @@ import attack from "../mechanics/attack";
 import { map } from "../map/map";
 import { saveGame, setFloorResult } from "../mechanics/save";
 import {
+  state,
   stateDungeon,
+  stateDynamic,
   statePlayer,
   stateSecret,
   stateShield,
@@ -46,7 +48,17 @@ window.addEventListener("keydown", (e) => {
 
     // movement
     if (newX !== statePlayer.x || newY !== statePlayer.y) {
-      if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
+      if (map[newY][newX] === 5) {
+        if (
+          statePlayer.unlockedItems.keyLevel >=
+          stateDynamic.healingRoom?.doorLevel!
+        ) {
+          stateDynamic.healingRoom!.isUnlocked = true;
+          map[newY][newX] = 0;
+        } else {
+          handleGameEvent({ type: "wait" });
+        }
+      } else if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
         statePlayer.x = newX;
         statePlayer.y = newY;
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });

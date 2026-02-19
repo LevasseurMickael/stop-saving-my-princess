@@ -34,7 +34,6 @@ export function loadMap() {
 
   if (dungeon.healingRoom) {
     stateDynamic.healingRoom = dungeon.healingRoom;
-
     map[dungeon.healingRoom.doorY][dungeon.healingRoom.doorX] = 5; // Mark healing room door on the map
     map[dungeon.healingRoom.y][dungeon.healingRoom.x] = 6; // Mark healing room center on the map
   }
