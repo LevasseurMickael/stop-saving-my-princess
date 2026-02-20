@@ -42,7 +42,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
     hint: "« The sanctuary at full strength hides more. »",
     unlocked: false,
     condition: {
-      kind: "heal_at_full_hp", // NEW
+      kind: "heal_at_full_hp",
     },
   },
   {
@@ -52,7 +52,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
     hint: "« Strike the four corners of the world. »",
     unlocked: false,
     condition: {
-      kind: "attack_corners", // NEW
+      kind: "attack_corners",
       count: 4,
     },
   },
@@ -63,7 +63,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
     hint: "« The royal locks finally open. »",
     unlocked: false,
     condition: {
-      kind: "unlock_healing_door", // NEW
+      kind: "unlock_healing_door",
       doorLevel: 5,
     },
   },

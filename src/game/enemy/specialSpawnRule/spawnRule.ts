@@ -20,13 +20,22 @@ export function getMonsterForSpecialFloor(
   monster: Monster[],
   enemies: Enemy[],
 ) {
+  // =====================
+  // Floors 1–10
+  // =====================
+
   if (floor === 2) {
     const list = [{ name: "cave-rat", numberToSpawn: 2 }];
     return getMonsterMultiple(enemies, monster, list);
   } else if (floor === 10) {
     const list = [{ name: "bone-archer", numberToSpawn: 1 }];
     return getMonsterMultiple(enemies, monster, list);
-  } else if (floor === 11) {
+  }
+
+  // =====================
+  // Floors 11–20
+  // =====================
+  else if (floor === 11) {
     const list = [
       { name: "green-slime", numberToSpawn: 1 },
       { name: "red-slime", numberToSpawn: 1 },
@@ -44,7 +53,12 @@ export function getMonsterForSpecialFloor(
   } else if (floor === 18) {
     const list = [{ name: "knight-recruit", numberToSpawn: 2 }];
     return getMonsterMultiple(enemies, monster, list);
-  } else if (floor === 22) {
+  }
+
+  // =====================
+  // Floors 21–30
+  // =====================
+  else if (floor === 22) {
     const list = [{ name: "rusty-armor", numberToSpawn: 2 }];
     return getMonsterMultiple(enemies, monster, list);
   } else if (floor === 24) {
@@ -57,7 +71,12 @@ export function getMonsterForSpecialFloor(
   } else if (floor === 27) {
     const family = "undead";
     return getMonsterFamily(enemies, monster, family);
-  } else if (floor === 32) {
+  }
+
+  // =====================
+  // Floors 31–40
+  // =====================
+  else if (floor === 32) {
     const family = "living armor";
     return getMonsterFamily(enemies, monster, family);
   } else if (floor === 37) {
@@ -70,7 +89,12 @@ export function getMonsterForSpecialFloor(
       { name: "venom-slime", numberToSpawn: 1 },
     ];
     return getMonsterMultiple(newFloorEnemies, monster, list);
-  } else if (floor === 42) {
+  }
+
+  // =====================
+  // Floors 41–50
+  // =====================
+  else if (floor === 42) {
     const list = [
       { name: "green-slime", numberToSpawn: 1 },
       { name: "cave-rat", numberToSpawn: 1 },
