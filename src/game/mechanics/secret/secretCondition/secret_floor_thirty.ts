@@ -16,7 +16,6 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
-    // Not enough rusty armor may spawn
     floor: 22,
     tier: 2,
     hint: "« Truth hides beneath rust. »",
@@ -24,7 +23,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     condition: {
       kind: "enemy_kill",
       slug: "rusty-armor",
-      count: 1,
+      count: 2,
     },
   },
   {
@@ -37,7 +36,6 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
-    // Not enough cult mage may spawn
     floor: 24,
     tier: 2,
     hint: "« The whispers must be silenced. »",
@@ -64,30 +62,30 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
-    // slime required for the condition won't spawn
     floor: 26,
     tier: 3,
     hint: "« What was true remains true. »",
     unlocked: false,
     condition: {
-      kind: "repeat_floor_condition",
-      floor: 1,
+      kind: "enemy_kill",
+      slug: "green-slime",
+      count: 3,
     },
   },
   {
-    // kill all family types may not be set up correctly
+    // kill family condition may not be set
     floor: 27,
     tier: 3,
     hint: "« Let the undead rest. »",
     unlocked: false,
     condition: {
-      kind: "kill_all_family_types", // NEW
+      kind: "kill_family",
       family: "undead",
-      // skeleton, wraith, bone-archer, rotting-champion
+      count: 8,
     },
   },
   {
-    // Condition may have not been set, does require family ghost monsters to spawn
+    // TODO Condition may have not been set, does require family ghost monsters to spawn
     floor: 28,
     tier: 3,
     hint: "« Les écailles éthérées révèlent l'invisible. »",

@@ -21,7 +21,6 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // monster may not spawn
     floor: 42,
     tier: 4,
     hint: "« Taste the blood of all families. »",
@@ -69,15 +68,13 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // kill all family types condition may not be set up correctly, require enough living armor to spawn
     floor: 46,
     tier: 4,
-    hint: "« Eradicate all traces of the living armors. »",
+    hint: "« Eradicate all traces of the royal. »",
     unlocked: false,
     condition: {
       kind: "kill_all_family_types",
-      family: "living armor",
-      // rusty, royal-guard, cursed-halberd
+      family: "royal",
     },
   },
   {
@@ -103,7 +100,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // visit all rooms, kill family, no damage from family, on spawn conditions may not be set up correctly, require enough royal and ghost monsters to spawn
+    // visit all rooms, kill family, no damage from family
     floor: 49,
     tier: 4,
     hint: "« The perfect dragon masters everything. »",
@@ -112,7 +109,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
       kind: "sequence",
       steps: [
         { kind: "visit_all_rooms" },
-        { kind: "kill_family", family: "royal", count: 3 },
+        { kind: "kill_family", family: "royal", count: 8 },
         { kind: "no_damage_from_family", family: "ghost" },
         { kind: "on_spawn" },
       ],

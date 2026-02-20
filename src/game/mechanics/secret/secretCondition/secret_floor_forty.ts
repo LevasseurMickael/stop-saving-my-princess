@@ -16,14 +16,14 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
-    // kill family condition may not be set, require enough royal family monsters to spawn
+    // kill family condition may not be set
     floor: 32,
     tier: 3,
-    hint: "« The royal guard falls before the dragon. »",
+    hint: "« The armors falls before the dragon. »",
     unlocked: false,
     condition: {
       kind: "kill_family",
-      family: "royal",
+      family: "living-armor",
       count: 5,
     },
   },
@@ -80,7 +80,6 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
-    // require all monster type to spawn
     floor: 37,
     tier: 3,
     hint: "« All types of jelly hide a secret. »",
@@ -97,7 +96,7 @@ export const floorToFortyConditions: FloorSecret[] = [
     hint: "« Why are you looking behind you this much? »",
     unlocked: false,
     condition: {
-      kind: "move_pattern", // NEW
+      kind: "move_pattern",
       pattern: "zigzag",
       axis: "vertical",
       count: 5,
