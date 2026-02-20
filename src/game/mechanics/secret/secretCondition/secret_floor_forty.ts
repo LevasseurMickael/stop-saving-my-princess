@@ -8,7 +8,7 @@ export const floorToFortyConditions: FloorSecret[] = [
   {
     floor: 31,
     tier: 3,
-    hint: "« Les serrures arcanes s'ouvrent aux initiés. »",
+    hint: "« The arcane locks open to the initiated. »",
     unlocked: false,
     condition: {
       kind: "has_key_level",
@@ -16,9 +16,10 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
+    // kill family condition may not be set, require enough royal family monsters to spawn
     floor: 32,
     tier: 3,
-    hint: "« La garde royale tombe face au dragon. »",
+    hint: "« The royal guard falls before the dragon. »",
     unlocked: false,
     condition: {
       kind: "kill_family",
@@ -27,9 +28,10 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
+    // sequence does not work, did not move may be a problem
     floor: 33,
     tier: 3,
-    hint: "« Le rituel ancien demande précision. »",
+    hint: "« The ancient ritual demands precision. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -46,9 +48,10 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
+    // use skill condition not set yet
     floor: 34,
     tier: 3,
-    hint: "« Le souffle du dragon révèle ce qui brûle. »",
+    hint: "« The dragon's breath reveals what burns. »",
     unlocked: false,
     condition: {
       kind: "use_skill", // NEW
@@ -58,7 +61,7 @@ export const floorToFortyConditions: FloorSecret[] = [
   {
     floor: 35,
     tier: 3,
-    hint: "« Vois au-delà du voile. »",
+    hint: "« See beyond the veil. »",
     unlocked: false,
     condition: {
       kind: "has_ghost_vision", // NEW
@@ -77,9 +80,10 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
+    // require all monster type to spawn
     floor: 37,
     tier: 3,
-    hint: "« Tous les types de gelée cachent un secret. »",
+    hint: "« All types of jelly hide a secret. »",
     unlocked: false,
     condition: {
       kind: "kill_all_family_types",
@@ -95,14 +99,14 @@ export const floorToFortyConditions: FloorSecret[] = [
     condition: {
       kind: "move_pattern", // NEW
       pattern: "zigzag",
-      axis: "horizontal",
+      axis: "vertical",
       count: 5,
     },
   },
   {
     floor: 39,
     tier: 3,
-    hint: "« La souffrance bloquée mène à la révélation. »",
+    hint: "« Blocked suffering leads to revelation. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -116,7 +120,7 @@ export const floorToFortyConditions: FloorSecret[] = [
   {
     floor: 40,
     tier: 3,
-    hint: "« Le silence absolu après la tempête. »",
+    hint: "« Absolute silence after the storm. »",
     unlocked: false,
     condition: {
       kind: "sequence",

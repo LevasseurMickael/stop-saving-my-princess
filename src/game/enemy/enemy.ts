@@ -4,7 +4,7 @@ import { monsters } from "./monsters";
 import {
   getMonsterForSpecialFloor,
   getMonsterSpawnForFloor,
-} from "./spawnRule";
+} from "./specialSpawnRule/spawnRule";
 
 // Enemy can't get on the same tile as other enemies
 export function isOccupied(x: number, y: number, self: Enemy) {

@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 0,
+  currentFloor: 1,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -31,18 +31,18 @@ export const stateSecret = {
 // Player related state, separated for clarity and potential future expansion
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
-  hp: 5,
-  maxHp: 5,
-  attack: 1,
+  hp: 999999999999999,
+  maxHp: 999999999999999,
+  attack: 999999999999999,
   attackRange: 1,
   resurectionCount: 0,
 
   // Track unlocked skills separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedSkills: {
     stunEnemyOncePerFloor: false, // from Smoke Breath
-    fireBreathOncePerFloor: false, // from Dragon's Breath
+    fireBreathOncePerFloor: true, // from Dragon's Breath
     canPushEnemiesBehind: false, // from Heavy Tail
-    normalDamageToGhosts: false, // from Soul Claw
+    normalDamageToGhosts: true, // from Soul Claw
     ghostDamageNegation: false, // from Ethereal Scales
     AreaDamageOnAttack: false, // from Flame Pulse
     reduceDamageOncePerFloor: false, // from Hardened Scales

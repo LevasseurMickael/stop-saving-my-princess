@@ -6,6 +6,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   // =====================
 
   {
+    // unlock immediately, should unlock when getting in the sanctuary room
     floor: 21,
     tier: 2,
     hint: "« The sanctuary hides a secret. »",
@@ -15,6 +16,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
+    // Not enough rusty armor may spawn
     floor: 22,
     tier: 2,
     hint: "« Truth hides beneath rust. »",
@@ -35,6 +37,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
+    // Not enough cult mage may spawn
     floor: 24,
     tier: 2,
     hint: "« The whispers must be silenced. »",
@@ -61,6 +64,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
+    // slime required for the condition won't spawn
     floor: 26,
     tier: 3,
     hint: "« What was true remains true. »",
@@ -71,6 +75,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
+    // kill all family types may not be set up correctly
     floor: 27,
     tier: 3,
     hint: "« Let the undead rest. »",
@@ -82,6 +87,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
+    // Condition may have not been set, does require family ghost monsters to spawn
     floor: 28,
     tier: 3,
     hint: "« Les écailles éthérées révèlent l'invisible. »",
@@ -105,6 +111,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
+    // visit all rooms condition may not be set up correctly
     floor: 30,
     tier: 3,
     hint: "« He who explores all finds all. »",

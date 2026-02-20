@@ -6,6 +6,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   // =====================
 
   {
+    // Problem using sequence, may not have the slime on the floor
     floor: 11,
     tier: 2,
     hint: "« Green comes before the flame. »",
@@ -19,6 +20,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
+    // No skeleton on the floor
     floor: 12,
     tier: 2,
     hint: "« Twice must the bones fall. »",
@@ -41,6 +43,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
+    // Lost-spirit not on the floor
     floor: 14,
     tier: 2,
     hint: "« The unseen becomes visible when it falls. »",
@@ -52,6 +55,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
+    // did not move does not work
     floor: 15,
     tier: 2,
     hint: "« The rhythm of battle reveals the truth. »",
@@ -76,6 +80,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
+    // Not enough vermin may spawn
     floor: 17,
     tier: 2,
     hint: "« Vermin hides its secrets in the shadows. »",
@@ -87,6 +92,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
+    // Not enough recruit may spawn
     floor: 18,
     tier: 2,
     hint: "« Recruits speak too much. »",
@@ -98,6 +104,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
+    // works even if not facing a wall
     floor: 19,
     tier: 2,
     hint: "« Defense against the wall is a key. »",

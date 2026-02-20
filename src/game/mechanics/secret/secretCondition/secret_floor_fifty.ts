@@ -6,9 +6,10 @@ export const floorToFiftyConditions: FloorSecret[] = [
   // =====================
 
   {
+    // sequence does not work, has skill may not be set, phantom knight may not spawn
     floor: 41,
     tier: 4,
-    hint: "« Les griffes de l'âme et les flammes antiques. »",
+    hint: "« The claws of the soul and the ancient flames. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -20,9 +21,10 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
+    // monster may not spawn
     floor: 42,
     tier: 4,
-    hint: "« Goûte au sang de toutes les familles. »",
+    hint: "« Taste the blood of all families. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -35,18 +37,20 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
+    // May not work
     floor: 43,
     tier: 4,
-    hint: "« Le sanctuaire à pleine force cache plus. »",
+    hint: "« The sanctuary at full strength hides more. »",
     unlocked: false,
     condition: {
       kind: "heal_at_full_hp", // NEW
     },
   },
   {
+    // attack corners condition may not be set up correctly
     floor: 44,
     tier: 4,
-    hint: "« Frappe les quatre coins du monde. »",
+    hint: "« Strike the four corners of the world. »",
     unlocked: false,
     condition: {
       kind: "attack_corners", // NEW
@@ -54,9 +58,10 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
+    // door has no level yet
     floor: 45,
     tier: 4,
-    hint: "« Les serrures royales s'ouvrent enfin. »",
+    hint: "« The royal locks finally open. »",
     unlocked: false,
     condition: {
       kind: "unlock_healing_door", // NEW
@@ -64,9 +69,10 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
+    // kill all family types condition may not be set up correctly, require enough living armor to spawn
     floor: 46,
     tier: 4,
-    hint: "« Éradique toute trace des armures vivantes. »",
+    hint: "« Eradicate all traces of the living armors. »",
     unlocked: false,
     condition: {
       kind: "kill_all_family_types",
@@ -77,7 +83,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
   {
     floor: 47,
     tier: 4,
-    hint: "« Le capitaine garde le secret ultime. »",
+    hint: "« The captain guards the ultimate secret. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -97,9 +103,10 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
+    // visit all rooms, kill family, no damage from family, on spawn conditions may not be set up correctly, require enough royal and ghost monsters to spawn
     floor: 49,
     tier: 4,
-    hint: "« Le dragon parfait maîtrise tout. »",
+    hint: "« The perfect dragon masters everything. »",
     unlocked: false,
     condition: {
       kind: "sequence",
