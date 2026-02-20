@@ -1,12 +1,12 @@
-import type { FloorSecret, GameEvent } from "../../../lib/type";
-import { map } from "../../map/map";
+import type { FloorSecret, GameEvent } from "../../../../lib/type";
+import { map } from "../../../map/map";
 import {
   stateDungeon,
   stateDynamic,
   stateSecret,
   stateStats,
-} from "../../state";
-import { allSecretConditions } from "./allSecretCondition";
+} from "../../../state";
+import { allSecretConditions } from "../allSecretCondition";
 import { evaluateCondition } from "./secretEvaluator";
 
 export function handleGameEvent(event: GameEvent) {

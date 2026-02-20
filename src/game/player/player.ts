@@ -13,7 +13,7 @@ import {
 import { enemiesTurn } from "../mechanics/turn";
 import { updateShieldState } from "../mechanics/shield";
 import { checkHintTile } from "../map/hintTile";
-import { handleGameEvent } from "../mechanics/secret/secretSystem";
+import { handleGameEvent } from "../mechanics/secret/secretEvaluation/secretSystem";
 import { enterNextFloor } from "../map/floor";
 
 // Handle player input

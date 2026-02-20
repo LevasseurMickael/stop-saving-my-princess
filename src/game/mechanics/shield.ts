@@ -1,6 +1,6 @@
 import type { Enemy } from "../../lib/type";
 import { statePlayer, stateShield } from "../state";
-import { handleGameEvent } from "./secret/secretSystem";
+import { handleGameEvent } from "./secret/secretEvaluation/secretSystem";
 
 // Update shield state based on current state
 export function updateShieldState() {

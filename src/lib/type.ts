@@ -155,9 +155,23 @@ export type ItemCondition =
   | { kind: "open_door_with_key"; keyLevel: number };
 
 export type PatternCondition =
-  | { kind: "move_pattern"; pattern: "square" | "cross" | "circle" }
   | { kind: "attack_corners"; count: number }
   | { kind: "visit_all_rooms" };
+
+export type movementPattern =
+  | { kind: "move_pattern"; pattern: "square"; size: number }
+  | {
+      kind: "move_pattern";
+      pattern: "L-shape";
+      direction: "normal" | "inverted" | "flipped" | "mirror";
+    }
+  | {
+      kind: "move_pattern";
+      pattern: "zigzag";
+      axis: "horizontal" | "vertical";
+      count: number;
+    }
+  | { kind: "move_pattern"; pattern: "spiral"; clockwise: boolean };
 
 export type FamilyCondition =
   | { kind: "kill_family"; family: string; count: number }
@@ -178,6 +192,7 @@ export type SecretCondition =
   | ItemCondition
   | PatternCondition
   | FamilyCondition
+  | movementPattern
   | SkillCondition;
 
 // Sequence conditions for secrets that require a specific sequence of actions or events

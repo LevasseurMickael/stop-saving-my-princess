@@ -8,16 +8,22 @@ import type {
   SecretCondition,
   SkillCondition,
   TargetCondition,
-} from "../../../lib/type";
-import { monsters } from "../../enemy/monsters";
-import { map } from "../../map/map";
+} from "../../../../lib/type";
+import { monsters } from "../../../enemy/monsters";
+import { map } from "../../../map/map";
 import {
   stateDynamic,
   stateKillCount,
   statePlayer,
   stateSecret,
   stateShield,
-} from "../../state";
+} from "../../../state";
+import {
+  evaluateMovePatternLShape,
+  evaluateMovePatternSpiral,
+  evaluateMovePatternSquare,
+  evaluateMovePatternZigzag,
+} from "./evaluatePattern";
 
 export function evaluateCondition(condition: SecretCondition): boolean {
   switch (condition.kind) {
@@ -64,6 +70,9 @@ export function evaluateCondition(condition: SecretCondition): boolean {
     case "heal_at_full_hp":
     case "unlock_healing_door":
       return evaluateHealingRoom(condition);
+
+    case "move_pattern":
+      return evaluateMovePattern(condition);
 
     default:
       return false;
@@ -130,6 +139,23 @@ function evaluateHealingRoom(condition: HealingRoomCondition): boolean {
         stateDynamic.healingRoom?.isUnlocked &&
         stateDynamic.healingRoom.doorLevel >= condition.doorLevel
       );
+    default:
+      return false;
+  }
+}
+
+function evaluateMovePattern(
+  condition: Extract<SecretCondition, { kind: "move_pattern" }>,
+): boolean {
+  switch (condition.pattern) {
+    case "square":
+      return evaluateMovePatternSquare(condition.size);
+    case "L-shape":
+      return evaluateMovePatternLShape(condition.direction);
+    case "zigzag":
+      return evaluateMovePatternZigzag(condition.axis, condition.count);
+    case "spiral":
+      return evaluateMovePatternSpiral(condition.clockwise);
     default:
       return false;
   }
@@ -499,6 +525,9 @@ function eventMatchesCondition(
     case "did_not_move":
     case "different_walls_attacked":
       return evaluateContext(condition);
+
+    case "move_pattern":
+      return evaluateMovePattern(condition);
 
     default:
       return false;

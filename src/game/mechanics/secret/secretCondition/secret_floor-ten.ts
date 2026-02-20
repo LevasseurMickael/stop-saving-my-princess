@@ -6,7 +6,7 @@ export const floorToTenConditions: FloorSecret[] = [
   // =====================
 
   {
-    floor: 50,
+    floor: 1,
     tier: 1,
     hint: "« Les gelées vertes cachent des trésors. »",
     unlocked: false,

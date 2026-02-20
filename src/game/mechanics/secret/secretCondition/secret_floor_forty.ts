@@ -68,10 +68,12 @@ export const floorToFortyConditions: FloorSecret[] = [
   {
     floor: 36,
     tier: 3,
-    hint: "« Les coins renferment des vérités. »",
+    hint: "« We know what hole that goes in right triangle. »",
     unlocked: false,
     condition: {
-      kind: "corner_position", // NEW
+      kind: "move_pattern", // NEW
+      pattern: "square",
+      size: 3,
     },
   },
   {
@@ -88,11 +90,13 @@ export const floorToFortyConditions: FloorSecret[] = [
   {
     floor: 38,
     tier: 3,
-    hint: "« Trace le symbole ancien. »",
+    hint: "« Why are you looking behind you this much? »",
     unlocked: false,
     condition: {
       kind: "move_pattern", // NEW
-      pattern: "square",
+      pattern: "zigzag",
+      axis: "horizontal",
+      count: 5,
     },
   },
   {

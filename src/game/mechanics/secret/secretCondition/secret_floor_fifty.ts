@@ -88,11 +88,12 @@ export const floorToFiftyConditions: FloorSecret[] = [
   {
     floor: 48,
     tier: 4,
-    hint: "« Marche en cercle autour de la vérité. »",
+    hint: "« Your drill is the drill that will pierce the heavens! »",
     unlocked: false,
     condition: {
       kind: "move_pattern",
-      pattern: "circle", // NEW
+      pattern: "spiral",
+      clockwise: true,
     },
   },
   {
