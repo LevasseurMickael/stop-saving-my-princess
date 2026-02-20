@@ -8,7 +8,7 @@ export const floorToTenConditions: FloorSecret[] = [
   {
     floor: 1,
     tier: 1,
-    hint: "« Les gelées vertes cachent des trésors. »",
+    hint: "« When three jellies fall, the path reveals itself. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -19,7 +19,7 @@ export const floorToTenConditions: FloorSecret[] = [
   {
     floor: 2,
     tier: 1,
-    hint: "« Les rats connaissent les passages secrets. »",
+    hint: "« Rats flee from secrets, but leave their mark behind. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -30,21 +30,21 @@ export const floorToTenConditions: FloorSecret[] = [
   {
     floor: 3,
     tier: 1,
-    hint: "« L'immobilité révèle ce qui est caché. »",
+    hint: "« The still one sees further. »",
     unlocked: false,
     condition: { kind: "did_not_move", turns: 3 },
   },
   {
     floor: 4,
     tier: 1,
-    hint: "« Frappe la pierre pour entendre sa réponse. »",
+    hint: "« Stone answers violence. »",
     unlocked: false,
     condition: { kind: "attack", target: "wall" },
   },
   {
     floor: 5,
     tier: 1,
-    hint: "« Le repos cache plus qu'il n'y paraît. »",
+    hint: "« Between rest and stone, a path hides. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -57,21 +57,21 @@ export const floorToTenConditions: FloorSecret[] = [
   {
     floor: 6,
     tier: 1,
-    hint: "« Le silence complet révèle les mystères. »",
+    hint: "« When the final breath fades, something awakens. »",
     unlocked: false,
     condition: { kind: "no_enemy_alive" },
   },
   {
     floor: 7,
     tier: 1,
-    hint: "« L'intention compte plus que la cible. »",
+    hint: "« Even the void can be struck.” »",
     unlocked: false,
     condition: { kind: "attack", target: "empty" },
   },
   {
     floor: 8,
     tier: 1,
-    hint: "« Le bouclier est plus qu'une défense. »",
+    hint: "« Perfect defense reveals the unseen. »",
     unlocked: false,
     condition: {
       kind: "took_damage",
@@ -81,7 +81,7 @@ export const floorToTenConditions: FloorSecret[] = [
   {
     floor: 9,
     tier: 1,
-    hint: "« Trois pierres différentes, trois secrets. »",
+    hint: "« Three stones, three scars. »",
     unlocked: false,
     condition: {
       kind: "different_walls_attacked",
@@ -91,7 +91,7 @@ export const floorToTenConditions: FloorSecret[] = [
   {
     floor: 10,
     tier: 1,
-    hint: "« L'archer des os détient une vérité. »",
+    hint: "«The fleshless archer guards the key. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",

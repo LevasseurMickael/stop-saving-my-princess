@@ -68,7 +68,7 @@ export const floorToFortyConditions: FloorSecret[] = [
   {
     floor: 36,
     tier: 3,
-    hint: "« We know what hole that goes in right triangle. »",
+    hint: "« We know what hole the triangle goes in right. »",
     unlocked: false,
     condition: {
       kind: "move_pattern", // NEW

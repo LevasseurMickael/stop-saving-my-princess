@@ -8,7 +8,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 11,
     tier: 2,
-    hint: "« Le rouge brûle après le vert. »",
+    hint: "« Green comes before the flame. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -21,7 +21,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 12,
     tier: 2,
-    hint: "« Les os se souviennent. »",
+    hint: "« Twice must the bones fall. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -32,7 +32,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 13,
     tier: 2,
-    hint: "« Suis les contours de l'ombre. »",
+    hint: "« Walk where stone brushes your side. »",
     unlocked: false,
     condition: {
       kind: "move",
@@ -43,7 +43,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 14,
     tier: 2,
-    hint: "« Ce qui est invisible peut être vu. »",
+    hint: "« The unseen becomes visible when it falls. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -54,7 +54,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 15,
     tier: 2,
-    hint: "« Le rythme de la bataille révèle la vérité. »",
+    hint: "« The rhythm of battle reveals the truth. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -68,7 +68,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 16,
     tier: 2,
-    hint: "« Les portes s'ouvrent à ceux qui cherchent. »",
+    hint: "« One key proves your worth. »",
     unlocked: false,
     condition: {
       kind: "has_key_level", // NEW
@@ -78,7 +78,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 17,
     tier: 2,
-    hint: "« La vermine cache ses secrets dans les ténèbres. »",
+    hint: "« Vermin hides its secrets in the shadows. »",
     unlocked: false,
     condition: {
       kind: "kill_family", // NEW
@@ -89,7 +89,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 18,
     tier: 2,
-    hint: "« Les recrues parlent trop. »",
+    hint: "« Recruits speak too much. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -100,7 +100,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 19,
     tier: 2,
-    hint: "« La défense face au mur est une clé. »",
+    hint: "« Defense against the wall is a key. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -113,7 +113,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
   {
     floor: 20,
     tier: 2,
-    hint: "« Le danger proche révèle les chemins cachés. »",
+    hint: "« Danger nearby reveals hidden paths. »",
     unlocked: false,
     condition: {
       kind: "sequence",

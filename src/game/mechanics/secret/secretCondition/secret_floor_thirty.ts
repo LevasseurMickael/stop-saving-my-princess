@@ -8,7 +8,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 21,
     tier: 2,
-    hint: "« Le sanctuaire cache un secret. »",
+    hint: "« The sanctuary hides a secret. »",
     unlocked: false,
     condition: {
       kind: "find_healing_room", // NEW
@@ -17,7 +17,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 22,
     tier: 2,
-    hint: "« L'armure rouillée garde la connaissance. »",
+    hint: "« Truth hides beneath rust. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -28,7 +28,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 23,
     tier: 2,
-    hint: "« Retourne d'où tu viens. »",
+    hint: "« The beginning is also an end. »",
     unlocked: false,
     condition: {
       kind: "on_spawn",
@@ -37,7 +37,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 24,
     tier: 2,
-    hint: "« Les cultistes murmurent des secrets. »",
+    hint: "« The whispers must be silenced. »",
     unlocked: false,
     condition: {
       kind: "enemy_kill",
@@ -48,7 +48,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 25,
     tier: 2,
-    hint: "« Les quatre vents soufflent la vérité. »",
+    hint: "« The wind strikes the four horizons. »",
     unlocked: false,
     condition: {
       kind: "sequence",
@@ -63,7 +63,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 26,
     tier: 3,
-    hint: "« L'histoire se répète pour ceux qui écoutent. »",
+    hint: "« What was true remains true. »",
     unlocked: false,
     condition: {
       kind: "repeat_floor_condition",
@@ -73,7 +73,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 27,
     tier: 3,
-    hint: "« Tous les morts doivent retourner au repos. »",
+    hint: "« Let the undead rest. »",
     unlocked: false,
     condition: {
       kind: "kill_all_family_types", // NEW
@@ -97,7 +97,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 29,
     tier: 3,
-    hint: "« Cinq pierres chantent des histoires différentes. »",
+    hint: "« Five stones tell different stories. »",
     unlocked: false,
     condition: {
       kind: "different_walls_attacked",
@@ -107,7 +107,7 @@ export const floorToThirtyConditions: FloorSecret[] = [
   {
     floor: 30,
     tier: 3,
-    hint: "« Celui qui explore tout trouve tout. »",
+    hint: "« He who explores all finds all. »",
     unlocked: false,
     condition: {
       kind: "visit_all_rooms", // NEW
