@@ -41,7 +41,14 @@ export type Monster = {
 export type SecretItem = {
   floor: number;
   name: string;
-  type: "passive" | "usable" | "key" | "stat" | "utility" | "vision";
+  type:
+    | "unlockedSkills"
+    | "unlockedItems"
+    | "reducedDamage"
+    | "stat"
+    | "monsterStatReduction"
+    | "vermin"
+    | "passive";
   effect: string;
   value: number | null;
   description: string;

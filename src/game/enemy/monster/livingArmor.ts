@@ -33,7 +33,7 @@ export const livingArmor: Monster[] = [
     monsterFamilly: "living armor",
     difficulty: 28,
     hp: 14,
-    attack: 3,
+    attack: 4,
     attackRange: 2,
     attackWeapon: "halberd",
     specialFloor: "forge",

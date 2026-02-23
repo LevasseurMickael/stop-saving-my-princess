@@ -5,6 +5,7 @@ import type {
   Direction,
   HealingRoom,
 } from "../lib/type";
+import { livingArmor } from "./enemy/monster/livingArmor";
 
 const MaxFloors = 50; // Maximum number of floors in the game, used for initializing floor state
 
@@ -31,18 +32,20 @@ export const stateSecret = {
 // Player related state, separated for clarity and potential future expansion
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
-  hp: 999999999999999,
-  maxHp: 999999999999999,
-  attack: 999999999999999,
-  attackRange: 1,
-  resurectionCount: 0,
+  stat: {
+    hp: 999999999999999,
+    maxHp: 999999999999999,
+    attack: 999999999999999,
+    attackRange: 1,
+    resurectionCount: 0,
+  },
 
   // Track unlocked skills separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedSkills: {
     stunEnemyOncePerFloor: false, // from Smoke Breath
-    fireBreathOncePerFloor: true, // from Dragon's Breath
+    fireBreathOncePerFloor: false, // from Dragon's Breath
     canPushEnemiesBehind: false, // from Heavy Tail
-    normalDamageToGhosts: true, // from Soul Claw
+    normalDamageToGhosts: false, // from Soul Claw
     ghostDamageNegation: false, // from Ethereal Scales
     AreaDamageOnAttack: false, // from Flame Pulse
     reduceDamageOncePerFloor: false, // from Hardened Scales
@@ -61,11 +64,16 @@ export const statePlayer = {
   unlockedItems: {
     keyLevel: 0, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
     ghostVisionLevel: 0, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
-    healOnNewFloor: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
+    moreHealFromSanctuary: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
     reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies
     dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
     canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map
     canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map
+  },
+
+  monsterStatReduction: {
+    reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
+    livingArmorHp: 0,
   },
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
   reducedDamage: {
@@ -74,6 +82,7 @@ export const statePlayer = {
     magic: 0,
     ghost: 0,
     vermin: 0,
+    livingArmor: 0,
     royalGuard: 0,
   },
   deathCount: 0,
@@ -103,10 +112,6 @@ export const stateTurn = {
 
 // Stats and progression related state, separated for clarity and potential future expansion
 export const stateStats = {
-  monsterStatReduction: {
-    reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
-    livingArmorHp: 0,
-  },
   hasSecretItem: false,
   secretUnlocked: false,
 };

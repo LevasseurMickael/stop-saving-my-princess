@@ -54,7 +54,7 @@ export const floorToFortyConditions: FloorSecret[] = [
     hint: "« The dragon's breath reveals what burns. »",
     unlocked: false,
     condition: {
-      kind: "use_skill", // NEW
+      kind: "use_skill",
       skill: "fireBreathOncePerFloor",
     },
   },
