@@ -77,13 +77,17 @@ export const statePlayer = {
 
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
   reducedDamage: {
-    physical: 0,
-    ranged: 0,
-    magic: 0,
-    ghost: 0,
-    vermin: 0,
-    livingArmor: 0,
-    royalGuard: 0,
+    type: {
+      physical: 100,
+      ranged: 0,
+      magic: 0,
+    },
+    family: {
+      ghost: 0,
+      vermin: 0,
+      "living armor": 0,
+      royal: 0,
+    },
   },
   deathCount: 0,
   x: 0,

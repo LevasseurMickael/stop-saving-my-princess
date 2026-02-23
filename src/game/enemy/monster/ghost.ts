@@ -38,7 +38,7 @@ export const ghost: Monster[] = [
     hp: 10,
     attack: 3,
     attackRange: 1,
-    attackWeapon: "spectral blade",
+    attackWeapon: "physical",
     specialFloor: "haunted",
     facing: "down",
     actionPerTurn: 1,

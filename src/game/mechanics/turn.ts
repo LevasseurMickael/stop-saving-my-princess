@@ -5,6 +5,7 @@ import { stateDynamic, statePlayer } from "../state";
 import { isBlockedByShield } from "./shield";
 import { knockbackPlayer } from "./knockback";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
+import { reducedDamage } from "../secret/secretUnlock/itemEffect/reducedDamage";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -85,9 +86,13 @@ export function enemyTurn(
           knockbackPlayer(enemy);
           return;
         }
-        // enemy attacks player
+        // enemy attacks player and does at least 1 damage, even if player has high damage reduction
         handleGameEvent({ type: "enemy_hit", blocker: false });
-        statePlayer.stat.hp = Math.max(0, statePlayer.stat.hp - enemy.attack);
+        statePlayer.stat.hp = Math.max(
+          0,
+          statePlayer.stat.hp -
+            Math.max(1, enemy.attack - reducedDamage(enemy)),
+        );
 
         // Check if player dies from the attack and reset position and HP if so
         if (statePlayer.stat.hp <= 0) {
