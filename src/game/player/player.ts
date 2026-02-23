@@ -142,9 +142,12 @@ window.addEventListener("keydown", (e) => {
   }
 
   if (map[newY][newX] === 6) {
-    // Player is healed twenty percent of max HP when entering the healing room center
-    const healAmount = Math.ceil(statePlayer.maxHp * 0.2);
-    statePlayer.hp = Math.min(statePlayer.hp + healAmount, statePlayer.maxHp);
+    // Player is healed ten percent of max HP when entering the healing room center
+    const healAmount = Math.ceil(statePlayer.stat.maxHp * 0.1);
+    statePlayer.stat.hp = Math.min(
+      statePlayer.stat.hp + healAmount,
+      statePlayer.stat.maxHp,
+    );
     map[newY][newX] = 0; // Remove healing room center from map (it will be re-added when we enter the floor again)
   }
 

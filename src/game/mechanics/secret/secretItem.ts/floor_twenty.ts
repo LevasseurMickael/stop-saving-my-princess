@@ -4,7 +4,7 @@ export const items_11_to_20: SecretItem[] = [
   {
     floor: 11,
     name: "Shadow Veil",
-    type: "unlockedItems",
+    type: "unlockedPassives",
     effect: "reducedDetection",
     value: 1,
     description: "Reduces enemy detection range.",
@@ -12,7 +12,7 @@ export const items_11_to_20: SecretItem[] = [
   {
     floor: 12,
     name: "Soul Claw",
-    type: "unlockedSkills",
+    type: "unlockedPassives",
     effect: "normalDamageToGhosts",
     value: null,
     description: "Your attacks can damage ghosts normally.",
@@ -28,7 +28,7 @@ export const items_11_to_20: SecretItem[] = [
   {
     floor: 14,
     name: "Owl Beak",
-    type: "unlockedItems",
+    type: "unlockedPassives",
     effect: "canSeeHintWalls",
     value: null,
     description: "Reveals hidden hint walls.",

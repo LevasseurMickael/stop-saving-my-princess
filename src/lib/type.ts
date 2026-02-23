@@ -48,7 +48,7 @@ export type SecretItem = {
     | "stat"
     | "monsterStatReduction"
     | "vermin"
-    | "passive";
+    | "unlockedPassives";
   effect: string;
   value: number | null;
   description: string;

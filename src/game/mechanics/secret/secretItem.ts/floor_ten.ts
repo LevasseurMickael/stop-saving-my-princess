@@ -44,8 +44,8 @@ export const items_1_to_10: SecretItem[] = [
   {
     floor: 6,
     name: "Empty Chest",
-    type: "passive",
-    effect: "no_effect",
+    type: "unlockedPassives",
+    effect: "emptyChest",
     value: null,
     description: "An empty chest, who stole its contents?",
   },
@@ -69,7 +69,7 @@ export const items_1_to_10: SecretItem[] = [
   {
     floor: 10,
     name: "Hardened Scales",
-    type: "unlockedSkills",
+    type: "unlockedPassives",
     effect: "reduceDamageOncePerFloor",
     value: null,
     description: "Negates first damage taken each floor.",

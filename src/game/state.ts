@@ -44,6 +44,14 @@ export const statePlayer = {
   unlockedSkills: {
     stunEnemyOncePerFloor: false, // from Smoke Breath
     fireBreathOncePerFloor: false, // from Dragon's Breath
+  },
+
+  unlockedPassives: {
+    reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies
+    dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
+    canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map
+    canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map
+    reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
     canPushEnemiesBehind: false, // from Heavy Tail
     normalDamageToGhosts: false, // from Soul Claw
     ghostDamageNegation: false, // from Ethereal Scales
@@ -53,6 +61,7 @@ export const statePlayer = {
     damageEnemyOnFirstDamageTakenPerFloor: false, // from Vengeful Spirit
     fearLowLevelEnemies: false, // from Ancient Roar
     extraDamageWhenLowHp: false, // from Ancient Dominance
+    emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
   },
 
   skillUsedThisFloor: {
@@ -65,16 +74,8 @@ export const statePlayer = {
     keyLevel: 0, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
     ghostVisionLevel: 0, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
     moreHealFromSanctuary: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
-    reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies
-    dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
-    canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map
-    canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map
   },
 
-  monsterStatReduction: {
-    reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
-    livingArmorHp: 0,
-  },
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
   reducedDamage: {
     physical: 0,

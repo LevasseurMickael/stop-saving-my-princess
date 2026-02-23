@@ -4,7 +4,7 @@ export const items_31_to_40: SecretItem[] = [
   {
     floor: 31,
     name: "Phantom Lantern",
-    type: "unlockedItems",
+    type: "unlockedPassives",
     effect: "ghostVisionLevel",
     value: 3,
     description: "Ghosts remain visible permanently.",
@@ -28,7 +28,7 @@ export const items_31_to_40: SecretItem[] = [
   {
     floor: 34,
     name: "Flame Pulse",
-    type: "unlockedSkills",
+    type: "unlockedPassives",
     effect: "AreaDamageOnAttack",
     value: 1,
     description: "Deals minor splash damage.",
@@ -44,7 +44,7 @@ export const items_31_to_40: SecretItem[] = [
   {
     floor: 36,
     name: "Ancient Roar",
-    type: "unlockedSkills",
+    type: "unlockedPassives",
     effect: "fearLowLevelEnemies",
     value: null,
     description: "Nearby low-level enemies hesitate briefly.",

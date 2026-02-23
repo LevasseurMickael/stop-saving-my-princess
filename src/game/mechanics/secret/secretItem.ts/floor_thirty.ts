@@ -4,7 +4,7 @@ export const items_21_to_30: SecretItem[] = [
   {
     floor: 21,
     name: "True Sight Orb",
-    type: "unlockedItems",
+    type: "unlockedPassives",
     effect: "canSeeExits",
     value: null,
     description: "Reveals invisible exits.",
@@ -12,7 +12,7 @@ export const items_21_to_30: SecretItem[] = [
   {
     floor: 22,
     name: "Heavy Tail",
-    type: "unlockedSkills",
+    type: "unlockedPassives",
     effect: "canPushEnemiesBehind",
     value: null,
     description: "Enemies behind you are pushed back when you attack.",
@@ -44,7 +44,7 @@ export const items_21_to_30: SecretItem[] = [
   {
     floor: 26,
     name: "Dungeon Map Fragment",
-    type: "unlockedItems",
+    type: "unlockedPassives",
     effect: "dungeonmapFragment",
     value: null,
     description: "Reveals current room layout.",
@@ -68,7 +68,7 @@ export const items_21_to_30: SecretItem[] = [
   {
     floor: 29,
     name: "Vengeful Spirit",
-    type: "unlockedSkills",
+    type: "unlockedPassives",
     effect: "damageEnemyOnFirstDamageTakenPerFloor",
     value: 3,
     description: "First attacker takes damage.",

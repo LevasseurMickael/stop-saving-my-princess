@@ -2,7 +2,13 @@
 
 export function getHudSprite(
   ctx: CanvasRenderingContext2D,
-  statePlayer: { deathCount: number; hp: number; maxHp: number },
+  statePlayer: {
+    deathCount: number;
+    stat: {
+      hp: number;
+      maxHp: number;
+    };
+  },
   stateStats: {
     hasSecretItem: boolean;
   },
@@ -13,7 +19,7 @@ export function getHudSprite(
   ctx.textBaseline = "top";
   ctx.fillStyle = "white";
   ctx.fillText(`Deaths: ${statePlayer.deathCount}`, 10, 10);
-  ctx.fillText(`HP: ${statePlayer.hp}/${statePlayer.maxHp}`, 10, 30);
+  ctx.fillText(`HP: ${statePlayer.stat.hp}/${statePlayer.stat.maxHp}`, 10, 30);
   ctx.fillText(`Secret: ${stateStats.hasSecretItem}`, 10, 50);
   ctx.fillText(`Floor: ${stateDungeon.currentFloor + 1}`, 10, 70);
   ctx.fillText(`Green-slime killed: ${stateKillCount["green-slime"]}`, 10, 90);
