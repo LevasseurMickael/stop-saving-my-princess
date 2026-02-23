@@ -22,6 +22,7 @@ export function enterNextFloor() {
 
   stateSecret.eventHistory.length = 0;
   stateSecret.turnCounter = 0;
+  stateSecret.visitAllRoom = [];
 
   stateDynamic.enemies.length = 0;
   stateDynamic.secrets.length = 0;

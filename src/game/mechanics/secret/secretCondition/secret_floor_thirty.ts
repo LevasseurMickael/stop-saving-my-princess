@@ -6,13 +6,13 @@ export const floorToThirtyConditions: FloorSecret[] = [
   // =====================
 
   {
-    // unlock immediately, should unlock when getting in the sanctuary room
     floor: 21,
     tier: 2,
-    hint: "« The sanctuary hides a secret. »",
+    hint: "« All secret does not require a key. »",
     unlocked: false,
     condition: {
-      kind: "find_healing_room", // NEW
+      kind: "facing_tile",
+      tile: 5,
     },
   },
   {
@@ -73,7 +73,6 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
-    // kill family condition may not be set
     floor: 27,
     tier: 3,
     hint: "« Let the undead rest. »",
@@ -109,13 +108,18 @@ export const floorToThirtyConditions: FloorSecret[] = [
     },
   },
   {
-    // visit all rooms condition may not be set up correctly
     floor: 30,
     tier: 3,
     hint: "« He who explores all finds all. »",
     unlocked: false,
     condition: {
-      kind: "visit_all_rooms", // NEW
+      kind: "visit_all_rooms",
+      steps: [
+        { kind: "adjacent_to", tile: 3 },
+        { kind: "adjacent_to", tile: 4 },
+        { kind: "adjacent_to", tile: 6 },
+        { kind: "on_spawn" },
+      ],
     },
   },
 ];

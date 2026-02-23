@@ -156,9 +156,7 @@ export type ItemCondition =
   | { kind: "has_ghost_vision"; level: number }
   | { kind: "open_door_with_key"; keyLevel: number };
 
-export type PatternCondition =
-  | { kind: "attack_corners"; count: number }
-  | { kind: "visit_all_rooms" };
+export type PatternCondition = { kind: "attack_corners"; count: number };
 
 export type movementPattern =
   | { kind: "move_pattern"; pattern: "square"; size: number }
@@ -188,6 +186,7 @@ export type SecretCondition =
   | PositionCondition
   | ActionCondition
   | SequenceCondition
+  | AllRoomCondition
   | ContextCondition
   | MetaCondition
   | HealingRoomCondition
@@ -200,6 +199,11 @@ export type SecretCondition =
 // Sequence conditions for secrets that require a specific sequence of actions or events
 export type SequenceCondition = {
   kind: "sequence";
+  steps: SecretCondition[];
+};
+
+export type AllRoomCondition = {
+  kind: "visit_all_rooms";
   steps: SecretCondition[];
 };
 

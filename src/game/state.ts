@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 18,
+  currentFloor: 29,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -24,7 +24,7 @@ export const stateSecret = {
   enemies: [] as Enemy[],
   damageFromFamily: {} as Record<string, number>, // Track damage taken from each enemy family for conditions that require it
   healedAtFullHp: false, // Track if the player has healed at full HP for conditions that require it
-  visitedRooms: new Set<number>(), // Track visited rooms for conditions that require it
+  visitAllRoom: [] as number[], // Track visited rooms for conditions that require it
   cornersVisited: new Set<string>(), // Track visited corners for conditions that require it, stored as "x,y"
 };
 
