@@ -46,7 +46,7 @@ export const items_11_to_20: SecretItem[] = [
     name: "Ancient Roost",
     type: "unlockedItems",
     effect: "moreHealFromSanctuary",
-    value: 10,
+    value: 0.1,
     description: "Recover more HP from sanctuaries.",
   },
   {

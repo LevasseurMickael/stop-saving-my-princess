@@ -142,7 +142,10 @@ window.addEventListener("keydown", (e) => {
 
   if (map[newY][newX] === 6) {
     // Player is healed ten percent of max HP when entering the healing room center
-    const healAmount = Math.ceil(statePlayer.stat.maxHp * 0.1);
+    const healAmount = Math.ceil(
+      statePlayer.stat.maxHp *
+        (0.1 + statePlayer.unlockedItems.moreHealFromSanctuary),
+    );
     statePlayer.stat.hp = Math.min(
       statePlayer.stat.hp + healAmount,
       statePlayer.stat.maxHp,
