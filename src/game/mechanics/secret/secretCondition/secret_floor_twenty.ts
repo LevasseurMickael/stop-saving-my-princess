@@ -52,7 +52,6 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
-    // did not move does not work
     floor: 15,
     tier: 2,
     hint: "« The rhythm of battle reveals the truth. »",
@@ -61,7 +60,10 @@ export const floorToTwentyConditions: FloorSecret[] = [
       kind: "sequence",
       steps: [
         { kind: "attack" },
-        { kind: "did_not_move", turns: 1 },
+        { kind: "shield", state: "deploying" },
+        { kind: "shield", state: "active" },
+        { kind: "wait", turns: 1 },
+        { kind: "shield", state: "retracting" },
         { kind: "attack" },
       ],
     },
@@ -72,7 +74,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     hint: "« One key proves your worth. »",
     unlocked: false,
     condition: {
-      kind: "has_key_level", // NEW
+      kind: "has_key_level",
       level: 1,
     },
   },
@@ -82,7 +84,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     hint: "« Vermin hides its secrets in the shadows. »",
     unlocked: false,
     condition: {
-      kind: "kill_family", // NEW
+      kind: "kill_family",
       family: "vermin",
       count: 8,
     },
@@ -99,7 +101,6 @@ export const floorToTwentyConditions: FloorSecret[] = [
     },
   },
   {
-    // works even if not facing a wall
     floor: 19,
     tier: 2,
     hint: "« Defense against the wall is a key. »",
@@ -107,7 +108,7 @@ export const floorToTwentyConditions: FloorSecret[] = [
     condition: {
       kind: "sequence",
       steps: [
-        { kind: "shield", state: "active", facing: "wall" },
+        { kind: "shield", state: "deploying", facing: "wall" },
         { kind: "did_not_move", turns: 1 },
       ],
     },

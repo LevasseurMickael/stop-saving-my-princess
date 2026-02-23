@@ -88,6 +88,7 @@ export type HealingRoom = {
 // Event types for game actions and conditions for secrets
 export type GameEvent =
   | { type: "move"; x: number; y: number }
+  | { type: "wait"; turns: number }
   | {
       type: "attack";
       direction: Direction;
@@ -133,7 +134,8 @@ export type ContextCondition =
   | { kind: "no_enemy_alive" }
   | { kind: "took_damage"; blocked?: boolean }
   | { kind: "did_not_move"; turns: number }
-  | { kind: "different_walls_attacked"; count: number };
+  | { kind: "different_walls_attacked"; count: number }
+  | { kind: "wait"; turns: number };
 
 export type SkillCondition =
   | { kind: "has_skill"; skill: keyof typeof statePlayer.unlockedSkills }

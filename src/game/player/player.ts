@@ -55,7 +55,7 @@ window.addEventListener("keydown", (e) => {
           stateDynamic.healingRoom!.isUnlocked = true;
           map[newY][newX] = 0;
         } else {
-          handleGameEvent({ type: "wait" });
+          handleGameEvent({ type: "wait", turns: 1 });
         }
       } else if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
         statePlayer.x = newX;
@@ -63,7 +63,7 @@ window.addEventListener("keydown", (e) => {
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
         acted = true;
       } else {
-        handleGameEvent({ type: "wait" });
+        handleGameEvent({ type: "wait", turns: 1 });
         acted = true;
       }
     }
@@ -90,7 +90,7 @@ window.addEventListener("keydown", (e) => {
       acted = true;
     }
   } else {
-    handleGameEvent({ type: "wait" });
+    handleGameEvent({ type: "wait", turns: 1 });
     acted = true; // Player can only toggle shield, so we consider that as acting
   }
 
