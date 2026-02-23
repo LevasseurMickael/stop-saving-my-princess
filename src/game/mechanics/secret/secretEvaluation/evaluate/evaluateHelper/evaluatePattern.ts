@@ -1,5 +1,5 @@
-import { stateSecret } from "../../../state";
-import { arraysEqual, getDirections } from "./getDirection";
+import { stateSecret } from "../../../../../state";
+import { arraysEqual, getDirections } from "../../getDirection";
 
 export function evaluateMovePatternSquare(size: number): boolean {
   const moves = stateSecret.eventHistory
