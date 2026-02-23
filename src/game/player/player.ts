@@ -13,9 +13,11 @@ import {
 import { enemiesTurn } from "../mechanics/turn";
 import { updateShieldState } from "../mechanics/shield";
 import { checkHintTile } from "../map/hintTile";
-import { handleGameEvent } from "../mechanics/secret/secretEvaluation/secretSystem";
+
 import { enterNextFloor } from "../map/floor";
-import { unlockingSecretItem } from "../mechanics/secret/secretUnlock/secretUnlock";
+import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
+import { unlockingSecretItem } from "../secret/secretUnlock/secretUnlock";
+import { keyLevelLogic } from "../secret/secretUnlock/itemEffect/items/keyLevel";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -49,15 +51,10 @@ window.addEventListener("keydown", (e) => {
     // movement
     if (newX !== statePlayer.x || newY !== statePlayer.y) {
       if (map[newY][newX] === 5) {
-        if (
-          statePlayer.unlockedItems.keyLevel >=
-          stateDynamic.healingRoom?.doorLevel!
-        ) {
-          stateDynamic.healingRoom!.isUnlocked = true;
-          map[newY][newX] = 0;
-        } else {
-          handleGameEvent({ type: "wait", turns: 1 });
-        }
+        keyLevelLogic(statePlayer, stateDynamic, map, newX, newY)
+          ? ""
+          : handleGameEvent({ type: "wait", turns: 1 });
+        acted = true;
       } else if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
         statePlayer.x = newX;
         statePlayer.y = newY;

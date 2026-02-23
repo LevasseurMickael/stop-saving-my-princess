@@ -1,4 +1,5 @@
 import type { HealingRoom } from "../../../lib/type";
+import { stateDungeon } from "../../state";
 import { findValidHealingRoomLocation } from "./findValidLocation";
 
 // Healing room generation logic:
@@ -18,6 +19,8 @@ export function createHealingRoom(
   const roomHeight = 2;
 
   let roomX: number, roomY: number, healX: number, healY: number;
+
+  const doorLevel = doorLevelLogic();
 
   // Calculate the position of the healing room based on the direction of the corridor it's attached to
   switch (direction) {
@@ -63,6 +66,22 @@ export function createHealingRoom(
     doorY,
     roomIndex: -1, // Will be set later when we find which room this is adjacent to
     isUnlocked: false,
-    doorLevel: 0,
+    doorLevel,
   };
+}
+
+function doorLevelLogic() {
+  if (stateDungeon.currentFloor < 5) {
+    return 0; // Always open door
+  } else if (stateDungeon.currentFloor < 15) {
+    return 1; // basic door
+  } else if (stateDungeon.currentFloor < 25) {
+    return 2; // Iron door
+  } else if (stateDungeon.currentFloor < 35) {
+    return 3; // Silver door
+  } else if (stateDungeon.currentFloor < 45) {
+    return 4; // arcane seal
+  } else {
+    return 5; // royal lock
+  }
 }

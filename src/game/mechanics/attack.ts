@@ -6,8 +6,9 @@ import {
 } from "../state";
 import type { Direction, TargetCondition } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
-import { handleGameEvent } from "./secret/secretEvaluation/secretSystem";
+
 import { map } from "../map/map";
+import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 
 // Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {

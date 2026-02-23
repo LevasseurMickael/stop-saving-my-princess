@@ -9,7 +9,7 @@ import {
 import { spawnEnemies } from "../enemy/enemy";
 import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
-import { allSecretConditions } from "../mechanics/secret/allSecretCondition";
+import { allSecretConditions } from "../secret/allSecretCondition";
 
 const TileSize = 30;
 const GridSize = 24;

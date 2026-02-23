@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 13,
+  currentFloor: 5,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -71,7 +71,7 @@ export const statePlayer = {
   // Track unlocked items and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedItems: {
     keyLevel: 0, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
-    ghostVisionLevel: 3, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
+    ghostVisionLevel: 0, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
     moreHealFromSanctuary: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
   },
 

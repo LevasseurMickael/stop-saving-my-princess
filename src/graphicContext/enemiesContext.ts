@@ -1,6 +1,6 @@
 // This file contains the function to render the enemies on the canvas based on their state. It is imported in main.ts to keep the code organized and maintainable.
 
-import { getGhostVisionLevel } from "../game/mechanics/secret/secretUnlock/itemEffect/items/ghostVisionLevel";
+import { getGhostVisionLevel } from "../game/secret/secretUnlock/itemEffect/items/ghostVisionLevel";
 import type { Enemy } from "../lib/type";
 import { enemyColors } from "./enemies/enemiesColors";
 

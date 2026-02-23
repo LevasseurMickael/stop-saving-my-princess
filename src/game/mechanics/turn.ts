@@ -4,7 +4,7 @@ import { map } from "../map/map";
 import { stateDynamic, statePlayer } from "../state";
 import { isBlockedByShield } from "./shield";
 import { knockbackPlayer } from "./knockback";
-import { handleGameEvent } from "./secret/secretEvaluation/secretSystem";
+import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 
 // Process all enemies' turns
 export function enemiesTurn() {
