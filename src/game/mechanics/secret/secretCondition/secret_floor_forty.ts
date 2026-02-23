@@ -16,34 +16,34 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
-    // kill family condition may not be set
     floor: 32,
     tier: 3,
     hint: "« The armors falls before the dragon. »",
     unlocked: false,
     condition: {
       kind: "kill_family",
-      family: "living-armor",
-      count: 5,
+      family: "living armor",
+      count: 8,
     },
   },
   {
-    // sequence does not work, did not move may be a problem
     floor: 33,
     tier: 3,
-    hint: "« The ancient ritual demands precision. »",
+    hint: "« The ancient ritual demands precision at the right place. »",
     unlocked: false,
     condition: {
       kind: "sequence",
       steps: [
         { kind: "on_spawn" },
         { kind: "attack", direction: "up" },
-        { kind: "did_not_move", turns: 1 },
-        { kind: "attack", direction: "right" },
-        { kind: "did_not_move", turns: 1 },
+        { kind: "attack", direction: "up" },
         { kind: "attack", direction: "down" },
-        { kind: "did_not_move", turns: 1 },
+        { kind: "attack", direction: "down" },
         { kind: "attack", direction: "left" },
+        { kind: "attack", direction: "right" },
+        { kind: "attack", direction: "left" },
+        { kind: "attack", direction: "right" },
+        { kind: "shield", state: "deploying" },
       ],
     },
   },
@@ -64,7 +64,7 @@ export const floorToFortyConditions: FloorSecret[] = [
     hint: "« See beyond the veil. »",
     unlocked: false,
     condition: {
-      kind: "has_ghost_vision", // NEW
+      kind: "has_ghost_vision",
       level: 3,
     },
   },
@@ -74,7 +74,7 @@ export const floorToFortyConditions: FloorSecret[] = [
     hint: "« We know what hole the triangle goes in right. »",
     unlocked: false,
     condition: {
-      kind: "move_pattern", // NEW
+      kind: "move_pattern",
       pattern: "square",
       size: 3,
     },
@@ -87,7 +87,6 @@ export const floorToFortyConditions: FloorSecret[] = [
     condition: {
       kind: "kill_all_family_types",
       family: "slime",
-      // green, red, crystal, venom
     },
   },
   {
