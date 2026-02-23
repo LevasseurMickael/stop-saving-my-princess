@@ -6,7 +6,7 @@ export const items_11_to_20: SecretItem[] = [
     name: "Shadow Veil",
     type: "unlockedPassives",
     effect: "reducedDetection",
-    value: 1,
+    value: true,
     description: "Reduces enemy detection range.",
   },
   {
@@ -14,7 +14,7 @@ export const items_11_to_20: SecretItem[] = [
     name: "Soul Claw",
     type: "unlockedPassives",
     effect: "normalDamageToGhosts",
-    value: null,
+    value: true,
     description: "Your attacks can damage ghosts normally.",
   },
   {
@@ -30,7 +30,7 @@ export const items_11_to_20: SecretItem[] = [
     name: "Owl Beak",
     type: "unlockedPassives",
     effect: "canSeeHintWalls",
-    value: null,
+    value: true,
     description: "Reveals hidden hint walls.",
   },
   {
@@ -46,8 +46,8 @@ export const items_11_to_20: SecretItem[] = [
     name: "Ancient Roost",
     type: "unlockedItems",
     effect: "moreHealFromSanctuary",
-    value: 5,
-    description: "Recover small HP each floor.",
+    value: 10,
+    description: "Recover more HP from sanctuaries.",
   },
   {
     floor: 17,

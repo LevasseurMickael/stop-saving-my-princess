@@ -56,7 +56,7 @@ export default function attack() {
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
-      enemy.hp = Math.max(0, enemy.hp - statePlayer.attack);
+      enemy.hp = Math.max(0, enemy.hp - statePlayer.stat.attack);
 
       // Enemy is stunned for 1 turn
       enemy.stunnedTurns = 1;

@@ -45,7 +45,7 @@ export function getMonsterForSpecialFloor(
     const list = [{ name: "skeleton", numberToSpawn: 2 }];
     return getMonsterMultiple(enemies, monster, list);
   } else if (floor === 14) {
-    const list = [{ name: "lost-spirit", numberToSpawn: 1 }];
+    const list = [{ name: "lost-spirit", numberToSpawn: 10 }];
     return getMonsterMultiple(enemies, monster, list);
   } else if (floor === 17) {
     const family = "vermin";

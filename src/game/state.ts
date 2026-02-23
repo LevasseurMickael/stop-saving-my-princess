@@ -5,13 +5,12 @@ import type {
   Direction,
   HealingRoom,
 } from "../lib/type";
-import { livingArmor } from "./enemy/monster/livingArmor";
 
 const MaxFloors = 50; // Maximum number of floors in the game, used for initializing floor state
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 36,
+  currentFloor: 13,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -33,8 +32,8 @@ export const stateSecret = {
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
   stat: {
-    hp: 999999999999999,
-    maxHp: 999999999999999,
+    hp: 500,
+    maxHp: 500,
     attack: 999999999999999,
     attackRange: 1,
     resurectionCount: 0,
@@ -47,21 +46,21 @@ export const statePlayer = {
   },
 
   unlockedPassives: {
-    reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies
-    dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
-    canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map
-    canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map
-    reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
-    canPushEnemiesBehind: false, // from Heavy Tail
-    normalDamageToGhosts: false, // from Soul Claw
-    ghostDamageNegation: false, // from Ethereal Scales
     AreaDamageOnAttack: false, // from Flame Pulse
-    reduceDamageOncePerFloor: false, // from Hardened Scales
-    negateMagicOncePerFloor: false, // from Runic Barrier
+    canPushEnemiesBehind: false, // from Heavy Tail
+    canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map
+    canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // from Vengeful Spirit
-    fearLowLevelEnemies: false, // from Ancient Roar
-    extraDamageWhenLowHp: false, // from Ancient Dominance
+    dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
+    extraDamageWhenLowHp: false, // from Ancient Dominance
+    fearLowLevelEnemies: false, // from Ancient Roar
+    ghostDamageNegation: false, // from Ethereal Scales
+    negateMagicOncePerFloor: false, // from Runic Barrier
+    normalDamageToGhosts: false, // from Soul Claw
+    reduceDamageOncePerFloor: false, // from Hardened Scales
+    reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies
+    reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
   },
 
   skillUsedThisFloor: {
@@ -72,7 +71,7 @@ export const statePlayer = {
   // Track unlocked items and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedItems: {
     keyLevel: 0, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
-    ghostVisionLevel: 0, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
+    ghostVisionLevel: 3, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
     moreHealFromSanctuary: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
   },
 

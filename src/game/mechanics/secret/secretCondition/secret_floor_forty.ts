@@ -12,7 +12,7 @@ export const floorToFortyConditions: FloorSecret[] = [
     unlocked: false,
     condition: {
       kind: "has_key_level",
-      level: 4,
+      level: 2,
     },
   },
   {

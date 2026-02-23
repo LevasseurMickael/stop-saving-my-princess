@@ -6,7 +6,7 @@ export const items_41_to_50: SecretItem[] = [
     name: "War Discipline",
     type: "unlockedPassives",
     effect: "reduceEnemyActionSpeed",
-    value: 1,
+    value: true,
     description: "Enemies act slightly slower.",
   },
   {
@@ -22,7 +22,7 @@ export const items_41_to_50: SecretItem[] = [
     name: "Ethereal Scales",
     type: "unlockedPassives",
     effect: "ghostDamageNegation",
-    value: null,
+    value: true,
     description: "Negates damage from ghosts.",
   },
   {
@@ -30,7 +30,7 @@ export const items_41_to_50: SecretItem[] = [
     name: "Ancient Dominance",
     type: "unlockedPassives",
     effect: "extraDamageWhenLowHp",
-    value: null,
+    value: true,
     description: "Deal more damage when wounded.",
   },
   {
@@ -46,7 +46,7 @@ export const items_41_to_50: SecretItem[] = [
     name: "Runic Barrier",
     type: "unlockedPassives",
     effect: "negateMagicOncePerFloor",
-    value: null,
+    value: true,
     description: "Absorbs one magic hit per floor.",
   },
   {

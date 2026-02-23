@@ -6,7 +6,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "True Sight Orb",
     type: "unlockedPassives",
     effect: "canSeeExits",
-    value: null,
+    value: true,
     description: "Reveals invisible exits.",
   },
   {
@@ -14,7 +14,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "Heavy Tail",
     type: "unlockedPassives",
     effect: "canPushEnemiesBehind",
-    value: null,
+    value: true,
     description: "Enemies behind you are pushed back when you attack.",
   },
   {
@@ -30,7 +30,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "Smoke Breath",
     type: "unlockedSkills",
     effect: "stunEnemyOncePerFloor",
-    value: 1,
+    value: true,
     description: "Stuns an adjacent enemy for one turn once per floor.",
   },
   {
@@ -46,7 +46,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "Dungeon Map Fragment",
     type: "unlockedPassives",
     effect: "dungeonmapFragment",
-    value: null,
+    value: true,
     description: "Reveals current room layout.",
   },
   {
@@ -70,7 +70,7 @@ export const items_21_to_30: SecretItem[] = [
     name: "Vengeful Spirit",
     type: "unlockedPassives",
     effect: "damageEnemyOnFirstDamageTakenPerFloor",
-    value: 3,
+    value: true,
     description: "First attacker takes damage.",
   },
   {

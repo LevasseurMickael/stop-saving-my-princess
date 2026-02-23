@@ -15,6 +15,7 @@ import { updateShieldState } from "../mechanics/shield";
 import { checkHintTile } from "../map/hintTile";
 import { handleGameEvent } from "../mechanics/secret/secretEvaluation/secretSystem";
 import { enterNextFloor } from "../map/floor";
+import { unlockingSecretItem } from "../mechanics/secret/secretUnlock/secretUnlock";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -138,6 +139,7 @@ window.addEventListener("keydown", (e) => {
   // Check for secret item or floor transition after moving
   if (map[newY][newX] === 2 && stateStats.secretUnlocked) {
     stateStats.hasSecretItem = true;
+    unlockingSecretItem();
     map[newY][newX] = 0; // Remove secret item from map
   }
 

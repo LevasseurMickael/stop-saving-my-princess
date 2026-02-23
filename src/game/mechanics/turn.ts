@@ -87,12 +87,12 @@ export function enemyTurn(
         }
         // enemy attacks player
         handleGameEvent({ type: "enemy_hit", blocker: false });
-        statePlayer.hp = Math.max(0, statePlayer.hp - enemy.attack);
+        statePlayer.stat.hp = Math.max(0, statePlayer.stat.hp - enemy.attack);
 
         // Check if player dies from the attack and reset position and HP if so
-        if (statePlayer.hp <= 0) {
+        if (statePlayer.stat.hp <= 0) {
           statePlayer.deathCount++;
-          statePlayer.hp = statePlayer.maxHp;
+          statePlayer.stat.hp = statePlayer.stat.maxHp;
           player.x = statePlayer.spawn.x;
           player.y = statePlayer.spawn.y;
         }

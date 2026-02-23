@@ -28,6 +28,7 @@ export type Monster = {
   name: string;
   slug: string;
   monsterFamilly: string;
+  isVisible: boolean;
   difficulty: number;
   hp: number;
   attack: number;
@@ -46,12 +47,64 @@ export type SecretItem = {
     | "unlockedItems"
     | "reducedDamage"
     | "stat"
-    | "monsterStatReduction"
-    | "vermin"
     | "unlockedPassives";
   effect: string;
-  value: number | null;
+  value: number | true;
   description: string;
+};
+
+export type statePlayer = {
+  spawn: { x: number; y: number };
+  stat: {
+    hp: number;
+    maxHp: number;
+    attack: number;
+    attackRange: number;
+    resurectionCount: number;
+  };
+  unlockedSkills: {
+    stunEnemyOncePerFloor: boolean;
+    fireBreathOncePerFloor: boolean;
+  };
+  unlockedPassives: {
+    reducedDetection: boolean;
+    dungeonmapFragment: boolean;
+    canSeeHintWalls: boolean;
+    canSeeExits: boolean;
+    reduceEnemyActionSpeed: boolean;
+    canPushEnemiesBehind: boolean;
+    normalDamageToGhosts: boolean;
+    ghostDamageNegation: boolean;
+    AreaDamageOnAttack: boolean;
+    reduceDamageOncePerFloor: boolean;
+    negateMagicOncePerFloor: boolean;
+    damageEnemyOnFirstDamageTakenPerFloor: boolean;
+    fearLowLevelEnemies: boolean;
+    extraDamageWhenLowHp: boolean;
+    emptyChest: boolean;
+  };
+  skillUsedThisFloor: {
+    stunEnemyOncePerFloor: boolean;
+    fireBreathOncePerFloor: boolean;
+  };
+  unlockedItems: {
+    keyLevel: number;
+    ghostVisionLevel: number;
+    moreHealFromSanctuary: number;
+  };
+  reducedDamage: {
+    physical: number;
+    ranged: number;
+    magic: number;
+    ghost: number;
+    vermin: number;
+    livingArmor: number;
+    royalGuard: number;
+  };
+  deathCount: number;
+  x: number;
+  y: number;
+  facing: Direction;
 };
 
 // Player type is defined in player.ts to avoid circular dependencies
