@@ -9,6 +9,7 @@ import { knockbackEnemy } from "./knockback";
 
 import { map } from "../map/map";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
+import { normalDamageToGhost } from "../secret/secretUnlock/itemEffect/passives/normalDamageToGhost";
 
 // Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {
@@ -57,7 +58,11 @@ export default function attack() {
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
-      enemy.hp = Math.max(0, enemy.hp - statePlayer.stat.attack);
+      enemy.hp = Math.max(
+        0,
+        enemy.hp -
+          Math.max(1, statePlayer.stat.attack - normalDamageToGhost(enemy)),
+      );
 
       // Enemy is stunned for 1 turn
       enemy.stunnedTurns = 1;

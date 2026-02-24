@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 30,
+  currentFloor: 13,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -34,7 +34,7 @@ export const statePlayer = {
   stat: {
     hp: 500,
     maxHp: 500,
-    attack: 999999999999999,
+    attack: 500,
     attackRange: 1,
     resurectionCount: 0,
   },
@@ -51,13 +51,13 @@ export const statePlayer = {
     canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
     canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // from Vengeful Spirit
-    dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
+    dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
     extraDamageWhenLowHp: false, // from Ancient Dominance
     fearLowLevelEnemies: false, // from Ancient Roar
     ghostDamageNegation: false, // from Ethereal Scales
     negateMagicOncePerFloor: false, // from Runic Barrier
-    normalDamageToGhosts: false, // from Soul Claw
+    normalDamageToGhosts: true, // from Soul Claw
     reduceDamageOncePerFloor: false, // from Hardened Scales
     reducedDetection: false, // # From Shadow Veil, reduces chance of being detected by traps and certain enemies
     reduceEnemyActionSpeed: false, // # From War Discipline, reduces enemy action speed by 1 turn
@@ -70,9 +70,9 @@ export const statePlayer = {
 
   // Track unlocked items and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedItems: {
-    keyLevel: 0, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
-    ghostVisionLevel: 0, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
-    moreHealFromSanctuary: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
+    keyLevel: 5, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
+    ghostVisionLevel: 5, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
+    moreHealFromSanctuary: 0.1, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
   },
 
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
