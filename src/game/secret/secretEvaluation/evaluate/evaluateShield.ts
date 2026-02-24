@@ -28,7 +28,6 @@ export function evaluateShield(
     if (lastEvent.type === "shield_deploying" && "facingX" in lastEvent) {
       const tile = map[lastEvent.facingY]?.[lastEvent.facingX];
       const targetType = getTileTargetType(tile);
-      console.log("Shield facing target type:", targetType);
       if (targetType !== condition.facing) return false;
     }
   }

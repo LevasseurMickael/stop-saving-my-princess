@@ -10,18 +10,19 @@ import { knockbackEnemy } from "./knockback";
 import { map } from "../map/map";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { normalDamageToGhost } from "../secret/secretUnlock/itemEffect/passives/normalDamageToGhost";
+import { canPushEnemiesBehind } from "../secret/secretUnlock/itemEffect/passives/canPushEnemiesBehind";
 
 // Calculate attack offset based on player's facing direction
 function getAttackOffset(facing: Direction) {
   switch (facing) {
     case "up":
-      return { dx: 0, dy: -1 };
+      return { dx: 0, dy: -1, bx: 0, by: 1 };
     case "down":
-      return { dx: 0, dy: 1 };
+      return { dx: 0, dy: 1, bx: 0, by: -1 };
     case "left":
-      return { dx: -1, dy: 0 };
+      return { dx: -1, dy: 0, bx: 1, by: 0 };
     case "right":
-      return { dx: 1, dy: 0 };
+      return { dx: 1, dy: 0, bx: -1, by: 0 };
   }
 }
 
@@ -46,11 +47,13 @@ export default function attack() {
   }
 
   // Calculate target tile based on player's facing direction
-  const { dx, dy } = getAttackOffset(statePlayer.facing);
+  const { dx, dy, bx, by } = getAttackOffset(statePlayer.facing);
   const targetX = statePlayer.x + dx;
   const targetY = statePlayer.y + dy;
 
   const target = getAttackTarget(targetX, targetY);
+
+  canPushEnemiesBehind(bx, by);
 
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {

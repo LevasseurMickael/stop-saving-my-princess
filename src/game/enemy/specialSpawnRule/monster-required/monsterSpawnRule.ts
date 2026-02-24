@@ -34,7 +34,6 @@ export function getMonsterUnique(
       };
     }
   }
-  console.log(enemies);
   return enemies;
 }
 

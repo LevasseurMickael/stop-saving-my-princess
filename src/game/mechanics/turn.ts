@@ -113,7 +113,6 @@ export function enemyTurn(
           statePlayer.stat.hp -
             Math.max(1, enemy.attack - reducedDamage(enemy)),
         );
-        console.log(statePlayer.stat.hp);
         // Check if player dies from the attack and reset position and HP if so
         if (statePlayer.stat.hp <= 0) {
           statePlayer.deathCount++;

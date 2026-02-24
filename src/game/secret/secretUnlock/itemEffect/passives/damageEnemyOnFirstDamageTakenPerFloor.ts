@@ -3,7 +3,6 @@ import { stateDungeon, statePlayer } from "../../../../state";
 
 // Handle the effect of damaging an enemy on the first time the player takes damage each floor
 export function damageEnemyOnFirstDamageTakenPerFloor(enemy: Enemy) {
-  console.log(enemy.hp);
   if (
     statePlayer.unlockedPassives.damageEnemyOnFirstDamageTakenPerFloor &&
     statePlayer.passiveOncePerFloorUsed.firstDamageTakenOncePerFloor
@@ -14,5 +13,4 @@ export function damageEnemyOnFirstDamageTakenPerFloor(enemy: Enemy) {
       Math.floor(enemy.hp - stateDungeon.currentFloor * 0.3),
     );
   }
-  console.log(enemy.hp);
 }

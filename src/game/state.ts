@@ -47,7 +47,7 @@ export const statePlayer = {
 
   unlockedPassives: {
     AreaDamageOnAttack: false, // from Flame Pulse
-    canPushEnemiesBehind: false, // from Heavy Tail
+    canPushEnemiesBehind: false, // # From Heavy Tail
     canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
     canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
