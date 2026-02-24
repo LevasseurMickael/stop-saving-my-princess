@@ -7,6 +7,7 @@ import { knockbackPlayer } from "./knockback";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { reducedDamage } from "../secret/secretUnlock/itemEffect/reducedDamage";
 import { reducedDetection } from "../secret/secretUnlock/itemEffect/passives/reducedDetection";
+import { reducedEnemyActionSpeed } from "../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -62,7 +63,11 @@ export function enemyTurn(
         { dx: 1, dy: 0 },
       ];
 
-      for (let i = 0; i < enemy.actionPerTurn; i++) {
+      for (
+        let i = 0;
+        i < Math.max(1, enemy.actionPerTurn - reducedEnemyActionSpeed());
+        i++
+      ) {
         const dir = directions[Math.floor(Math.random() * directions.length)];
         const newX = enemy.x + dir.dx;
         const newY = enemy.y + dir.dy;

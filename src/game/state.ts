@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 20,
+  currentFloor: 1,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -48,8 +48,8 @@ export const statePlayer = {
   unlockedPassives: {
     AreaDamageOnAttack: false, // from Flame Pulse
     canPushEnemiesBehind: false, // from Heavy Tail
-    canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map
-    canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map
+    canSeeExits: false, // from True Sight Orb, allows player to see exit location on the map #
+    canSeeHintWalls: false, // from Owl Beak, allows player to see hint walls on the map #
     damageEnemyOnFirstDamageTakenPerFloor: false, // from Vengeful Spirit
     dungeonmapFragment: false, // from Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
@@ -59,7 +59,7 @@ export const statePlayer = {
     negateMagicOncePerFloor: false, // from Runic Barrier
     normalDamageToGhosts: false, // from Soul Claw
     reduceDamageOncePerFloor: false, // from Hardened Scales
-    reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies
+    reducedDetection: false, // from Shadow Veil, reduces chance of being detected by traps and certain enemies #
     reduceEnemyActionSpeed: false, // from War Discipline, reduces enemy action speed by 1 turn
   },
 
