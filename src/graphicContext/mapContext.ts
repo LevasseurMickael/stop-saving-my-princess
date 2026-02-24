@@ -1,6 +1,7 @@
 // This file contains the function to render the map tiles based on the map data structure. It is imported in main.ts to keep the code organized and maintainable.
 
 import { canSeeExits } from "../game/secret/secretUnlock/itemEffect/passives/canSeeExits";
+import { canSeeHintWalls } from "../game/secret/secretUnlock/itemEffect/passives/canSeeHintWall";
 
 export function getMapSprite(
   ctx: CanvasRenderingContext2D,
@@ -18,7 +19,7 @@ export function getMapSprite(
       } else if (map[y][x] === 3) {
         ctx.fillStyle = canSeeExits();
       } else if (map[y][x] === 4) {
-        ctx.fillStyle = "white";
+        ctx.fillStyle = canSeeHintWalls();
       } else if (map[y][x] === 5) {
         ctx.fillStyle = "teal";
       } else if (map[y][x] === 6) {
