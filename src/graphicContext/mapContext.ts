@@ -2,6 +2,7 @@
 
 import { canSeeExits } from "../game/secret/secretUnlock/itemEffect/passives/canSeeExits";
 import { canSeeHintWalls } from "../game/secret/secretUnlock/itemEffect/passives/canSeeHintWall";
+import { dungeonmapFragment } from "../game/secret/secretUnlock/itemEffect/passives/dungeonmapFragment";
 
 export function getMapSprite(
   ctx: CanvasRenderingContext2D,
@@ -12,21 +13,29 @@ export function getMapSprite(
 ) {
   for (let y = 0; y < GridSize; y++) {
     for (let x = 0; x < GridSizeWidth; x++) {
+      let baseColor: string = "";
+
       if (map[y][x] === 1) {
-        ctx.fillStyle = "gray";
+        baseColor = "gray";
       } else if (map[y][x] === 2) {
-        ctx.fillStyle = "gold";
+        baseColor = "gold";
       } else if (map[y][x] === 3) {
-        ctx.fillStyle = canSeeExits();
+        baseColor = canSeeExits();
       } else if (map[y][x] === 4) {
-        ctx.fillStyle = canSeeHintWalls();
+        baseColor = canSeeHintWalls();
       } else if (map[y][x] === 5) {
-        ctx.fillStyle = "teal";
+        baseColor = "teal";
       } else if (map[y][x] === 6) {
-        ctx.fillStyle = "green";
+        baseColor = "green";
       } else {
-        ctx.fillStyle = "black";
+        baseColor = "black";
       }
+
+      if (!dungeonmapFragment(x, y)) {
+        baseColor = "darkgray";
+      }
+
+      ctx.fillStyle = baseColor;
       ctx.fillRect(x * TileSize, y * TileSize, TileSize, TileSize);
     }
   }

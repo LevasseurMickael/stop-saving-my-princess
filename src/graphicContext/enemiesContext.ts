@@ -1,6 +1,7 @@
 // This file contains the function to render the enemies on the canvas based on their state. It is imported in main.ts to keep the code organized and maintainable.
 
 import { getGhostVisionLevel } from "../game/secret/secretUnlock/itemEffect/items/ghostVisionLevel";
+import { dungeonmapFragment } from "../game/secret/secretUnlock/itemEffect/passives/dungeonmapFragment";
 import type { Enemy } from "../lib/type";
 import { enemyColors } from "./enemies/enemiesColors";
 
@@ -11,6 +12,10 @@ export function getEnemiesSprite(
 ) {
   for (const enemy of stateDynamic.enemies) {
     if (!enemy.alive) continue;
+
+    if (!dungeonmapFragment(enemy.x, enemy.y)) {
+      continue; // Skip rendering if the tile is not visible on the map
+    }
 
     const color =
       enemy.name !== undefined ? enemyColors[enemy.name] || "red" : "red";
