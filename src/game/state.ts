@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 13,
+  currentFloor: 44,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -50,12 +50,12 @@ export const statePlayer = {
     canPushEnemiesBehind: false, // from Heavy Tail
     canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
     canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
-    damageEnemyOnFirstDamageTakenPerFloor: false, // from Vengeful Spirit
+    damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
     dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
     extraDamageWhenLowHp: false, // from Ancient Dominance
     fearLowLevelEnemies: false, // from Ancient Roar
-    ghostDamageNegation: false, // from Ethereal Scales
+    ghostDamageNegation: false, // # From Ethereal Scales
     negateMagicOncePerFloor: false, // # From Runic Barrier
     normalDamageToGhosts: false, // # From Soul Claw
     reduceDamageOncePerFloor: false, // # From Hardened Scales
@@ -67,6 +67,7 @@ export const statePlayer = {
   passiveOncePerFloorUsed: {
     negateDamegeOncePerFloor: true,
     negateMagicOncePerFloor: true,
+    firstDamageTakenOncePerFloor: true,
   },
 
   // Track unlocked skills and their effects separately for clarity and potential future mechanics that interact with specific unlocks

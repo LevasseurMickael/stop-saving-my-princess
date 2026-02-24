@@ -10,6 +10,8 @@ import { reducedDetection } from "../secret/secretUnlock/itemEffect/passives/red
 import { reducedEnemyActionSpeed } from "../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { reduceDamageOncePerFloor } from "../secret/secretUnlock/itemEffect/passives/reduceDamageOncePerFloor";
 import { negateMagicOncePerFloor } from "../secret/secretUnlock/itemEffect/passives/negateMagicOncePerFloor";
+import { ghostDamageNegation } from "../secret/secretUnlock/itemEffect/passives/ghostDamageNegation";
+import { damageEnemyOnFirstDamageTakenPerFloor } from "../secret/secretUnlock/itemEffect/passives/damageEnemyOnFirstDamageTakenPerFloor";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -96,6 +98,10 @@ export function enemyTurn(
         }
         // enemy attacks player and does at least 1 damage, even if player has high damage reduction
         handleGameEvent({ type: "enemy_hit", blocker: false });
+        damageEnemyOnFirstDamageTakenPerFloor(enemy);
+        if (ghostDamageNegation(enemy)) {
+          return;
+        }
         if (negateMagicOncePerFloor(enemy)) {
           return;
         }

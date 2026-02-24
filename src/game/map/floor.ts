@@ -30,6 +30,7 @@ export function enterNextFloor() {
   // Reset one-time passive effects for the new floor
   statePlayer.passiveOncePerFloorUsed.negateDamegeOncePerFloor = true;
   statePlayer.passiveOncePerFloorUsed.negateMagicOncePerFloor = true;
+  statePlayer.passiveOncePerFloorUsed.firstDamageTakenOncePerFloor = true;
 
   // Reset player state for the new floor
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = false;

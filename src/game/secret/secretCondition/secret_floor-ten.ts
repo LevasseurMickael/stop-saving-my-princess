@@ -1,4 +1,4 @@
-import type { FloorSecret } from "../../../../lib/type";
+import type { FloorSecret } from "../../../lib/type";
 
 export const floorToTenConditions: FloorSecret[] = [
   // =====================

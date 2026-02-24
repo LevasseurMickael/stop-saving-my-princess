@@ -1,4 +1,4 @@
-import type { FloorSecret } from "../../../../lib/type";
+import type { FloorSecret } from "../../../lib/type";
 
 export const floorToFiftyConditions: FloorSecret[] = [
   // =====================
@@ -57,7 +57,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // door has no level yet
+    // Opening the door does not unlock the secret
     floor: 45,
     tier: 4,
     hint: "« The royal locks finally open. »",
