@@ -7,6 +7,7 @@ export function getMonsterUnique(
   name: string,
   numberToSpawn: number,
   index: number,
+  mult: number,
 ): Enemy[] {
   const specialMonster = monster.find((m) => m.slug === name);
 
@@ -17,8 +18,8 @@ export function getMonsterUnique(
         x: enemies[i].x,
         y: enemies[i].y,
         alive: true,
-        hp: specialMonster.hp,
-        attack: specialMonster.attack,
+        hp: Math.round(specialMonster.hp * mult),
+        attack: Math.round(specialMonster.attack * mult),
         attackRange: specialMonster.attackRange,
         attackWeapon: specialMonster.attackWeapon,
         slug: specialMonster.slug,
@@ -33,6 +34,7 @@ export function getMonsterUnique(
       };
     }
   }
+  console.log(enemies);
   return enemies;
 }
 
@@ -41,6 +43,7 @@ export function getMonsterMultiple(
   enemies: Enemy[],
   monster: Monster[],
   list: { name: string; numberToSpawn: number }[],
+  mult: number,
 ): Enemy[] {
   list.forEach(({ name, numberToSpawn }) => {
     enemies = getMonsterUnique(
@@ -51,6 +54,7 @@ export function getMonsterMultiple(
       list.indexOf(
         list.find((m) => m.name === name) || { name: "", numberToSpawn: 0 },
       ),
+      mult,
     );
   });
   return enemies;

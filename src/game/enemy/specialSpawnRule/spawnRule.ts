@@ -26,10 +26,10 @@ export function getMonsterForSpecialFloor(
 
   if (floor === 2) {
     const list = [{ name: "cave-rat", numberToSpawn: 2 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1);
   } else if (floor === 10) {
     const list = [{ name: "bone-archer", numberToSpawn: 1 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1.5);
   }
 
   // =====================
@@ -40,19 +40,19 @@ export function getMonsterForSpecialFloor(
       { name: "green-slime", numberToSpawn: 1 },
       { name: "red-slime", numberToSpawn: 1 },
     ];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1);
   } else if (floor === 12) {
     const list = [{ name: "skeleton", numberToSpawn: 2 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1);
   } else if (floor === 14) {
     const list = [{ name: "lost-spirit", numberToSpawn: 10 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1);
   } else if (floor === 17) {
     const family = "vermin";
     return getMonsterFamily(enemies, monster, family);
   } else if (floor === 18) {
     const list = [{ name: "knight-recruit", numberToSpawn: 2 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1.5);
   }
 
   // =====================
@@ -60,14 +60,13 @@ export function getMonsterForSpecialFloor(
   // =====================
   else if (floor === 22) {
     const list = [{ name: "rusty-armor", numberToSpawn: 2 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1);
   } else if (floor === 24) {
     const list = [{ name: "cult-mage", numberToSpawn: 2 }];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1);
   } else if (floor === 26) {
     const list = [{ name: "green-slime", numberToSpawn: 3 }];
-    console.log(enemies);
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 2);
   } else if (floor === 27) {
     const family = "undead";
     return getMonsterFamily(enemies, monster, family);
@@ -88,7 +87,7 @@ export function getMonsterForSpecialFloor(
       { name: "crystal-slime", numberToSpawn: 1 },
       { name: "venom-slime", numberToSpawn: 1 },
     ];
-    return getMonsterMultiple(newFloorEnemies, monster, list);
+    return getMonsterMultiple(newFloorEnemies, monster, list, 2);
   }
 
   // =====================
@@ -101,7 +100,7 @@ export function getMonsterForSpecialFloor(
       { name: "skeleton", numberToSpawn: 1 },
       { name: "lost-spirit", numberToSpawn: 1 },
     ];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 1.5);
   } else if (floor === 46) {
     const list = [
       { name: "knight-recruit", numberToSpawn: 1 },
@@ -109,12 +108,12 @@ export function getMonsterForSpecialFloor(
       { name: "royal-spearmaster", numberToSpawn: 1 },
       { name: "templar-captain", numberToSpawn: 1 },
     ];
-    return getMonsterMultiple(enemies, monster, list);
+    return getMonsterMultiple(enemies, monster, list, 2);
   } else if (floor === 49) {
     const family = "royal";
     const newFloorEnemies = getMonsterFamily(enemies, monster, family);
     const list = [{ name: "phantom-knight", numberToSpawn: 2 }];
-    return getMonsterMultiple(newFloorEnemies, monster, list);
+    return getMonsterMultiple(newFloorEnemies, monster, list, 5);
   } else {
     return enemies;
   }
