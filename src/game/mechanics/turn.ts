@@ -8,6 +8,7 @@ import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { reducedDamage } from "../secret/secretUnlock/itemEffect/reducedDamage";
 import { reducedDetection } from "../secret/secretUnlock/itemEffect/passives/reducedDetection";
 import { reducedEnemyActionSpeed } from "../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
+import { reduceDamageOncePerFloor } from "../secret/secretUnlock/itemEffect/passives/reduceDamageOncePerFloor";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -94,12 +95,15 @@ export function enemyTurn(
         }
         // enemy attacks player and does at least 1 damage, even if player has high damage reduction
         handleGameEvent({ type: "enemy_hit", blocker: false });
+        if (reduceDamageOncePerFloor()) {
+          return;
+        }
         statePlayer.stat.hp = Math.max(
           0,
           statePlayer.stat.hp -
             Math.max(1, enemy.attack - reducedDamage(enemy)),
         );
-
+        console.log(statePlayer.stat.hp);
         // Check if player dies from the attack and reset position and HP if so
         if (statePlayer.stat.hp <= 0) {
           statePlayer.deathCount++;

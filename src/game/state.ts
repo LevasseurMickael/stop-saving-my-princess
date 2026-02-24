@@ -57,12 +57,19 @@ export const statePlayer = {
     fearLowLevelEnemies: false, // from Ancient Roar
     ghostDamageNegation: false, // from Ethereal Scales
     negateMagicOncePerFloor: false, // from Runic Barrier
-    normalDamageToGhosts: true, // from Soul Claw
+    normalDamageToGhosts: false, // # From Soul Claw
     reduceDamageOncePerFloor: false, // from Hardened Scales
     reducedDetection: false, // # From Shadow Veil, reduces chance of being detected by traps and certain enemies
     reduceEnemyActionSpeed: false, // # From War Discipline, reduces enemy action speed by 1 turn
   },
 
+  // Track unlocked passives and their effects separately for clarity and potential future mechanics that interact with specific unlocks
+  passiveOncePerFloorUsed: {
+    negateDamegeOncePerFloor: true,
+    negateMagicOncePerFloor: true,
+  },
+
+  // Track unlocked skills and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   skillUsedThisFloor: {
     stunEnemyOncePerFloor: false,
     fireBreathOncePerFloor: false,

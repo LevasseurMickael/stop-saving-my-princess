@@ -27,6 +27,11 @@ export function enterNextFloor() {
   stateDynamic.enemies.length = 0;
   stateDynamic.secrets.length = 0;
 
+  // Reset one-time passive effects for the new floor
+  statePlayer.passiveOncePerFloorUsed.negateDamegeOncePerFloor = true;
+  statePlayer.passiveOncePerFloorUsed.negateMagicOncePerFloor = true;
+
+  // Reset player state for the new floor
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = false;
   statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = false;
 
