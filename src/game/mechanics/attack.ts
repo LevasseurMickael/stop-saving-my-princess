@@ -13,6 +13,7 @@ import { normalDamageToGhost } from "../secret/secretUnlock/itemEffect/passives/
 import { canPushEnemiesBehind } from "../secret/secretUnlock/itemEffect/passives/canPushEnemiesBehind";
 import { areaDamageOnAttack } from "../secret/secretUnlock/itemEffect/passives/areaDamageOnAttack";
 import { getAttackOffset } from "./getAttackOffset";
+import { extraDamageWhenLowHp } from "../secret/secretUnlock/itemEffect/passives/extraDamageWhenLowHp";
 
 function getAttackTarget(x: number, y: number): TargetCondition {
   const tile = map[y]?.[x];
@@ -50,10 +51,15 @@ export default function attack() {
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
+      console.log(statePlayer.stat.attack * extraDamageWhenLowHp());
       enemy.hp = Math.max(
         0,
         enemy.hp -
-          Math.max(1, statePlayer.stat.attack - normalDamageToGhost(enemy)),
+          Math.max(
+            1,
+            statePlayer.stat.attack * extraDamageWhenLowHp() -
+              normalDamageToGhost(enemy),
+          ),
       );
 
       // Enemy is stunned for 1 turn

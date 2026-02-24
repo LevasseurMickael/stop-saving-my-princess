@@ -32,7 +32,7 @@ export const stateSecret = {
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
   stat: {
-    hp: 500,
+    hp: 100,
     maxHp: 500,
     attack: 500,
     attackRange: 1,
@@ -46,14 +46,14 @@ export const statePlayer = {
   },
 
   unlockedPassives: {
-    AreaDamageOnAttack: true, // from Flame Pulse
+    AreaDamageOnAttack: false, // # From Flame Pulse
     canPushEnemiesBehind: false, // # From Heavy Tail
     canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
     canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
     dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
-    extraDamageWhenLowHp: false, // from Ancient Dominance
+    extraDamageWhenLowHp: false, // # From Ancient Dominance
     fearLowLevelEnemies: false, // TODO from Ancient Roar
     ghostDamageNegation: false, // # From Ethereal Scales
     negateMagicOncePerFloor: false, // # From Runic Barrier
