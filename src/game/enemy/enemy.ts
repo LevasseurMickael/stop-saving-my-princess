@@ -54,6 +54,7 @@ export function spawnEnemies(
         x, // Enemy position on x-axis
         y, // Enemy position on y-axis
         alive: true, // Enemy is alive
+        maxHp: monster.hp, // Enemies max hp
         hp: monster.hp, // Enemies hp
         attack: monster.attack, // Enemies attack
         attackRange: monster.attackRange, // Enemies can attack adjacent tiles

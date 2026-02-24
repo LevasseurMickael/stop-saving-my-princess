@@ -20,6 +20,7 @@ export function getMonsterFamily(
         x: enemies[i].x,
         y: enemies[i].y,
         alive: true,
+        maxHp: selectedMonster.maxHp,
         hp: selectedMonster.hp,
         attack: selectedMonster.attack,
         attackRange: selectedMonster.attackRange,

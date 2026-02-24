@@ -12,7 +12,7 @@ export function areaDamageOnAttack(aoe: { dx: number; dy: number }[]) {
     stateDynamic.enemies.forEach((enemy) => {
       if (!enemy.alive) return;
       if (targetX === enemy.x && targetY === enemy.y) {
-        enemy.hp -= Math.round(statePlayer.stat.attack * 0.5); // Deal minor splash damage (50% of player's attack)
+        enemy.hp -= Math.ceil(statePlayer.stat.attack * 0.5); // Deal minor splash damage (50% of player's attack)
         if (enemy.hp <= 0) {
           enemy.alive = false;
         }

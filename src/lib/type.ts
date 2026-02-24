@@ -9,6 +9,7 @@ export type Enemy = {
   x: number;
   y: number;
   stunnedTurns?: number; // number of turns the enemy is stunned
+  maxHp: number;
   hp: number;
   attack: number;
   attackRange: number;
@@ -30,6 +31,7 @@ export type Monster = {
   monsterFamilly: string;
   isVisible: boolean;
   difficulty: number;
+  maxHp: number;
   hp: number;
   attack: number;
   attackRange: number;

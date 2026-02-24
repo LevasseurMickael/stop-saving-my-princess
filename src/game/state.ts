@@ -34,7 +34,7 @@ export const statePlayer = {
   stat: {
     hp: 100,
     maxHp: 500,
-    attack: 500,
+    attack: 1,
     attackRange: 1,
     resurectionCount: 0,
   },
@@ -52,9 +52,9 @@ export const statePlayer = {
     canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
     dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
-    emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
+    emptyChest: false, // TODO from Empty Chest, has no effect but is required for certain secrets
     extraDamageWhenLowHp: false, // # From Ancient Dominance
-    fearLowLevelEnemies: false, // TODO from Ancient Roar
+    fearLowLevelEnemies: true, // TODO from Ancient Roar
     ghostDamageNegation: false, // # From Ethereal Scales
     negateMagicOncePerFloor: false, // # From Runic Barrier
     normalDamageToGhosts: false, // # From Soul Claw
@@ -86,7 +86,7 @@ export const statePlayer = {
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
   reducedDamage: {
     type: {
-      physical: 100,
+      physical: 0,
       ranged: 0,
       magic: 0,
     },

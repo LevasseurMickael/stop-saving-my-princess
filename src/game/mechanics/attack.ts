@@ -51,7 +51,6 @@ export default function attack() {
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
-      console.log(statePlayer.stat.attack * extraDamageWhenLowHp());
       enemy.hp = Math.max(
         0,
         enemy.hp -
