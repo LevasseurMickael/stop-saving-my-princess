@@ -56,9 +56,9 @@ export const statePlayer = {
     extraDamageWhenLowHp: false, // from Ancient Dominance
     fearLowLevelEnemies: false, // from Ancient Roar
     ghostDamageNegation: false, // from Ethereal Scales
-    negateMagicOncePerFloor: false, // from Runic Barrier
+    negateMagicOncePerFloor: false, // # From Runic Barrier
     normalDamageToGhosts: false, // # From Soul Claw
-    reduceDamageOncePerFloor: false, // from Hardened Scales
+    reduceDamageOncePerFloor: false, // # From Hardened Scales
     reducedDetection: false, // # From Shadow Veil, reduces chance of being detected by traps and certain enemies
     reduceEnemyActionSpeed: false, // # From War Discipline, reduces enemy action speed by 1 turn
   },
