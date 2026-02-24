@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 44,
+  currentFloor: 0,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -46,7 +46,7 @@ export const statePlayer = {
   },
 
   unlockedPassives: {
-    AreaDamageOnAttack: false, // from Flame Pulse
+    AreaDamageOnAttack: true, // from Flame Pulse
     canPushEnemiesBehind: false, // # From Heavy Tail
     canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
     canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
@@ -54,7 +54,7 @@ export const statePlayer = {
     dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // from Empty Chest, has no effect but is required for certain secrets
     extraDamageWhenLowHp: false, // from Ancient Dominance
-    fearLowLevelEnemies: false, // from Ancient Roar
+    fearLowLevelEnemies: false, // TODO from Ancient Roar
     ghostDamageNegation: false, // # From Ethereal Scales
     negateMagicOncePerFloor: false, // # From Runic Barrier
     normalDamageToGhosts: false, // # From Soul Claw

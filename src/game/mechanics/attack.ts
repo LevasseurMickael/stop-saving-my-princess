@@ -4,27 +4,15 @@ import {
   statePlayer,
   stateShield,
 } from "../state";
-import type { Direction, TargetCondition } from "../../lib/type";
+import type { TargetCondition } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
 
 import { map } from "../map/map";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { normalDamageToGhost } from "../secret/secretUnlock/itemEffect/passives/normalDamageToGhost";
 import { canPushEnemiesBehind } from "../secret/secretUnlock/itemEffect/passives/canPushEnemiesBehind";
-
-// Calculate attack offset based on player's facing direction
-function getAttackOffset(facing: Direction) {
-  switch (facing) {
-    case "up":
-      return { dx: 0, dy: -1, bx: 0, by: 1 };
-    case "down":
-      return { dx: 0, dy: 1, bx: 0, by: -1 };
-    case "left":
-      return { dx: -1, dy: 0, bx: 1, by: 0 };
-    case "right":
-      return { dx: 1, dy: 0, bx: -1, by: 0 };
-  }
-}
+import { areaDamageOnAttack } from "../secret/secretUnlock/itemEffect/passives/areaDamageOnAttack";
+import { getAttackOffset } from "./getAttackOffset";
 
 function getAttackTarget(x: number, y: number): TargetCondition {
   const tile = map[y]?.[x];
@@ -47,13 +35,14 @@ export default function attack() {
   }
 
   // Calculate target tile based on player's facing direction
-  const { dx, dy, bx, by } = getAttackOffset(statePlayer.facing);
+  const { dx, dy, behindx, behindy, aoe } = getAttackOffset(statePlayer.facing);
   const targetX = statePlayer.x + dx;
   const targetY = statePlayer.y + dy;
 
   const target = getAttackTarget(targetX, targetY);
 
-  canPushEnemiesBehind(bx, by);
+  areaDamageOnAttack(aoe);
+  canPushEnemiesBehind(behindx, behindy);
 
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {

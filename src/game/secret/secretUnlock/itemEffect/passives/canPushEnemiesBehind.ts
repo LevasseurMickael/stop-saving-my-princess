@@ -21,6 +21,5 @@ export function canPushEnemiesBehind(bx: number, by: number): void {
   if (enemyBehind) {
     enemyBehind.stunnedTurns = 1; // Stun the enemy for 1 turn when pushed
     knockbackEnemy(enemyBehind);
-    console.log(`Pushed ${enemyBehind.name} behind player!`);
   }
 }
