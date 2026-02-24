@@ -6,6 +6,7 @@ import { isBlockedByShield } from "./shield";
 import { knockbackPlayer } from "./knockback";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { reducedDamage } from "../secret/secretUnlock/itemEffect/reducedDamage";
+import { reducedDetection } from "../secret/secretUnlock/itemEffect/passives/reducedDetection";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -28,11 +29,11 @@ export function enemyTurn(
 
   // aggro area for patrol pattern
   const dist = Math.abs(enemy.x - player.x) + Math.abs(enemy.y - player.y);
-  if (enemy.pattern === "patrol" && dist <= 3) {
+  if (enemy.pattern === "patrol" && dist <= 4 - reducedDetection()) {
     enemy.pattern = "chase";
   }
   // lost interest if player is far away
-  if (enemy.pattern === "chase" && dist > 4) {
+  if (enemy.pattern === "chase" && dist > 4 - reducedDetection()) {
     enemy.pattern = "patrol";
   }
 
