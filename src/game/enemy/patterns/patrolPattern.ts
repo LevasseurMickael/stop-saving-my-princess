@@ -18,11 +18,22 @@ export function patrolPattern(enemy: Enemy, map: number[][]) {
     const dir = directions[Math.floor(Math.random() * directions.length)];
     const newX = enemy.x + dir.dx;
     const newY = enemy.y + dir.dy;
-
-    // Check if the new position is valid (not a wall and not occupied by another enemy)
-    if (map[newY]?.[newX] === 0 && !isOccupied(newX, newY, enemy)) {
-      enemy.x = newX;
-      enemy.y = newY;
+    if (enemy.attackWeapon === "melee") {
+      // Check if the new position is valid (not a wall and not occupied by another enemy)
+      if (map[newY]?.[newX] === 0 && !isOccupied(newX, newY, enemy)) {
+        enemy.x = newX;
+        enemy.y = newY;
+      }
+    } else {
+      const moveOrNot = Math.random() < 0.2; // 20% chance to move
+      if (
+        moveOrNot &&
+        map[newY]?.[newX] === 0 &&
+        !isOccupied(newX, newY, enemy)
+      ) {
+        enemy.x = newX;
+        enemy.y = newY;
+      }
     }
   }
 }

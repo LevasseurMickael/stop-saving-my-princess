@@ -62,7 +62,7 @@ export function spawnEnemies(
         facing: monster.facing, // Initial facing direction
         actionPerTurn: monster.actionPerTurn, // Enemies number of actions per turn
         stunnedTurns: 0, // No stun initially
-        pattern: Math.random() < 0.5 ? "stationary" : "patrol", // Randomly assign pattern
+        pattern: "patrol", // Initial behavior pattern
         name: monster.name, // Name of the monster
         slug: monster.slug, // Slug identifier for the monster
         monsterFamilly: monster.monsterFamilly, // Familly of the monster

@@ -32,7 +32,7 @@ export function getMonsterFamily(
         facing: selectedMonster.facing,
         actionPerTurn: selectedMonster.actionPerTurn,
         stunnedTurns: 0,
-        pattern: "stationary",
+        pattern: "patrol",
         name: selectedMonster.name,
       };
     }

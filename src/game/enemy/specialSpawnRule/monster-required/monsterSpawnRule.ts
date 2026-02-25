@@ -30,7 +30,7 @@ export function getMonsterUnique(
         facing: specialMonster.facing,
         actionPerTurn: specialMonster.actionPerTurn,
         stunnedTurns: 0,
-        pattern: "stationary",
+        pattern: "patrol",
         name: specialMonster.name,
       };
     }
