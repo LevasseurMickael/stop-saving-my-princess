@@ -16,6 +16,7 @@ export const undead: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Wraith",
@@ -32,6 +33,7 @@ export const undead: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 1,
+    attackChargeTurnMax: 1,
   },
   {
     name: "Bone Archer",
@@ -48,6 +50,7 @@ export const undead: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 1,
+    attackChargeTurnMax: 1,
   },
   {
     name: "Rotting Champion",
@@ -64,5 +67,6 @@ export const undead: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
 ];

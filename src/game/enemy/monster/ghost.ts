@@ -16,6 +16,7 @@ export const ghost: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 1,
+    attackChargeTurnMax: 1,
   },
   {
     name: "Crying Specter",
@@ -32,6 +33,7 @@ export const ghost: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 1,
+    attackChargeTurnMax: 1,
   },
   {
     name: "Phantom Knight",
@@ -48,5 +50,6 @@ export const ghost: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
 ];

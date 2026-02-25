@@ -16,6 +16,7 @@ export const royalForce: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Royal Archer",
@@ -32,6 +33,7 @@ export const royalForce: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 1,
+    attackChargeTurnMax: 1,
   },
   {
     name: "Royal Spearmaster",
@@ -48,6 +50,7 @@ export const royalForce: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Templar Captain",
@@ -64,5 +67,6 @@ export const royalForce: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
 ];

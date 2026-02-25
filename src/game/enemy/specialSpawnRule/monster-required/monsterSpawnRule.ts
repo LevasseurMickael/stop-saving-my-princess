@@ -30,6 +30,7 @@ export function getMonsterUnique(
         facing: specialMonster.facing,
         actionPerTurn: specialMonster.actionPerTurn,
         attackChargeTurn: specialMonster.attackChargeTurn,
+        attackChargeTurnMax: specialMonster.attackChargeTurnMax,
         stunnedTurns: 0,
         pattern: "patrol",
         name: specialMonster.name,

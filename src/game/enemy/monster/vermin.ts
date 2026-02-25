@@ -16,6 +16,7 @@ export const vermin: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Shadow Bat",
@@ -32,6 +33,7 @@ export const vermin: Monster[] = [
     facing: "down",
     actionPerTurn: 3,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Fire Beetle",
@@ -48,6 +50,7 @@ export const vermin: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Tunnel Spider",
@@ -64,5 +67,6 @@ export const vermin: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
 ];

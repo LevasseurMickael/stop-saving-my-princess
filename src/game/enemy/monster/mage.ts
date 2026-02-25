@@ -16,6 +16,7 @@ export const mage: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 2,
+    attackChargeTurnMax: 2,
   },
   {
     name: "Arcane Sentinel",
@@ -32,6 +33,7 @@ export const mage: Monster[] = [
     facing: "down",
     actionPerTurn: 2,
     attackChargeTurn: 1,
+    attackChargeTurnMax: 1,
   },
   {
     name: "Hex Binder",
@@ -48,5 +50,6 @@ export const mage: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 2,
+    attackChargeTurnMax: 2,
   },
 ];

@@ -14,7 +14,7 @@ export function rangedPattern(
   // Charge attack for a few turns before attacking
   if (isInAttackRange(enemy, player) && enemy.attackChargeTurn === 0) {
     attackPattern(enemy, player);
-    enemy.attackChargeTurn = 1; // Reset charge turn after attacking
+    enemy.attackChargeTurn = enemy.attackChargeTurnMax; // Reset charge turn after attacking
     return;
   } else if (isInAttackRange(enemy, player) && enemy.attackChargeTurn > 0) {
     enemy.attackChargeTurn -= 1;

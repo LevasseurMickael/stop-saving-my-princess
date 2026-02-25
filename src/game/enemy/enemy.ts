@@ -62,6 +62,7 @@ export function spawnEnemies(
         facing: monster.facing, // Initial facing direction
         actionPerTurn: monster.actionPerTurn, // Enemies number of actions per turn
         attackChargeTurn: monster.attackChargeTurn, // Number of turns required to charge attack
+        attackChargeTurnMax: monster.attackChargeTurnMax, // Max number of turns required to charge attack
         stunnedTurns: 0, // No stun initially
         pattern: "patrol", // Initial behavior pattern
         name: monster.name, // Name of the monster

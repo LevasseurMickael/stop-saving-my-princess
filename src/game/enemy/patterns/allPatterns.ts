@@ -1,5 +1,4 @@
 import type { Enemy } from "../../../lib/type";
-import { chasePattern } from "./chasePattern";
 import { magicPattern } from "./magicPattern";
 import { meleePattern } from "./meleePattern";
 import { patrolPattern } from "./patrolPattern";
@@ -12,18 +11,9 @@ export function allMonsterPatterns(
   map: number[][],
 ) {
   switch (enemy.pattern) {
-    // Stationary pattern: enemy does not move
-    case "stationary":
-      // Do nothing
-      break;
-
     // Patrol pattern: move randomly within the room
     case "patrol":
       patrolPattern(enemy, map);
-      break;
-
-    case "chase":
-      chasePattern(enemy, player, map);
       break;
 
     case "runAway":
@@ -39,7 +29,7 @@ export function allMonsterPatterns(
       break;
 
     case "magic":
-      magicPattern();
+      magicPattern(enemy, player);
       break;
   }
 }

@@ -32,6 +32,7 @@ export function getMonsterFamily(
         facing: selectedMonster.facing,
         actionPerTurn: selectedMonster.actionPerTurn,
         attackChargeTurn: selectedMonster.attackChargeTurn,
+        attackChargeTurnMax: selectedMonster.attackChargeTurnMax,
         stunnedTurns: 0,
         pattern: "patrol",
         name: selectedMonster.name,

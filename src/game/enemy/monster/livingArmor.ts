@@ -16,6 +16,7 @@ export const livingArmor: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Royal Guard Armor",
@@ -32,6 +33,7 @@ export const livingArmor: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
   {
     name: "Cursed Halberd Armor",
@@ -48,5 +50,6 @@ export const livingArmor: Monster[] = [
     facing: "down",
     actionPerTurn: 1,
     attackChargeTurn: 0,
+    attackChargeTurnMax: 0,
   },
 ];

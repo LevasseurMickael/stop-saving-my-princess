@@ -17,6 +17,7 @@ export type Enemy = {
   facing: Direction;
   actionPerTurn: number;
   attackChargeTurn: number;
+  attackChargeTurnMax: number;
   alive: boolean;
   pattern: string;
   name?: string;
@@ -41,6 +42,7 @@ export type Monster = {
   facing: Direction;
   actionPerTurn: number;
   attackChargeTurn: number;
+  attackChargeTurnMax: number;
 };
 
 export type SecretItem = {
