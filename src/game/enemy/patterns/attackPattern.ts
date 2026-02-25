@@ -8,6 +8,7 @@ import { negateMagicOncePerFloor } from "../../secret/secretUnlock/itemEffect/pa
 import { reduceDamageOncePerFloor } from "../../secret/secretUnlock/itemEffect/passives/reduceDamageOncePerFloor";
 import { reducedDamage } from "../../secret/secretUnlock/itemEffect/reducedDamage";
 import { statePlayer } from "../../state";
+import { friendlyDamage } from "./pattern-helper/friendlyDamage";
 
 export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
   const distX = player.x - enemy.x;
@@ -35,6 +36,10 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
       0,
       statePlayer.stat.hp - Math.max(1, enemy.attack - reducedDamage(enemy)),
     );
+
+    if (enemy.attackWeapon === "magic") {
+      friendlyDamage(enemy);
+    }
     // Check if player dies from the attack and reset position and HP if so
     if (statePlayer.stat.hp <= 0) {
       statePlayer.deathCount++;
