@@ -5,13 +5,7 @@ import {
   GridSizeWidth,
   loadMap,
 } from "./game/map/map";
-import {
-  stateDungeon,
-  stateDynamic,
-  stateKillCount,
-  statePlayer,
-  stateStats,
-} from "./game/state";
+import { stateDynamic, statePlayer } from "./game/state";
 import "./game/player/player";
 import {
   getPlayerAttackSprite,
@@ -51,7 +45,7 @@ function render() {
   getEnemiesSprite(ctx, stateDynamic, TileSize);
 
   // Draw HUD
-  getHudSprite(ctx, statePlayer, stateStats, stateKillCount, stateDungeon);
+  getHudSprite(ctx);
 }
 
 // Load initial floor and start game loop

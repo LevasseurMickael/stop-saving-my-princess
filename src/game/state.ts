@@ -41,7 +41,7 @@ export const statePlayer = {
 
   // Track unlocked skills separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedSkills: {
-    stunEnemyOncePerFloor: false, // from Smoke Breath
+    stunEnemyOncePerFloor: true, // from Smoke Breath
     fireBreathOncePerFloor: false, // from Dragon's Breath
   },
 
@@ -72,8 +72,8 @@ export const statePlayer = {
 
   // Track unlocked skills and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   skillUsedThisFloor: {
-    stunEnemyOncePerFloor: false,
-    fireBreathOncePerFloor: false,
+    stunEnemyOncePerFloor: true,
+    fireBreathOncePerFloor: true,
   },
 
   // Track unlocked items and their effects separately for clarity and potential future mechanics that interact with specific unlocks

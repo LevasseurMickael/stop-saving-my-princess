@@ -19,6 +19,7 @@ import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { unlockingSecretItem } from "../secret/secretUnlock/secretUnlock";
 import { keyLevelLogic } from "../secret/secretUnlock/itemEffect/items/keyLevel";
 import { isOccupied } from "../enemy/enemy";
+import { stunEnemyOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/stunEnemyOncePerFloor";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -47,6 +48,11 @@ window.addEventListener("keydown", (e) => {
     } else if (e.key === "d") {
       newX++;
       statePlayer.facing = "right";
+    }
+
+    if (e.key === "a" && statePlayer.unlockedSkills.stunEnemyOncePerFloor) {
+      stunEnemyOncePerFloor();
+      acted = true;
     }
 
     // movement

@@ -33,8 +33,8 @@ export function enterNextFloor() {
   statePlayer.passiveOncePerFloorUsed.firstDamageTakenOncePerFloor = true;
 
   // Reset player state for the new floor
-  statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = false;
-  statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = false;
+  statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = true;
+  statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = true;
 
   loadMap();
 
