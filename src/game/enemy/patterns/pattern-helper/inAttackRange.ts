@@ -69,9 +69,9 @@ export function hasLineOfSight(
       if (!map[y] || map[y][x] === undefined || map[y][x] !== 0) {
         return false; // Blocked by wall or out of bounds
       }
-      if (isOccupied(x, y, enemy)) {
-        return false; // Blocked by another enemy
-      }
+      // if (isOccupied(x, y, enemy)) {
+      //   return false; // Blocked by another enemy
+      // }
       if (x !== player.x) x += stepX;
       if (y !== player.y) y += stepY;
     }

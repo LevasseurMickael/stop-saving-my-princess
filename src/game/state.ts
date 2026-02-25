@@ -41,8 +41,8 @@ export const statePlayer = {
 
   // Track unlocked skills separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedSkills: {
-    stunEnemyOncePerFloor: true, // from Smoke Breath
-    fireBreathOncePerFloor: false, // from Dragon's Breath
+    stunEnemyOncePerFloor: false, // from Smoke Breath
+    fireBreathOncePerFloor: true, // from Dragon's Breath
   },
 
   unlockedPassives: {
