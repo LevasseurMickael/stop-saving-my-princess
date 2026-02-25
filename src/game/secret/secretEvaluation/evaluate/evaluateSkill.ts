@@ -7,7 +7,9 @@ export function evaluateSkill(condition: SkillCondition): boolean {
     case "has_skill":
       return statePlayer.unlockedSkills[condition.skill] === true;
     case "use_skill":
-      return statePlayer.skillUsedThisFloor[condition.skill] === true;
+      return statePlayer.skillUsedThisFloor[condition.skill] === false;
+    case "has_passive":
+      return statePlayer.unlockedPassives[condition.skill] === true;
   }
   return false;
 }

@@ -48,7 +48,6 @@ export const floorToFortyConditions: FloorSecret[] = [
     },
   },
   {
-    // use skill condition not set yet
     floor: 34,
     tier: 3,
     hint: "« The dragon's breath reveals what burns. »",

@@ -3,10 +3,13 @@ import { map } from "../../../map/map";
 import { stateSecret } from "../../../state";
 import { evaluateCondition } from "../secretEvaluator";
 import { evaluateContext } from "./evaluateContext";
+import { evaluateFamily } from "./evaluateFamily";
 import { getTileTargetType } from "./evaluateHelper/getTileTargetType";
 import { isAdjacentToTileType } from "./evaluateHelper/isAdjacentToTileType";
 import { evaluateMovePattern } from "./evaluateMovePattern";
 import { evaluatePosition } from "./evaluatePosition";
+import { evaluateSkill } from "./evaluateSkill";
+import { evaluateVisitAllRooms } from "./evaluateVisitAllRoom";
 
 export function evaluateSequence(steps: SecretCondition[]): boolean {
   // Séparer les conditions d'état (évaluées maintenant)
@@ -115,12 +118,26 @@ function eventMatchesCondition(
     case "enemy_killed_last":
     case "no_enemy_alive":
     case "took_damage":
+    case "enemy_kill":
     case "did_not_move":
     case "different_walls_attacked":
       return evaluateContext(condition);
 
     case "move_pattern":
       return evaluateMovePattern(condition);
+
+    case "has_skill":
+    case "use_skill":
+    case "has_passive":
+      return evaluateSkill(condition);
+
+    case "visit_all_rooms":
+      return evaluateVisitAllRooms(condition.steps);
+
+    case "kill_family":
+    case "kill_all_family_types":
+    case "no_damage_from_family":
+      return evaluateFamily(condition);
 
     default:
       return false;

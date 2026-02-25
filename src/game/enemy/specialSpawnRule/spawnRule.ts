@@ -93,7 +93,10 @@ export function getMonsterForSpecialFloor(
   // =====================
   // Floors 41–50
   // =====================
-  else if (floor === 42) {
+  else if (floor === 41) {
+    const list = [{ name: "phantom-knight", numberToSpawn: 1 }];
+    return getMonsterMultiple(enemies, monster, list, 1);
+  } else if (floor === 42) {
     const list = [
       { name: "green-slime", numberToSpawn: 1 },
       { name: "cave-rat", numberToSpawn: 1 },

@@ -11,7 +11,7 @@ export function evaluateHealingRoom(condition: HealingRoomCondition): boolean {
     case "unlock_healing_door":
       if (!stateDynamic.healingRoom) return false;
       return (
-        stateDynamic.healingRoom?.isUnlocked &&
+        stateDynamic.healingRoom.isUnlocked &&
         stateDynamic.healingRoom.doorLevel >= condition.doorLevel
       );
     default:

@@ -73,13 +73,13 @@ export function createHealingRoom(
 function doorLevelLogic() {
   if (stateDungeon.currentFloor < 5) {
     return 0; // Always open door
-  } else if (stateDungeon.currentFloor < 15) {
+  } else if (stateDungeon.currentFloor < 14) {
     return 1; // basic door
-  } else if (stateDungeon.currentFloor < 25) {
+  } else if (stateDungeon.currentFloor < 24) {
     return 2; // Iron door
-  } else if (stateDungeon.currentFloor < 35) {
+  } else if (stateDungeon.currentFloor < 34) {
     return 3; // Silver door
-  } else if (stateDungeon.currentFloor < 45) {
+  } else if (stateDungeon.currentFloor < 44) {
     return 4; // arcane seal
   } else {
     return 5; // royal lock

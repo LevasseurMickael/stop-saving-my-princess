@@ -172,6 +172,9 @@ window.addEventListener("keydown", (e) => {
       statePlayer.stat.maxHp,
     );
     map[newY][newX] = 0; // Remove healing room center from map (it will be re-added when we enter the floor again)
+    if (statePlayer.stat.hp === statePlayer.stat.maxHp) {
+      stateSecret.healedAtFullHp = true;
+    }
   }
 
   // Floor transition

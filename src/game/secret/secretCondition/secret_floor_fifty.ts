@@ -6,7 +6,6 @@ export const floorToFiftyConditions: FloorSecret[] = [
   // =====================
 
   {
-    // sequence does not work, has skill may not be set, phantom knight may not spawn
     floor: 41,
     tier: 4,
     hint: "« The claws of the soul and the ancient flames. »",
@@ -14,7 +13,7 @@ export const floorToFiftyConditions: FloorSecret[] = [
     condition: {
       kind: "sequence",
       steps: [
-        { kind: "has_skill", skill: "normalDamageToGhosts" },
+        { kind: "has_passive", skill: "normalDamageToGhosts" },
         { kind: "has_skill", skill: "fireBreathOncePerFloor" },
         { kind: "enemy_kill", slug: "phantom-knight", count: 1 },
       ],
@@ -36,7 +35,6 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // May not work
     floor: 43,
     tier: 4,
     hint: "« The sanctuary at full strength hides more. »",
@@ -46,18 +44,16 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // attack corners condition may not be set up correctly
     floor: 44,
     tier: 4,
-    hint: "« Strike the four corners of the world. »",
+    hint: "« None of them remain untouched. »",
     unlocked: false,
     condition: {
-      kind: "attack_corners",
-      count: 4,
+      kind: "different_walls_attacked",
+      count: 20,
     },
   },
   {
-    // Opening the door does not unlock the secret
     floor: 45,
     tier: 4,
     hint: "« The royal locks finally open. »",
@@ -100,7 +96,6 @@ export const floorToFiftyConditions: FloorSecret[] = [
     },
   },
   {
-    // visit all rooms, kill family, no damage from family
     floor: 49,
     tier: 4,
     hint: "« The perfect dragon masters everything. »",
@@ -108,10 +103,17 @@ export const floorToFiftyConditions: FloorSecret[] = [
     condition: {
       kind: "sequence",
       steps: [
-        { kind: "visit_all_rooms" },
-        { kind: "kill_family", family: "royal", count: 8 },
+        {
+          kind: "visit_all_rooms",
+          steps: [
+            { kind: "adjacent_to", tile: 3 },
+            { kind: "adjacent_to", tile: 4 },
+            { kind: "adjacent_to", tile: 6 },
+            { kind: "on_spawn" },
+          ],
+        },
+        { kind: "no_enemy_alive" },
         { kind: "no_damage_from_family", family: "ghost" },
-        { kind: "on_spawn" },
       ],
     },
   },

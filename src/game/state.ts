@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 9,
+  currentFloor: 26,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -32,7 +32,7 @@ export const stateSecret = {
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
   stat: {
-    hp: 100,
+    hp: 500,
     maxHp: 500,
     attack: 99999,
     attackRange: 1,
@@ -48,8 +48,8 @@ export const statePlayer = {
   unlockedPassives: {
     AreaDamageOnAttack: false, // # From Flame Pulse
     canPushEnemiesBehind: false, // # From Heavy Tail
-    canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
-    canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
+    canSeeExits: true, // # From True Sight Orb, allows player to see exit location on the map
+    canSeeHintWalls: true, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
     dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false, // TODO from Empty Chest, has no effect but is required for certain secrets

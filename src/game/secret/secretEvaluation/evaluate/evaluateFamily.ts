@@ -21,7 +21,8 @@ export function evaluateFamily(condition: FamilyCondition): boolean {
       return familyType.every((slug) => stateKillCount[slug] > 0);
 
     case "no_damage_from_family":
-      return stateSecret.damageFromFamily[condition.family] === 0;
+      return !stateSecret.damageFromFamily[condition.family] ? true : false;
+
     default:
       return false;
   }

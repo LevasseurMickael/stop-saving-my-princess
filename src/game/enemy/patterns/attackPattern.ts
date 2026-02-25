@@ -7,7 +7,7 @@ import { ghostDamageNegation } from "../../secret/secretUnlock/itemEffect/passiv
 import { negateMagicOncePerFloor } from "../../secret/secretUnlock/itemEffect/passives/negateMagicOncePerFloor";
 import { reduceDamageOncePerFloor } from "../../secret/secretUnlock/itemEffect/passives/reduceDamageOncePerFloor";
 import { reducedDamage } from "../../secret/secretUnlock/itemEffect/reducedDamage";
-import { statePlayer } from "../../state";
+import { statePlayer, stateSecret } from "../../state";
 import { friendlyDamage } from "./pattern-helper/friendlyDamage";
 
 export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
@@ -32,6 +32,13 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     if (reduceDamageOncePerFloor()) {
       return;
     }
+    stateSecret.damageFromFamily[enemy.monsterFamilly!] =
+      (stateSecret.damageFromFamily[enemy.monsterFamilly!] || 0) +
+      Math.max(1, enemy.attack - reducedDamage(enemy));
+    console.log(
+      `Damage from family ${enemy.monsterFamilly}:`,
+      stateSecret.damageFromFamily[enemy.monsterFamilly!],
+    );
     statePlayer.stat.hp = Math.max(
       0,
       statePlayer.stat.hp - Math.max(1, enemy.attack - reducedDamage(enemy)),

@@ -78,22 +78,19 @@ export const floorToThirtyConditions: FloorSecret[] = [
     hint: "« Let the undead rest. »",
     unlocked: false,
     condition: {
-      kind: "kill_family",
-      family: "undead",
-      count: 8,
+      kind: "no_enemy_alive",
     },
   },
   {
-    // TODO Condition may have not been set, does require family ghost monsters to spawn
     floor: 28,
     tier: 3,
-    hint: "« Les écailles éthérées révèlent l'invisible. »",
+    hint: "« Can you see down below? »",
     unlocked: false,
     condition: {
       kind: "sequence",
       steps: [
-        { kind: "has_skill", skill: "ghostDamageNegation" }, // NEW
-        { kind: "no_damage_from_family", family: "ghost" }, // NEW
+        { kind: "adjacent_to", tile: 3 },
+        { kind: "has_passive", skill: "canSeeExits" },
       ],
     },
   },

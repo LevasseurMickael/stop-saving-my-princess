@@ -47,7 +47,7 @@ export function fireBreathOncePerFloor() {
     }
   });
 
-  // statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = false; // Mark as used for this floor
+  statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = false; // Mark as used for this floor
 }
 
 function coneLineOfSight(

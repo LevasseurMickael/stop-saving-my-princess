@@ -40,6 +40,7 @@ export function evaluateCondition(condition: SecretCondition): boolean {
 
     case "has_skill":
     case "use_skill":
+    case "has_passive":
       return evaluateSkill(condition);
 
     case "has_key_level":

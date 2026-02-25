@@ -206,6 +206,7 @@ export type ContextCondition =
 export type SkillCondition =
   | { kind: "has_skill"; skill: keyof typeof statePlayer.unlockedSkills }
   | { kind: "use_skill"; skill: keyof typeof statePlayer.skillUsedThisFloor }
+  | { kind: "has_passive"; skill: keyof typeof statePlayer.unlockedPassives }
   | {
       kind: "kill_with_skill";
       skill: keyof typeof statePlayer.unlockedSkills;
