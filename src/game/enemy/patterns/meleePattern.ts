@@ -1,7 +1,10 @@
 import type { Enemy } from "../../../lib/type";
 import { reducedEnemyActionSpeed } from "../../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { attackPattern } from "./attackPattern";
-import { isInAttackRange } from "./pattern-helper/inAttackRange";
+import {
+  hasLineOfSight,
+  isInAttackRange,
+} from "./pattern-helper/inAttackRange";
 import { tryToMoveTowardsPlayer } from "./pattern-helper/tryToMoveTowardsPlayer";
 
 export function meleePattern(
@@ -11,13 +14,13 @@ export function meleePattern(
 ) {
   const actions = Math.max(1, enemy.actionPerTurn - reducedEnemyActionSpeed());
 
-  if (isInAttackRange(enemy, player)) {
+  if (isInAttackRange(enemy, player) && hasLineOfSight(enemy, player, map)) {
     attackPattern(enemy, player);
     return;
   }
 
   for (let i = 0; i < actions; i++) {
-    if (isInAttackRange(enemy, player)) {
+    if (isInAttackRange(enemy, player) && hasLineOfSight(enemy, player, map)) {
       attackPattern(enemy, player);
       return;
     }

@@ -1,7 +1,10 @@
 import type { Enemy } from "../../../lib/type";
 import { reducedEnemyActionSpeed } from "../../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { attackPattern } from "./attackPattern";
-import { isInAttackRange } from "./pattern-helper/inAttackRange";
+import {
+  hasLineOfSight,
+  isInAttackRange,
+} from "./pattern-helper/inAttackRange";
 import { tryToMoveTowardsPlayer } from "./pattern-helper/tryToMoveTowardsPlayer";
 
 export function rangedPattern(
@@ -12,7 +15,11 @@ export function rangedPattern(
   const actions = Math.max(1, enemy.actionPerTurn - reducedEnemyActionSpeed());
 
   // Charge attack for a few turns before attacking
-  if (isInAttackRange(enemy, player) && enemy.attackChargeTurn === 0) {
+  if (
+    isInAttackRange(enemy, player) &&
+    enemy.attackChargeTurn === 0 &&
+    hasLineOfSight(enemy, player, map)
+  ) {
     attackPattern(enemy, player);
     enemy.attackChargeTurn = enemy.attackChargeTurnMax; // Reset charge turn after attacking
     return;
