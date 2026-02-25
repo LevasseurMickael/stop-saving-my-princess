@@ -31,6 +31,7 @@ export function getMonsterFamily(
         specialFloor: selectedMonster.specialFloor,
         facing: selectedMonster.facing,
         actionPerTurn: selectedMonster.actionPerTurn,
+        attackChargeTurn: selectedMonster.attackChargeTurn,
         stunnedTurns: 0,
         pattern: "patrol",
         name: selectedMonster.name,

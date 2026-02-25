@@ -4,21 +4,24 @@ import { attackPattern } from "./attackPattern";
 import { isInAttackRange } from "./pattern-helper/inAttackRange";
 import { tryToMoveTowardsPlayer } from "./pattern-helper/tryToMoveTowardsPlayer";
 
-export function meleePattern(
+export function rangedPattern(
   enemy: Enemy,
   player: { x: number; y: number },
   map: number[][],
 ) {
   const actions = Math.max(1, enemy.actionPerTurn - reducedEnemyActionSpeed());
 
-  if (isInAttackRange(enemy, player)) {
+  // Charge attack for a few turns before attacking
+  if (isInAttackRange(enemy, player) && enemy.attackChargeTurn === 0) {
     attackPattern(enemy, player);
+    enemy.attackChargeTurn = 1; // Reset charge turn after attacking
     return;
+  } else if (isInAttackRange(enemy, player) && enemy.attackChargeTurn > 0) {
+    enemy.attackChargeTurn -= 1;
   }
 
   for (let i = 0; i < actions; i++) {
     if (isInAttackRange(enemy, player)) {
-      attackPattern(enemy, player);
       return;
     }
     const distX = player.x - enemy.x;

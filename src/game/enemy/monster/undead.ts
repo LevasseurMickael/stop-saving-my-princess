@@ -15,6 +15,7 @@ export const undead: Monster[] = [
     specialFloor: "crypt",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
   {
     name: "Wraith",
@@ -30,6 +31,7 @@ export const undead: Monster[] = [
     specialFloor: "crypt",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 1,
   },
   {
     name: "Bone Archer",
@@ -45,6 +47,7 @@ export const undead: Monster[] = [
     specialFloor: "crypt",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 1,
   },
   {
     name: "Rotting Champion",
@@ -60,5 +63,6 @@ export const undead: Monster[] = [
     specialFloor: "crypt",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
 ];

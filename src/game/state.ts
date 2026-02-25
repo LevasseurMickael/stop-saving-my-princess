@@ -34,7 +34,7 @@ export const statePlayer = {
   stat: {
     hp: 100,
     maxHp: 500,
-    attack: 1,
+    attack: 99999,
     attackRange: 1,
     resurectionCount: 0,
   },

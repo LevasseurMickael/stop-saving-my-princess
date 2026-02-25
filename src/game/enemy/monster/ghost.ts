@@ -15,6 +15,7 @@ export const ghost: Monster[] = [
     specialFloor: "haunted",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 1,
   },
   {
     name: "Crying Specter",
@@ -30,6 +31,7 @@ export const ghost: Monster[] = [
     specialFloor: "haunted",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 1,
   },
   {
     name: "Phantom Knight",
@@ -45,5 +47,6 @@ export const ghost: Monster[] = [
     specialFloor: "haunted",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
 ];

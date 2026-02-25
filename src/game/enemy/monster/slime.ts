@@ -15,6 +15,7 @@ export const slime: Monster[] = [
     specialFloor: "slime",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
   {
     name: "Red Slime",
@@ -30,6 +31,7 @@ export const slime: Monster[] = [
     specialFloor: "slime",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
   {
     name: "Crystal Slime",
@@ -45,6 +47,7 @@ export const slime: Monster[] = [
     specialFloor: "slime",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 0,
   },
   {
     name: "Venom Slime",
@@ -60,5 +63,6 @@ export const slime: Monster[] = [
     specialFloor: "slime",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
 ];

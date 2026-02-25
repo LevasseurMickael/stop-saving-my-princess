@@ -15,6 +15,7 @@ export const vermin: Monster[] = [
     specialFloor: "rat",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 0,
   },
   {
     name: "Shadow Bat",
@@ -30,6 +31,7 @@ export const vermin: Monster[] = [
     specialFloor: "dark",
     facing: "down",
     actionPerTurn: 3,
+    attackChargeTurn: 0,
   },
   {
     name: "Fire Beetle",
@@ -45,6 +47,7 @@ export const vermin: Monster[] = [
     specialFloor: "lava",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 0,
   },
   {
     name: "Tunnel Spider",
@@ -56,9 +59,10 @@ export const vermin: Monster[] = [
     hp: 6,
     attack: 2,
     attackRange: 2,
-    attackWeapon: "ranged",
+    attackWeapon: "melee",
     specialFloor: "cave",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 0,
   },
 ];

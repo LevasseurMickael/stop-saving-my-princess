@@ -15,6 +15,7 @@ export const royalForce: Monster[] = [
     specialFloor: "barracks",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
   {
     name: "Royal Archer",
@@ -30,6 +31,7 @@ export const royalForce: Monster[] = [
     specialFloor: "barracks",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 1,
   },
   {
     name: "Royal Spearmaster",
@@ -45,6 +47,7 @@ export const royalForce: Monster[] = [
     specialFloor: "barracks",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 0,
   },
   {
     name: "Templar Captain",
@@ -60,5 +63,6 @@ export const royalForce: Monster[] = [
     specialFloor: "castle",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 0,
   },
 ];

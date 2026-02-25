@@ -48,12 +48,28 @@ export function enemyTurn(
     enemy.pattern = "melee";
   }
 
+  if (
+    enemy.pattern === "patrol" &&
+    dist <= enemy.attackRange - reducedDetection() &&
+    enemy.attackWeapon === "ranged"
+  ) {
+    enemy.pattern = "ranged";
+  }
+
   // aggro area for patrol pattern
 
   // if (enemy.pattern === "patrol" && dist <= 4 - reducedDetection()) {
   //   enemy.pattern = "chase";
   // }
   // lost interest if player is far away
+
+  if (
+    enemy.pattern === "ranged" &&
+    dist > enemy.attackRange - reducedDetection()
+  ) {
+    enemy.pattern = "patrol";
+  }
+
   if (
     (enemy.pattern === "chase" ||
       enemy.pattern === "runAway" ||

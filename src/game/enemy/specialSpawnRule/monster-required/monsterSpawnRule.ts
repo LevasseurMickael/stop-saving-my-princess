@@ -29,6 +29,7 @@ export function getMonsterUnique(
         specialFloor: specialMonster.specialFloor,
         facing: specialMonster.facing,
         actionPerTurn: specialMonster.actionPerTurn,
+        attackChargeTurn: specialMonster.attackChargeTurn,
         stunnedTurns: 0,
         pattern: "patrol",
         name: specialMonster.name,

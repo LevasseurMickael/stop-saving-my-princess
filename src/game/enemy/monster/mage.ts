@@ -15,6 +15,7 @@ export const mage: Monster[] = [
     specialFloor: "arcane",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 2,
   },
   {
     name: "Arcane Sentinel",
@@ -30,6 +31,7 @@ export const mage: Monster[] = [
     specialFloor: "arcane",
     facing: "down",
     actionPerTurn: 2,
+    attackChargeTurn: 1,
   },
   {
     name: "Hex Binder",
@@ -45,5 +47,6 @@ export const mage: Monster[] = [
     specialFloor: "arcane",
     facing: "down",
     actionPerTurn: 1,
+    attackChargeTurn: 2,
   },
 ];

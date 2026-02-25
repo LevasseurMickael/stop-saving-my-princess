@@ -3,7 +3,7 @@ import { chasePattern } from "./chasePattern";
 import { magicPattern } from "./magicPattern";
 import { meleePattern } from "./meleePattern";
 import { patrolPattern } from "./patrolPattern";
-import { rangePattern } from "./rangePattern";
+import { rangedPattern } from "./rangedPattern";
 import { runAwayPattern } from "./runAwayPattern";
 
 export function allMonsterPatterns(
@@ -34,8 +34,8 @@ export function allMonsterPatterns(
       meleePattern(enemy, player, map);
       break;
 
-    case "range":
-      rangePattern();
+    case "ranged":
+      rangedPattern(enemy, player, map);
       break;
 
     case "magic":
