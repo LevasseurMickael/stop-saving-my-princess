@@ -1,6 +1,4 @@
 import type { Enemy } from "../../../lib/type";
-import { fearLowLevelEnemies } from "../../secret/secretUnlock/itemEffect/passives/fearLowLevelEnemies";
-import { stateDungeon } from "../../state";
 import { isOccupied } from "../enemy";
 
 // Monster with low hp or difficulty level run away from the player until being 4 tail away from the player, then they get back to their original pattern.
@@ -9,8 +7,6 @@ export function runAwayPattern(
   player: { x: number; y: number },
   map: number[][],
 ) {
-  if (!fearLowLevelEnemies()) return;
-
   const distX = player.x - enemy.x;
   const distY = player.y - enemy.y;
 

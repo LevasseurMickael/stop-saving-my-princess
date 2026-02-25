@@ -4,6 +4,7 @@ import { stateDungeon, stateDynamic, statePlayer } from "../state";
 import { reducedDetection } from "../secret/secretUnlock/itemEffect/passives/reducedDetection";
 import { allMonsterPatterns } from "../enemy/patterns/allPatterns";
 import { runAwayPattern } from "../enemy/patterns/runAwayPattern";
+import { fearLowLevelEnemies } from "../secret/secretUnlock/itemEffect/passives/fearLowLevelEnemies";
 
 // Process all enemies' turns
 export function enemiesTurn() {
@@ -30,7 +31,11 @@ export function enemyTurn(
     enemy.difficulty !== undefined &&
     stateDungeon.currentFloor !== undefined &&
     enemy.difficulty - stateDungeon.currentFloor >= 10;
-  if ((lowHp && dist <= 4) || (lowDifficulty && dist <= 4)) {
+
+  if (
+    (lowHp && dist <= 4 && fearLowLevelEnemies()) ||
+    (lowDifficulty && dist <= 4 && fearLowLevelEnemies())
+  ) {
     runAwayPattern(enemy, player, map);
     return;
   }
