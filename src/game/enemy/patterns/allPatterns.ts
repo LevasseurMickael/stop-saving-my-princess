@@ -31,7 +31,7 @@ export function allMonsterPatterns(
       break;
 
     case "melee":
-      meleePattern();
+      meleePattern(enemy, player, map);
       break;
 
     case "range":

@@ -23,12 +23,12 @@ export function isBlockedByShield(enemy: Enemy) {
 
   switch (statePlayer.facing) {
     case "up":
-      return dx === 0 && dy === -1;
+      return dx === 0 && dy <= -enemy.attackRange;
     case "down":
-      return dx === 0 && dy === 1;
+      return dx === 0 && dy <= enemy.attackRange;
     case "left":
-      return dx === -1 && dy === 0;
+      return dx <= -enemy.attackRange && dy === 0;
     case "right":
-      return dx === 1 && dy === 0;
+      return dx <= enemy.attackRange && dy === 0;
   }
 }

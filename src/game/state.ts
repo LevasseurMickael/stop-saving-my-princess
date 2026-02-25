@@ -10,7 +10,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 49,
+  currentFloor: 1,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -86,7 +86,7 @@ export const statePlayer = {
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
   reducedDamage: {
     type: {
-      physical: 0,
+      melee: 0,
       ranged: 0,
       magic: 0,
     },

@@ -12,8 +12,8 @@ import { statePlayer } from "../../state";
 export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
   const distX = player.x - enemy.x;
   const distY = player.y - enemy.y;
-  // If enemy is adjacent to player and try to enter the player's tile, the player dies
-  if (Math.abs(distX) + Math.abs(distY) === 1) {
+  // If enemy
+  if (Math.abs(distX) + Math.abs(distY) <= enemy.attackRange) {
     if (isBlockedByShield(enemy)) {
       handleGameEvent({ type: "enemy_hit", blocker: true });
       knockbackPlayer(enemy);
