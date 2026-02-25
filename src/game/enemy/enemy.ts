@@ -7,7 +7,11 @@ import {
 } from "./specialSpawnRule/spawnRule";
 
 // Enemy can't get on the same tile as other enemies
-export function isOccupied(x: number, y: number, self: Enemy) {
+export function isOccupied(
+  x: number,
+  y: number,
+  self: Enemy | Enemy[],
+): boolean {
   return stateDynamic.enemies.some(
     (e) => e !== self && e.x === x && e.y === y && e.alive,
   );

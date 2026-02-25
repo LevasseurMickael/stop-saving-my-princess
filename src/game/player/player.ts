@@ -18,6 +18,7 @@ import { enterNextFloor } from "../map/floor";
 import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
 import { unlockingSecretItem } from "../secret/secretUnlock/secretUnlock";
 import { keyLevelLogic } from "../secret/secretUnlock/itemEffect/items/keyLevel";
+import { isOccupied } from "../enemy/enemy";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -55,7 +56,15 @@ window.addEventListener("keydown", (e) => {
           ? ""
           : handleGameEvent({ type: "wait", turns: 1 });
         acted = true;
-      } else if (map[newY][newX] !== 1 && map[newY][newX] !== 4) {
+      } else if (
+        map[newY][newX] !== 1 &&
+        map[newY][newX] !== 4 &&
+        (!isOccupied(newX, newY, stateDynamic.enemies) ||
+          // Player can move onto enemy tiles if they are ghosts, but not other types of monsters
+          stateDynamic.enemies.every(
+            (e) => e.x !== newX || e.y !== newY || e.monsterFamilly === "ghost",
+          ))
+      ) {
         statePlayer.x = newX;
         statePlayer.y = newY;
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
