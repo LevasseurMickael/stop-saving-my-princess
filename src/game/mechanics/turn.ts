@@ -1,15 +1,15 @@
 import type { Enemy } from "../../lib/type";
-import { isOccupied } from "../entities/enemy";
 import { map } from "../map/map";
-import { player } from "../entities/player";
-import { state } from "../state";
-import { isBlockedByShield } from "./shield";
-import { knockbackPlayer } from "./knockback";
+import { stateDungeon, stateDynamic, statePlayer } from "../state";
+import { reducedDetection } from "../secret/secretUnlock/itemEffect/passives/reducedDetection";
+import { allMonsterPatterns } from "../enemy/patterns/allPatterns";
+import { runAwayPattern } from "../enemy/patterns/runAwayPattern";
+import { fearLowLevelEnemies } from "../secret/secretUnlock/itemEffect/passives/fearLowLevelEnemies";
 
 // Process all enemies' turns
 export function enemiesTurn() {
-  for (const enemy of state.enemies) {
-    enemyTurn(enemy, player, map);
+  for (const enemy of stateDynamic.enemies) {
+    enemyTurn(enemy, statePlayer, map);
   }
 }
 
@@ -25,13 +25,63 @@ export function enemyTurn(
     return;
   }
 
-  // aggro area for patrol pattern
   const dist = Math.abs(enemy.x - player.x) + Math.abs(enemy.y - player.y);
-  if (enemy.pattern === "patrol" && dist <= 3) {
-    enemy.pattern = "chase";
+  const lowHp = enemy.hp <= Math.ceil(enemy.maxHp * 0.2);
+  const lowDifficulty =
+    enemy.difficulty !== undefined &&
+    stateDungeon.currentFloor !== undefined &&
+    enemy.difficulty - stateDungeon.currentFloor >= 10;
+
+  if (
+    (lowHp && dist <= 4 && fearLowLevelEnemies()) ||
+    (lowDifficulty && dist <= 4 && fearLowLevelEnemies())
+  ) {
+    runAwayPattern(enemy, player, map);
+    return;
   }
-  // lost interest if player is far away
-  if (enemy.pattern === "chase" && dist > 4) {
+
+  if (
+    enemy.pattern === "patrol" &&
+    dist <= 4 - reducedDetection() &&
+    enemy.attackWeapon === "melee"
+  ) {
+    enemy.pattern = "melee";
+  }
+
+  if (
+    (enemy.pattern === "runAway" || enemy.pattern === "melee") &&
+    dist > 4 - reducedDetection()
+  ) {
+    enemy.pattern = "patrol";
+  }
+
+  if (
+    enemy.pattern === "patrol" &&
+    dist <= enemy.attackRange - reducedDetection() &&
+    enemy.attackWeapon === "ranged"
+  ) {
+    enemy.pattern = "ranged";
+  }
+
+  if (
+    enemy.pattern === "ranged" &&
+    dist > enemy.attackRange - reducedDetection()
+  ) {
+    enemy.pattern = "patrol";
+  }
+
+  if (
+    enemy.pattern === "patrol" &&
+    dist <= enemy.attackRange - reducedDetection() &&
+    enemy.attackWeapon === "magic"
+  ) {
+    enemy.pattern = "magic";
+  }
+
+  if (
+    enemy.pattern === "magic" &&
+    dist > enemy.attackRange - reducedDetection()
+  ) {
     enemy.pattern = "patrol";
   }
 
@@ -45,84 +95,5 @@ export function enemyTurn(
   if (!enemy.alive) return;
 
   // Handle enemy behavior based on its pattern
-  switch (enemy.pattern) {
-    // Stationary pattern: enemy does not move
-    case "stationary":
-      // Do nothing
-      break;
-
-    // Patrol pattern: move randomly within the room
-    case "patrol":
-      const directions = [
-        { dx: 0, dy: -1 },
-        { dx: 0, dy: 1 },
-        { dx: -1, dy: 0 },
-        { dx: 1, dy: 0 },
-      ];
-      // Simple random movement
-      const dir = directions[Math.floor(Math.random() * directions.length)];
-      const newX = enemy.x + dir.dx;
-      const newY = enemy.y + dir.dy;
-
-      // Check if the new position is valid (not a wall and not occupied by another enemy)
-      if (map[newY]?.[newX] === 0 && !isOccupied(newX, newY, enemy)) {
-        enemy.x = newX;
-        enemy.y = newY;
-      }
-
-      break;
-
-    case "chase":
-      // Move towards player
-      const distX = player.x - enemy.x;
-      const distY = player.y - enemy.y;
-
-      // If enemy is adjacent to player and try to enter the player's tile, the player dies
-      if (Math.abs(distX) + Math.abs(distY) === 1) {
-        if (isBlockedByShield(enemy)) {
-          knockbackPlayer(enemy);
-          return;
-        }
-        // enemy attacks player
-        state.hp--;
-
-        // Check if player dies from the attack and reset position and HP if so
-        if (state.hp <= 0) {
-          state.deathCount++;
-          state.hp = state.maxHp;
-          player.x = state.spawn.x;
-          player.y = state.spawn.y;
-        }
-        return;
-      }
-
-      // Move in the direction that reduces distance to player, prioritizing horizontal movement if distances are equal
-      if (Math.abs(distX) > Math.abs(distY)) {
-        const stepX = enemy.x + Math.sign(distX);
-
-        // Check if enemy tries to move onto player's tile, which would result in player death
-        if (stepX === player.x && enemy.y === player.y) {
-          state.deathCount++;
-          return;
-        }
-
-        // Check if the new position is valid (not a wall and not occupied by another enemy)
-        if (map[enemy.y]?.[stepX] === 0 && !isOccupied(stepX, enemy.y, enemy)) {
-          enemy.x = stepX;
-        }
-      } else {
-        // Prioritize vertical movement if distances are equal
-        const stepY = enemy.y + Math.sign(distY);
-        if (enemy.x === player.x && stepY === player.y) {
-          state.deathCount++;
-          return;
-        }
-
-        // Check if the new position is valid (not a wall and not occupied by another enemy)
-        if (map[stepY]?.[enemy.x] === 0 && !isOccupied(enemy.x, stepY, enemy)) {
-          enemy.y = stepY;
-        }
-      }
-      return;
-  }
+  allMonsterPatterns(enemy, player, map);
 }

@@ -1,0 +1,77 @@
+import type { SecretItem } from "../../../lib/type";
+
+export const items_1_to_10: SecretItem[] = [
+  {
+    floor: 1,
+    name: "Ghostly Shroud",
+    type: "reducedDamage",
+    effect: "ghost",
+    value: 1,
+    description: "Reduces damage taken from ghosts.",
+  },
+  {
+    floor: 2,
+    name: "Spectral Lantern",
+    type: "unlockedItems",
+    effect: "ghostVisionLevel",
+    value: 1,
+    description: "Reveals all ghosts close to you.",
+  },
+  {
+    floor: 3,
+    name: "Bone Charm",
+    type: "stat",
+    effect: "resurectionCount",
+    value: 1,
+    description: "Chance to avoid death once.",
+  },
+  {
+    floor: 4,
+    name: "Ancient Carapace",
+    type: "stat",
+    effect: "hp",
+    value: 4,
+    description: "Increase maximum HP by 4.",
+  },
+  {
+    floor: 5,
+    name: "Rust Key",
+    type: "unlockedItems",
+    effect: "keyLevel",
+    value: 1,
+    description: "Opens basic locked doors.",
+  },
+  {
+    floor: 6,
+    name: "Empty Chest",
+    type: "unlockedPassives",
+    effect: "emptyChest",
+    value: true,
+    description: "An empty chest, who stole its contents?",
+  },
+  {
+    floor: 7,
+    name: "Vermin's Bane",
+    type: "reducedDamage",
+    effect: "reducedDamage",
+    value: 1,
+    description: "Reduces damage taken from vermin.",
+  },
+  {
+    floor: 8,
+    name: "Claw Sharpening",
+    type: "stat",
+    effect: "attack",
+    value: 1,
+    description: "Increase attack by 1.",
+  },
+
+  {
+    floor: 10,
+    name: "Hardened Scales",
+    type: "unlockedPassives",
+    effect: "reduceDamageOncePerFloor",
+    value: true,
+    description: "Negates first damage taken each floor.",
+  },
+];

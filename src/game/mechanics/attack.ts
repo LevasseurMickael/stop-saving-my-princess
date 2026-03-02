@@ -1,44 +1,65 @@
-import { player } from "../entities/player";
-import { map } from "../map/map";
-import { checkSecretCondition } from "../mechanics/secret";
-import { state } from "../state";
-import { isOccupied } from "../entities/enemy";
-import type { Direction } from "../../lib/type";
+import {
+  stateDynamic,
+  stateKillCount,
+  statePlayer,
+  stateShield,
+} from "../state";
+import type { TargetCondition } from "../../lib/type";
 import { knockbackEnemy } from "./knockback";
 
-// Calculate attack offset based on player's facing direction
-function getAttackOffset(facing: Direction) {
-  switch (facing) {
-    case "up":
-      return { dx: 0, dy: -1 };
-    case "down":
-      return { dx: 0, dy: 1 };
-    case "left":
-      return { dx: -1, dy: 0 };
-    case "right":
-      return { dx: 1, dy: 0 };
-  }
+import { map } from "../map/map";
+import { handleGameEvent } from "../secret/secretEvaluation/secretSystem";
+import { normalDamageToGhost } from "../secret/secretUnlock/itemEffect/passives/normalDamageToGhost";
+import { canPushEnemiesBehind } from "../secret/secretUnlock/itemEffect/passives/canPushEnemiesBehind";
+import { areaDamageOnAttack } from "../secret/secretUnlock/itemEffect/passives/areaDamageOnAttack";
+import { getAttackOffset } from "./getAttackOffset";
+import { extraDamageWhenLowHp } from "../secret/secretUnlock/itemEffect/passives/extraDamageWhenLowHp";
+
+function getAttackTarget(x: number, y: number): TargetCondition {
+  const tile = map[y]?.[x];
+
+  const hasEnemy = stateDynamic.enemies.some(
+    (enemy) => enemy.alive && enemy.x === x && enemy.y === y,
+  );
+
+  if (hasEnemy) return "enemy";
+  if (tile === 3) return "stair";
+  if (tile === 4 || tile === 1) return "wall";
+  return "empty";
 }
 
 // Handle player attack action
 export default function attack() {
   // Cannot attack while shield is not retracted
-  if (state.shield.state !== "retracted") {
+  if (stateShield.shield.state !== "retracted") {
     return;
   }
 
   // Calculate target tile based on player's facing direction
-  const { dx, dy } = getAttackOffset(player.facing);
-  const targetX = player.x + dx;
-  const targetY = player.y + dy;
+  const { dx, dy, behindx, behindy, aoe } = getAttackOffset(statePlayer.facing);
+  const targetX = statePlayer.x + dx;
+  const targetY = statePlayer.y + dy;
+
+  const target = getAttackTarget(targetX, targetY);
+
+  areaDamageOnAttack(aoe);
+  canPushEnemiesBehind(behindx, behindy);
 
   // Check if attack hits any enemy
-  for (const enemy of state.enemies) {
-    if (!enemy.alive) continue;
+  const hitEnemy = stateDynamic.enemies.some((enemy) => {
+    if (!enemy.alive) return false;
 
     if (targetX === enemy.x && targetY === enemy.y) {
       // Attack hits enemy
-      enemy.hp--;
+      enemy.hp = Math.max(
+        0,
+        enemy.hp -
+          Math.max(
+            1,
+            statePlayer.stat.attack * extraDamageWhenLowHp() -
+              normalDamageToGhost(enemy),
+          ),
+      );
 
       // Enemy is stunned for 1 turn
       enemy.stunnedTurns = 1;
@@ -49,20 +70,35 @@ export default function attack() {
       // Enemy dies if HP reaches 0
       if (enemy.hp <= 0) {
         enemy.alive = false;
-        state.kills++;
+        // Increment kill count for the enemy's slug, defaulting to 0 if slug is undefined
+        stateKillCount[enemy.slug || ""] =
+          (stateKillCount[enemy.slug || ""] || 0) + 1;
+        console.log(
+          `Killed ${enemy.slug}. Total kills: ${stateKillCount[enemy.slug || ""]}`,
+        );
+        handleGameEvent({ type: "enemy_kill" });
       }
 
-      // Check if secret condition is met after the attack and unlock secret area if so
-      if (checkSecretCondition() && !state.secretUnlocked) {
-        state.secretUnlocked = true;
-        if (state.secrets.length > 0) {
-          const secret = state.secrets[0];
-          secret.unlocked = true;
-          map[secret.y][secret.x] = 2; // Unlock secret area
-        }
-      }
+      // Check if secret condition is met after attack and handle event
+      handleGameEvent({
+        type: "attack",
+        direction: statePlayer.facing,
+        target: "enemy",
+        targetX,
+        targetY,
+      });
       return true; // Attack hit an enemy
     }
+  });
+
+  if (!hitEnemy) {
+    // If attack missed, still handle the attack event for secret conditions
+    handleGameEvent({
+      type: "attack",
+      direction: statePlayer.facing,
+      target,
+      targetX,
+      targetY,
+    });
   }
-  return false; // Attack missed
 }

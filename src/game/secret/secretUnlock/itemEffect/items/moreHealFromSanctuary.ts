@@ -1,0 +1,1 @@
+// moreHealFromSanctuary is directly added to the healing calculation in player.ts in the variable healAmount when entering the healing room center, so no additional code is needed here. This file is just a placeholder to track the unlock and its effect in the state.
