@@ -10,6 +10,7 @@ import { spawnEnemies } from "../enemy/enemy";
 import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
 import { allSecretConditions } from "../secret/allSecretCondition";
+import { tileIndex } from "../../graphicContext/tile_index";
 
 const TileSize = 24;
 const GridSize = 38;
@@ -33,8 +34,9 @@ export function loadMap() {
 
   if (dungeon.healingRoom) {
     stateDynamic.healingRoom = dungeon.healingRoom;
-    map[dungeon.healingRoom.doorY][dungeon.healingRoom.doorX] = 5; // Mark healing room door on the map
-    map[dungeon.healingRoom.y][dungeon.healingRoom.x] = 6; // Mark healing room center on the map
+    map[dungeon.healingRoom.doorY][dungeon.healingRoom.doorX] =
+      tileIndex.secretDoor; // Mark healing room door on the map
+    map[dungeon.healingRoom.y][dungeon.healingRoom.x] = tileIndex.healingRoom; // Mark healing room center on the map
   }
 
   // Check if there's a secret condition for this floor and create hint tile if so

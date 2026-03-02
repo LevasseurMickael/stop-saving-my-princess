@@ -147,6 +147,14 @@ export type HealingRoom = {
   doorLevel: number; // 0 = no door, 1 = basic door, 2 = iron door, 3 = silver door, 4 = arcane seal, 5 = royal lock
 };
 
+export type SpriteConfig = {
+  sheetSrc: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
 // =======================
 // Core gameplay types
 // =======================

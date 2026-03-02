@@ -1,3 +1,5 @@
+import { tileIndex } from "../../graphicContext/tile_index";
+
 export function findSecretRoom(map: number[][]) {
   // Find all wall tiles adjacent to empty space, pick one randomly as secret room entrance
   const canditates: { x: number; y: number }[] = [];
@@ -13,11 +15,11 @@ export function findSecretRoom(map: number[][]) {
   // Start from 1 and end at length - 1 to avoid out of bounds
   for (let y = 1; y < map.length - 1; y++) {
     for (let x = 1; x < map[y].length - 1; x++) {
-      if (map[y][x] !== 1) continue; // Must be a wall
+      if (map[y][x] !== tileIndex.wall) continue; // Must be a wall
 
       // Check if adjacent to empty space
       for (const d of directions) {
-        if (map[y + d.dy][x + d.dx] === 0) {
+        if (map[y + d.dy][x + d.dx] === tileIndex.empty) {
           canditates.push({ x, y });
           break;
         }

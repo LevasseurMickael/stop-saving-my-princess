@@ -9,7 +9,6 @@ export function keyLevelLogic(
     statePlayer.unlockedItems.keyLevel >= stateDynamic.healingRoom?.doorLevel!
   ) {
     stateDynamic.healingRoom.isUnlocked = true;
-    map[newY][newX] = 0;
   } else {
     return false; // Player cannot pass through the door
   }

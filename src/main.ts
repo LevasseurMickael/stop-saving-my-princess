@@ -14,6 +14,7 @@ import {
 import { getEnemiesSprite } from "./graphicContext/enemiesContext";
 import { getHudSprite } from "./graphicContext/hudContext";
 import { getMapSprite } from "./graphicContext/mapContext";
+import { preloadAllImage } from "./graphicContext/imageLoader";
 
 // Initialize canvas and rendering context
 const canvas = document.createElement("canvas");
@@ -48,8 +49,17 @@ function render() {
   getHudSprite(ctx);
 }
 
-// Load initial floor and start game loop
-loadMap();
+async function startGame() {
+  console.log("Loading images...");
+
+  await preloadAllImage();
+
+  console.log("Images loaded, starting game loop...");
+  // Load initial floor and start game loop
+  loadMap();
+
+  gameLoop();
+}
 
 // Main game loop using requestAnimationFrame for smooth rendering
 function gameLoop() {
@@ -57,4 +67,4 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-gameLoop();
+startGame();

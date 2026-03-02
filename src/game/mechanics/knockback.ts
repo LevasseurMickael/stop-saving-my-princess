@@ -1,3 +1,4 @@
+import { tileIndex } from "../../graphicContext/tile_index";
 import type { Enemy } from "../../lib/type";
 import { isOccupied } from "../enemy/enemy";
 
@@ -14,7 +15,7 @@ export function knockbackPlayer(enemy: Enemy) {
 
   // Check if knockback position is valid (not a wall and not occupied by an enemy)
   if (
-    map[knockbackY]?.[knockbackX] === 0 &&
+    map[knockbackY]?.[knockbackX] === tileIndex.empty &&
     !isOccupied(knockbackX, knockbackY, enemy)
   ) {
     statePlayer.x = knockbackX;
@@ -33,7 +34,7 @@ export function knockbackEnemy(enemy: Enemy) {
 
   // Check if knockback position is valid (not a wall and not occupied by another enemy)
   if (
-    map[knockbackY]?.[knockbackX] === 0 &&
+    map[knockbackY]?.[knockbackX] === tileIndex.empty &&
     !isOccupied(knockbackX, knockbackY, enemy)
   ) {
     enemy.x = knockbackX;

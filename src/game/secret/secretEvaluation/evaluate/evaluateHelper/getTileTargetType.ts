@@ -1,3 +1,4 @@
+import { tileIndex } from "../../../../../graphicContext/tile_index";
 import type { TargetCondition } from "../../../../../lib/type";
 import { stateSecret } from "../../../../state";
 
@@ -14,7 +15,7 @@ export function getTileTargetType(
     if (hasEnemy) return "enemy";
   }
 
-  if (tile === 3) return "stair";
-  if (tile === 4 || tile === 1) return "wall";
+  if (tile === tileIndex.exit) return "stair";
+  if (tile === tileIndex.hintWall || tile === tileIndex.wall) return "wall";
   return "empty";
 }

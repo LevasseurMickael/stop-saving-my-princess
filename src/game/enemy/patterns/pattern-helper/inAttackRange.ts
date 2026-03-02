@@ -1,3 +1,4 @@
+import { tileIndex } from "../../../../graphicContext/tile_index";
 import type { Enemy } from "../../../../lib/type";
 import { isOccupied } from "../../enemy";
 
@@ -35,7 +36,11 @@ export function hasLineOfSight(
     // Vertical line of sight
     const stepY = Math.sign(distY);
     for (let y = enemy.y + stepY; y !== player.y; y += stepY) {
-      if (!map[y] || map[y][enemy.x] === undefined || map[y][enemy.x] !== 0) {
+      if (
+        !map[y] ||
+        map[y][enemy.x] === undefined ||
+        map[y][enemy.x] !== tileIndex.empty
+      ) {
         return false; // Blocked by wall or out of bounds
       }
       if (isOccupied(enemy.x, y, enemy) && enemy.attackWeapon !== "magic") {
@@ -50,7 +55,7 @@ export function hasLineOfSight(
       if (
         !map[enemy.y] ||
         map[enemy.y][x] === undefined ||
-        map[enemy.y][x] !== 0
+        map[enemy.y][x] !== tileIndex.empty
       ) {
         return false; // Blocked by wall or out of bounds
       }
@@ -66,7 +71,7 @@ export function hasLineOfSight(
     let x = enemy.x + stepX;
     let y = enemy.y + stepY;
     while (x !== player.x || y !== player.y) {
-      if (!map[y] || map[y][x] === undefined || map[y][x] !== 0) {
+      if (!map[y] || map[y][x] === undefined || map[y][x] !== tileIndex.empty) {
         return false; // Blocked by wall or out of bounds
       }
       // if (isOccupied(x, y, enemy)) {

@@ -3,6 +3,7 @@ import { rng } from "../rng";
 import type { Room } from "../../lib/type";
 import { statePlayer } from "../state";
 import { createHealingRoom } from "./healingRoom/healingRoom";
+import { tileIndex } from "../../graphicContext/tile_index";
 
 // Check if two rooms intersect (including a 1-tile buffer)
 function intersects(a: Room, b: Room) {
@@ -57,7 +58,7 @@ export function generateDungeon(seed: number) {
         // Carve out the room
         for (let ry = y; ry < y + h; ry++) {
           for (let rx = x; rx < x + w; rx++) {
-            map[ry][rx] = 0; // Empty space
+            map[ry][rx] = tileIndex.empty; // Empty space
           }
         }
         placed = true;
@@ -79,17 +80,17 @@ export function generateDungeon(seed: number) {
 
     // Horizontal corridor
     for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) {
-      map[ay][x] = 0;
+      map[ay][x] = tileIndex.empty; // Carve corridor
     }
     // Vertical corridor
     for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) {
-      map[y][bx] = 0;
+      map[y][bx] = tileIndex.empty; // Carve corridor
     }
   }
 
   // Place stairs in the last room
   const lastRoom = rooms[rooms.length - 1];
-  map[lastRoom.y + 1][lastRoom.x + 1] = 3;
+  map[lastRoom.y + 1][lastRoom.x + 1] = tileIndex.exit;
 
   // Place player in the first room
   const spawnPlayerRoom = rooms[0];

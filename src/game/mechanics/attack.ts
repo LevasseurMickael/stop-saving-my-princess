@@ -14,6 +14,7 @@ import { canPushEnemiesBehind } from "../secret/secretUnlock/itemEffect/passives
 import { areaDamageOnAttack } from "../secret/secretUnlock/itemEffect/passives/areaDamageOnAttack";
 import { getAttackOffset } from "./getAttackOffset";
 import { extraDamageWhenLowHp } from "../secret/secretUnlock/itemEffect/passives/extraDamageWhenLowHp";
+import { tileIndex } from "../../graphicContext/tile_index";
 
 function getAttackTarget(x: number, y: number): TargetCondition {
   const tile = map[y]?.[x];
@@ -23,8 +24,8 @@ function getAttackTarget(x: number, y: number): TargetCondition {
   );
 
   if (hasEnemy) return "enemy";
-  if (tile === 3) return "stair";
-  if (tile === 4 || tile === 1) return "wall";
+  if (tile === tileIndex.exit) return "stair";
+  if (tile === tileIndex.hintWall || tile === tileIndex.wall) return "wall";
   return "empty";
 }
 

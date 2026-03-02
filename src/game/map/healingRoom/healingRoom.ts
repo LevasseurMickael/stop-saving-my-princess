@@ -1,3 +1,4 @@
+import { tileIndex } from "../../../graphicContext/tile_index";
 import type { HealingRoom } from "../../../lib/type";
 import { stateDungeon } from "../../state";
 import { findValidHealingRoomLocation } from "./findValidLocation";
@@ -56,7 +57,7 @@ export function createHealingRoom(
   // Carve out the healing room
   for (let dy = 0; dy < roomHeight; dy++) {
     for (let dx = 0; dx < roomWidth; dx++) {
-      map[roomY + dy][roomX + dx] = 0; // Empty space
+      map[roomY + dy][roomX + dx] = tileIndex.empty; // Empty space
     }
   }
   return {

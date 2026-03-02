@@ -13,6 +13,7 @@ export const stateDungeon = {
   currentFloor: 0,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
+  healingRoomDoorOpen: false, // Track if the healing room door is open for the current floor
 };
 
 // Secret related state, separated for clarity and potential future expansion

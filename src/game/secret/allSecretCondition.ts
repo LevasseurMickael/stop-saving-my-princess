@@ -1,4 +1,4 @@
-import type { FloorSecret } from "../../../lib/type";
+import type { FloorSecret } from "../../lib/type";
 import { floorToTenConditions } from "./secretCondition/secret_floor-ten";
 import { floorToFiftyConditions } from "./secretCondition/secret_floor_fifty";
 import { floorToFortyConditions } from "./secretCondition/secret_floor_forty";

@@ -1,3 +1,4 @@
+import { tileIndex } from "../../../../graphicContext/tile_index";
 import type { Enemy } from "../../../../lib/type";
 import { isOccupied } from "../../enemy";
 
@@ -20,7 +21,7 @@ export function tryToMoveTowardsPlayer(
     return false; // Out of bounds
   }
 
-  if (map[newY][newX] === 0 && !isOccupied(newX, newY, enemy)) {
+  if (map[newY][newX] === tileIndex.empty && !isOccupied(newX, newY, enemy)) {
     enemy.x = newX;
     enemy.y = newY;
     return true;

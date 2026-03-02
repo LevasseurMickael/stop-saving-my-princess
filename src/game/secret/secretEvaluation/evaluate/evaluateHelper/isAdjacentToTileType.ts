@@ -1,3 +1,4 @@
+import { tileIndex } from "../../../../../graphicContext/tile_index";
 import type { TargetCondition } from "../../../../../lib/type";
 import { map } from "../../../../map/map";
 
@@ -14,11 +15,13 @@ export function isAdjacentToTileType(
   ];
 
   if (tileType === "wall") {
-    return adjacentTiles.some((tile) => tile === 4 || tile === 1);
+    return adjacentTiles.some(
+      (tile) => tile === tileIndex.secretDoor || tile === tileIndex.wall,
+    );
   } else if (tileType === "stair") {
-    return adjacentTiles.some((tile) => tile === 3);
+    return adjacentTiles.some((tile) => tile === tileIndex.exit);
   } else if (tileType === "empty") {
-    return adjacentTiles.some((tile) => tile === 0);
+    return adjacentTiles.some((tile) => tile === tileIndex.empty);
   }
   return false;
 }

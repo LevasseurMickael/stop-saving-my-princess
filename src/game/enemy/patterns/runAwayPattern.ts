@@ -1,3 +1,4 @@
+import { tileIndex } from "../../../graphicContext/tile_index";
 import type { Enemy } from "../../../lib/type";
 import { isOccupied } from "../enemy";
 
@@ -42,15 +43,7 @@ function tryMove(
   const newX = enemy.x + stepX;
   const newY = enemy.y + stepY;
 
-  const targetTile = map[newY][newX];
-
-  const isWalkable =
-    targetTile === 0 ||
-    targetTile === 2 ||
-    targetTile === 3 ||
-    targetTile === 6;
-
-  if (isWalkable && !isOccupied(newX, newY, enemy)) {
+  if (map[newY]?.[newX] === tileIndex.empty && !isOccupied(newX, newY, enemy)) {
     enemy.x = newX;
     enemy.y = newY;
     return true;

@@ -21,6 +21,7 @@ import { keyLevelLogic } from "../secret/secretUnlock/itemEffect/items/keyLevel"
 import { isOccupied } from "../enemy/enemy";
 import { stunEnemyOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/stunEnemyOncePerFloor";
 import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/fireBreathOncePerFloor";
+import { tileIndex } from "../../graphicContext/tile_index";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -63,14 +64,17 @@ window.addEventListener("keydown", (e) => {
 
     // movement
     if (newX !== statePlayer.x || newY !== statePlayer.y) {
-      if (map[newY][newX] === 5) {
+      if (
+        map[newY][newX] === tileIndex.secretDoor &&
+        stateDynamic.healingRoom?.isUnlocked !== true
+      ) {
         keyLevelLogic(statePlayer, stateDynamic, map, newX, newY)
           ? ""
           : handleGameEvent({ type: "wait", turns: 1 });
         acted = true;
       } else if (
-        map[newY][newX] !== 1 &&
-        map[newY][newX] !== 4 &&
+        map[newY][newX] !== tileIndex.wall &&
+        map[newY][newX] !== tileIndex.hintWall &&
         (!isOccupied(newX, newY, stateDynamic.enemies) ||
           // Player can move onto enemy tiles if they are ghosts, but not other types of monsters
           stateDynamic.enemies.every(
@@ -155,13 +159,13 @@ window.addEventListener("keydown", (e) => {
   }
 
   // Check for secret item or floor transition after moving
-  if (map[newY][newX] === 2 && stateStats.secretUnlocked) {
+  if (map[newY][newX] === tileIndex.chest && stateStats.secretUnlocked) {
     stateStats.hasSecretItem = true;
     unlockingSecretItem();
     map[newY][newX] = 0; // Remove secret item from map
   }
 
-  if (map[newY][newX] === 6) {
+  if (map[newY][newX] === tileIndex.healingRoom) {
     // Player is healed ten percent of max HP when entering the healing room center
     const healAmount = Math.ceil(
       statePlayer.stat.maxHp *
@@ -178,7 +182,7 @@ window.addEventListener("keydown", (e) => {
   }
 
   // Floor transition
-  if (map[newY][newX] === 3) {
+  if (map[newY][newX] === tileIndex.exit) {
     setFloorResult(
       stateDungeon.currentFloor,
       stateStats.hasSecretItem ? "1" : "2",
