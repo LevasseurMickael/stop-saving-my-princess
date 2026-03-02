@@ -18,7 +18,7 @@ import { getMapSprite } from "./graphicContext/mapContext";
 // Initialize canvas and rendering context
 const canvas = document.createElement("canvas");
 canvas.width = 1200;
-canvas.height = 800;
+canvas.height = 912;
 document.body.appendChild(canvas);
 
 // Render the game state to the canvas

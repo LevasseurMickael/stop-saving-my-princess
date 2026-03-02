@@ -11,9 +11,9 @@ import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
 import { allSecretConditions } from "../secret/allSecretCondition";
 
-const TileSize = 30;
-const GridSize = 24;
-const GridSizeWidth = 40; // For wider maps in later floors
+const TileSize = 24;
+const GridSize = 38;
+const GridSizeWidth = 50; // For wider maps in later floors
 
 let map: number[][] = [];
 
@@ -26,8 +26,7 @@ export function loadMap() {
   stateDynamic.secrets = [];
 
   // Generate a new dungeon layout for the current floor
-  const floorSeed = Math.floor(Math.random() * 1000000);
-  const dungeon = generateDungeon(floorSeed);
+  const dungeon = generateDungeon(stateDungeon.runSeed);
 
   // Set global map and spawn points
   map = dungeon.map;
