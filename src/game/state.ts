@@ -13,7 +13,6 @@ export const stateDungeon = {
   currentFloor: 0,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
-  healingRoomDoorOpen: false, // Track if the healing room door is open for the current floor
 };
 
 // Secret related state, separated for clarity and potential future expansion
@@ -116,6 +115,7 @@ export const stateDynamic = {
   enemies: [] as Enemy[],
   secrets: [] as { x: number; y: number; unlocked: boolean }[],
   healingRoom: null as HealingRoom | null,
+  chest: false, // Track if the chest on the current floor has been opened for conditions that require it
 };
 
 // Turn management state to control flow between player and enemy actions

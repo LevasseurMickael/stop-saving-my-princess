@@ -162,7 +162,6 @@ window.addEventListener("keydown", (e) => {
   if (map[newY][newX] === tileIndex.chest && stateStats.secretUnlocked) {
     stateStats.hasSecretItem = true;
     unlockingSecretItem();
-    map[newY][newX] = 0; // Remove secret item from map
   }
 
   if (map[newY][newX] === tileIndex.healingRoom) {

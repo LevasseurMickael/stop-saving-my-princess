@@ -13,58 +13,97 @@ import {
 } from "./graphicContext/playerContext";
 import { getEnemiesSprite } from "./graphicContext/enemiesContext";
 import { getHudSprite } from "./graphicContext/hudContext";
-import { getMapSprite } from "./graphicContext/mapContext";
+
 import { preloadAllImage } from "./graphicContext/imageLoader";
+import { getBackgroundSprite } from "./graphicContext/contexts/backgroundContext";
+import { getEntitiesSprite } from "./graphicContext/contexts/entitiesContext";
+import { createCanvasLayer } from "./graphicContext/canvasLayer";
 
-// Initialize canvas and rendering context
-const canvas = document.createElement("canvas");
-canvas.width = 1200;
-canvas.height = 912;
-document.body.appendChild(canvas);
+// Created canvas layers and their contexts
+const { layer, contexts } = createCanvasLayer(1200, 912);
 
-// Render the game state to the canvas
-const ctx = canvas.getContext("2d")!;
+// Created a global render function that will be called every frame
+let ctxBackground: CanvasRenderingContext2D;
+let ctxEntities: CanvasRenderingContext2D;
+let ctxCharacters: CanvasRenderingContext2D;
+let ctxUI: CanvasRenderingContext2D;
 
-// Initial clear
-ctx.fillStyle = "black";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Flag to control when to redraw the background (static elements)
+let backgroundDirty = true;
 
-// Render function to draw the map, player, enemies, and HUD
-function render() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw map tiles
-  getMapSprite(ctx, map, GridSize, GridSizeWidth, TileSize);
-
-  // Draw player
-  getPlayerSprite(ctx, statePlayer, TileSize);
-
-  // Draw radius where the player attack is effective
-  getPlayerAttackSprite(ctx, statePlayer, TileSize);
-
-  // Draw enemies
-  getEnemiesSprite(ctx, stateDynamic, TileSize);
-
-  // Draw HUD
-  getHudSprite(ctx);
+// Function to mark background as dirty when something changes that requires a redraw
+export function markBackgroundDirty() {
+  backgroundDirty = true;
 }
 
+/// Render the background layer (floor, walls, hint walls) - only if dirty
+function renderBackground() {
+  if (!backgroundDirty) return;
+
+  ctxBackground.clearRect(0, 0, 1200, 912);
+  getBackgroundSprite(ctxBackground, map, GridSize, GridSizeWidth, TileSize);
+
+  backgroundDirty = false;
+}
+
+/// Render the entities layer (chests, doors, stairs) - needs to be called every frame because of dynamic elements like doors opening
+function renderEntities() {
+  ctxEntities.clearRect(0, 0, 1200, 912);
+  getEntitiesSprite(ctxEntities, map, GridSize, GridSizeWidth, TileSize);
+}
+
+// Render the characters layer (player, enemies, projectiles) - needs to be called every frame for movement and animations
+function renderCharacters() {
+  ctxCharacters.clearRect(0, 0, 1200, 912);
+
+  // Draw player
+  getPlayerSprite(ctxCharacters, statePlayer, TileSize);
+
+  // Draw player attack radius
+  getPlayerAttackSprite(ctxCharacters, statePlayer, TileSize);
+
+  // Draw enemies
+  getEnemiesSprite(ctxCharacters, stateDynamic, TileSize);
+}
+
+// Render the UI layer (HUD, health bars, etc.) - needs to be called every frame for dynamic UI updates
+function renderUI() {
+  ctxUI.clearRect(0, 0, 1200, 912);
+  getHudSprite(ctxUI);
+}
+
+// Main render function that calls individual layer renderers
+function render() {
+  renderBackground(); // ← Only redraw if something changed that requires it (e.g. new floor, secret revealed)
+  renderEntities(); // ← Every frame (doors opening/closing, chests opening, etc.)
+  renderCharacters(); // ← Every frame (movements)
+  renderUI(); // ← Every frame (HP change, etc.)
+}
+
+// Init function to load resources and start the game loop
 async function startGame() {
   console.log("Loading images...");
-
   await preloadAllImage();
+  console.log("Images loaded!");
 
-  console.log("Images loaded, starting game loop...");
-  // Load initial floor and start game loop
+  // Assign contexts to global variables for use in render functions
+  ctxBackground = contexts.background;
+  ctxEntities = contexts.entities;
+  ctxCharacters = contexts.characters;
+  ctxUI = contexts.ui;
+
+  // Load the initial map and set up the game state
   loadMap();
 
+  // Start the game loop
   gameLoop();
 }
 
-// Main game loop using requestAnimationFrame for smooth rendering
+// Game loop using requestAnimationFrame for smooth rendering
 function gameLoop() {
   render();
   requestAnimationFrame(gameLoop);
 }
 
+// Start the game
 startGame();

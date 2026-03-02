@@ -1,3 +1,4 @@
+import { clearFloorTileCache } from "../../graphicContext/floorTile/floorTileCache";
 import {
   stateDungeon,
   stateDynamic,
@@ -35,6 +36,8 @@ export function enterNextFloor() {
   // Reset player state for the new floor
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = true;
   statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = true;
+
+  clearFloorTileCache();
 
   loadMap();
 

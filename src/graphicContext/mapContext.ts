@@ -3,10 +3,12 @@
 import { canSeeExits } from "../game/secret/secretUnlock/itemEffect/passives/canSeeExits";
 import { canSeeHintWalls } from "../game/secret/secretUnlock/itemEffect/passives/canSeeHintWall";
 import { dungeonmapFragment } from "../game/secret/secretUnlock/itemEffect/passives/dungeonmapFragment";
-import { stateDungeon, stateDynamic } from "../game/state";
+import { stateDynamic } from "../game/state";
 import { drawSprite } from "./drawSprite";
+import { floorSpriteLogic } from "./floorTile/floorSpriteLogic";
 import { getCachedImage } from "./imageLoader";
 import { tileIndex } from "./tile_index";
+import { wallSpriteLogic } from "./wallSpriteLogic";
 
 export function getMapSprite(
   ctx: CanvasRenderingContext2D,
@@ -22,7 +24,10 @@ export function getMapSprite(
       let spriteKey: string | null = null;
 
       if (map[y][x] === tileIndex.wall) {
-        baseColor = "gray";
+        spriteKey = wallSpriteLogic(map, x, y);
+        if (!spriteKey) {
+          baseColor = "gray";
+        }
 
         // treasure chest graphic logic
       } else if (map[y][x] === tileIndex.chest) {
@@ -39,7 +44,7 @@ export function getMapSprite(
       } else if (map[y][x] === tileIndex.hintWall) {
         const hintWallColor = canSeeHintWalls();
         if (hintWallColor === "white") {
-          tileImage = getCachedImage("/MayanStone.png");
+          spriteKey = "hint-wall";
         }
         baseColor = hintWallColor; // Fallback
       }
@@ -56,7 +61,7 @@ export function getMapSprite(
       else if (map[y][x] === tileIndex.healingRoom) {
         baseColor = "green";
       } else {
-        tileImage = getCachedImage("/floorTile.png");
+        spriteKey = floorSpriteLogic(map, x, y);
         baseColor = "black";
       }
 
