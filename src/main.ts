@@ -18,6 +18,7 @@ import { preloadAllImage } from "./graphicContext/imageLoader";
 import { getBackgroundSprite } from "./graphicContext/contexts/backgroundContext";
 import { getEntitiesSprite } from "./graphicContext/contexts/entitiesContext";
 import { createCanvasLayer } from "./graphicContext/canvasLayer";
+import { getWarFogSprite } from "./graphicContext/contexts/warFogContext";
 
 // Created canvas layers and their contexts
 const { layer, contexts } = createCanvasLayer(1200, 912);
@@ -26,6 +27,7 @@ const { layer, contexts } = createCanvasLayer(1200, 912);
 let ctxBackground: CanvasRenderingContext2D;
 let ctxEntities: CanvasRenderingContext2D;
 let ctxCharacters: CanvasRenderingContext2D;
+let ctxWarFog: CanvasRenderingContext2D;
 let ctxUI: CanvasRenderingContext2D;
 
 // Flag to control when to redraw the background (static elements)
@@ -66,6 +68,11 @@ function renderCharacters() {
   getEnemiesSprite(ctxCharacters, stateDynamic, TileSize);
 }
 
+function renderWarFog() {
+  ctxWarFog.clearRect(0, 0, 1200, 912);
+  getWarFogSprite(ctxWarFog, GridSize, GridSizeWidth, TileSize);
+}
+
 // Render the UI layer (HUD, health bars, etc.) - needs to be called every frame for dynamic UI updates
 function renderUI() {
   ctxUI.clearRect(0, 0, 1200, 912);
@@ -77,6 +84,7 @@ function render() {
   renderBackground(); // ← Only redraw if something changed that requires it (e.g. new floor, secret revealed)
   renderEntities(); // ← Every frame (doors opening/closing, chests opening, etc.)
   renderCharacters(); // ← Every frame (movements)
+  renderWarFog(); // ← Every frame (fog of war changes)
   renderUI(); // ← Every frame (HP change, etc.)
 }
 
@@ -90,6 +98,7 @@ async function startGame() {
   ctxBackground = contexts.background;
   ctxEntities = contexts.entities;
   ctxCharacters = contexts.characters;
+  ctxWarFog = contexts.warFog;
   ctxUI = contexts.ui;
 
   // Load the initial map and set up the game state

@@ -1,4 +1,3 @@
-import { dungeonmapFragment } from "../../game/secret/secretUnlock/itemEffect/passives/dungeonmapFragment";
 import { drawSprite } from "../drawSprite";
 import { floorSpriteLogic } from "../floorTile/floorSpriteLogic";
 import { tileIndex } from "../tile_index";
@@ -37,12 +36,6 @@ export function getBackgroundSprite(
       // Autres tiles de fond
       else {
         baseColor = "black";
-      }
-
-      // Fog of war
-      if (!dungeonmapFragment(x, y)) {
-        baseColor = "darkgray";
-        spriteKey = null;
       }
 
       // Dessiner
