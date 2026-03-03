@@ -1,18 +1,20 @@
 import { tileIndex } from "../../../graphicContext/tile_index";
-import type { HealingRoom } from "../../../lib/type";
-import { stateDungeon } from "../../state";
-import { findValidHealingRoomLocation } from "./findValidLocation";
+import type { HealingRoom, SecretRoom } from "../../../lib/type";
+import { stateDungeon, stateStats } from "../../state";
+import { findValidRoomLocation } from "./findValidLocation";
 
 // Healing room generation logic:
 // 1. Scan the map for valid locations to place a healing room (a small 2x3 room connected to a corridor).
 // 2. Randomly select one of the valid locations.
 // 3. Carve out the healing room in the map and return its details for later use (like placing the healing tile).
-export function createHealingRoom(
+export function createRoom(
   map: number[][],
   rand: () => number,
-): HealingRoom | null {
-  const location = findValidHealingRoomLocation(map, rand);
+  type: string,
+): HealingRoom | null | SecretRoom {
+  const location = findValidRoomLocation(map, rand);
   if (!location) return null;
+  if (!type) return null;
 
   const { x: doorX, y: doorY, direction } = location;
 
@@ -60,15 +62,28 @@ export function createHealingRoom(
       map[roomY + dy][roomX + dx] = tileIndex.empty; // Empty space
     }
   }
-  return {
-    x: healX,
-    y: healY,
-    doorX,
-    doorY,
-    roomIndex: -1, // Will be set later when we find which room this is adjacent to
-    isUnlocked: false,
-    doorLevel,
-  };
+  if (type === "healingRoom") {
+    return {
+      x: healX,
+      y: healY,
+      doorX,
+      doorY,
+      roomIndex: -1, // Will be set later when we find which room this is adjacent to
+      isUnlocked: false,
+      doorLevel,
+    };
+  } else if (type === "secretRoom") {
+    return {
+      x: healX,
+      y: healY,
+      doorX,
+      doorY,
+      roomIndex: -1, // Will be set later when we find which room this is adjacent to
+      isUnlocked: false,
+      doorLevel,
+    };
+  }
+  return null;
 }
 
 function doorLevelLogic() {

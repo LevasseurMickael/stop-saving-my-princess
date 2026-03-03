@@ -4,13 +4,14 @@ import type {
   GameEvent,
   Direction,
   HealingRoom,
+  SecretRoom,
 } from "../lib/type";
 
 const MaxFloors = 50; // Maximum number of floors in the game, used for initializing floor state
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 0,
+  currentFloor: 1,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -115,6 +116,7 @@ export const stateDynamic = {
   enemies: [] as Enemy[],
   secrets: [] as { x: number; y: number; unlocked: boolean }[],
   healingRoom: null as HealingRoom | null,
+  secretRoom: null as SecretRoom | null,
   chest: false, // Track if the chest on the current floor has been opened for conditions that require it
 };
 

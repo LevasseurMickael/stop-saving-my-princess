@@ -3,7 +3,7 @@
 import { tileIndex } from "../../../graphicContext/tile_index";
 
 // Healing room location criteria
-export function findValidHealingRoomLocation(
+export function findValidRoomLocation(
   map: number[][],
   rand: () => number,
 ): {
@@ -20,8 +20,8 @@ export function findValidHealingRoomLocation(
   const width = map[0].length;
   const height = map.length;
 
-  const roomWidth = 3; // Width of the corridor leading to the healing room
-  const roomHeight = 2; // Height of the healing room
+  const roomWidth = 3; // Width of the corridor leading to the room
+  const roomHeight = 2; // Height of the  room
 
   for (let y = 3; y < height - 3; y++) {
     for (let x = 3; x < width - 3; x++) {

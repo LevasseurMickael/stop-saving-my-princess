@@ -1,8 +1,8 @@
 import { GridSize, GridSizeWidth } from "./map";
 import { rng } from "../rng";
 import type { Room } from "../../lib/type";
-import { statePlayer } from "../state";
-import { createHealingRoom } from "./healingRoom/healingRoom";
+import { statePlayer, stateStats } from "../state";
+import { createRoom } from "./healingRoom/healingRoom";
 import { tileIndex } from "../../graphicContext/tile_index";
 
 // Check if two rooms intersect (including a 1-tile buffer)
@@ -28,7 +28,7 @@ export function generateDungeon(seed: number) {
   const rooms: Room[] = [];
 
   // 3-5 rooms
-  const roomCount = 30 + Math.floor(rand() * 3);
+  const roomCount = 20 + Math.floor(rand() * 3);
 
   // Try to place rooms without overlap
   for (let i = 0; i < roomCount; i++) {
@@ -38,8 +38,8 @@ export function generateDungeon(seed: number) {
     while (!placed && attempts < 10) {
       const w = 4 + Math.floor(rand() * 4); // Room width 4-7
       const h = 4 + Math.floor(rand() * 4); // Room height 4-7
-      const x = 2 + Math.floor(rand() * (GridSizeWidth - w - 3)); // Ensure room fits within borders
-      const y = 2 + Math.floor(rand() * (GridSize - h - 3));
+      const x = 2 + Math.floor(rand() * (GridSizeWidth - w - 4)); // Ensure room fits within borders
+      const y = 2 + Math.floor(rand() * (GridSize - h - 4));
 
       const room = { x, y, w, h };
 
@@ -101,12 +101,15 @@ export function generateDungeon(seed: number) {
   statePlayer.y = spawnY;
   statePlayer.spawn = { x: spawnX, y: spawnY };
 
-  const healingRoom = createHealingRoom(map, rand);
+  const healingRoom = createRoom(map, rand, "healingRoom");
+
+  // const secretRoom = createRoom(map, rand, "secretRoom");
 
   return {
     map,
     spawn: { x: statePlayer.x, y: statePlayer.y },
     rooms,
     healingRoom,
+    // secretRoom,
   };
 }

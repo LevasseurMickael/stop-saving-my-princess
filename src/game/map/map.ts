@@ -11,6 +11,8 @@ import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
 import { allSecretConditions } from "../secret/allSecretCondition";
 import { tileIndex } from "../../graphicContext/tile_index";
+import { createRoom } from "./healingRoom/healingRoom";
+import { rng } from "../rng";
 
 const TileSize = 24;
 const GridSize = 38;
@@ -66,7 +68,8 @@ export function loadMap() {
   stateSecret.enemies = stateDynamic.enemies;
 
   // Find secret room and add to state
-  const secretRoom = findSecretRoom(map);
+  const rand = rng(stateDungeon.runSeed);
+  const secretRoom = createRoom(map, rand, "secretRoom");
   stateDynamic.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];
   return dungeon.rooms;
 }

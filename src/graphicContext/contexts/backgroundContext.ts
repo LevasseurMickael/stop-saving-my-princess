@@ -23,7 +23,13 @@ export function getBackgroundSprite(
       }
 
       // Sol
-      else if (map[y][x] === 0) {
+      else if (
+        map[y][x] === tileIndex.empty ||
+        map[y][x] === tileIndex.secretDoor ||
+        map[y][x] === tileIndex.chest ||
+        map[y][x] === tileIndex.exit ||
+        map[y][x] === tileIndex.healingRoom
+      ) {
         spriteKey = floorSpriteLogic(map, x, y);
         baseColor = "black";
       }
