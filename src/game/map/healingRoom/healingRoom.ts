@@ -1,6 +1,6 @@
 import { tileIndex } from "../../../graphicContext/tile_index";
 import type { HealingRoom, SecretRoom } from "../../../lib/type";
-import { stateDungeon, stateStats } from "../../state";
+import { stateDungeon } from "../../state";
 import { findValidRoomLocation } from "./findValidLocation";
 
 // Healing room generation logic:
@@ -24,6 +24,8 @@ export function createRoom(
   let roomX: number, roomY: number, healX: number, healY: number;
 
   const doorLevel = doorLevelLogic();
+
+  const tiles: { x: number; y: number }[] = [];
 
   // Calculate the position of the healing room based on the direction of the corridor it's attached to
   switch (direction) {
@@ -59,7 +61,11 @@ export function createRoom(
   // Carve out the healing room
   for (let dy = 0; dy < roomHeight; dy++) {
     for (let dx = 0; dx < roomWidth; dx++) {
-      map[roomY + dy][roomX + dx] = tileIndex.empty; // Empty space
+      const tileX = roomX + dx;
+      const tileY = roomY + dy;
+      map[tileY][tileX] = tileIndex.empty; // Empty space
+
+      tiles.push({ x: tileX, y: tileY });
     }
   }
   if (type === "healingRoom") {
@@ -81,6 +87,7 @@ export function createRoom(
       roomIndex: -1, // Will be set later when we find which room this is adjacent to
       isUnlocked: false,
       doorSecret: false,
+      tiles,
     };
   }
   return null;

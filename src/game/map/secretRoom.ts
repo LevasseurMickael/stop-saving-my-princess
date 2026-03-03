@@ -9,9 +9,15 @@ export function revealTreasureRoom() {
 
   stateStats.secretUnlocked = true;
 
+  for (const tile of stateDynamic.secretRoom.tiles) {
+    map[tile.y][tile.x] = tileIndex.empty; // Mark secret room tiles as empty on the map
+  }
+
   // Reveal the secret room door and chest on the map
   map[stateDynamic.secretRoom.doorY][stateDynamic.secretRoom.doorX] =
     tileIndex.treasureDoor; // Mark secret room door on the map
+
+  map[stateDynamic.secretRoom.y][stateDynamic.secretRoom.x] = tileIndex.chest; // Mark secret room center as chest on the map
 
   // refresh the map to show the newly revealed door and chest
 

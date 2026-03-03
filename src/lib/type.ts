@@ -155,6 +155,7 @@ export type SecretRoom = {
   doorY: number;
   isUnlocked: boolean;
   doorSecret: boolean;
+  tiles: { x: number; y: number }[]; // Tiles that belong to the secret room for rendering and condition checks
 };
 
 export type SpriteConfig = {

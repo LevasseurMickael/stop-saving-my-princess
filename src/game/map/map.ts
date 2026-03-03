@@ -40,12 +40,17 @@ export function loadMap() {
   }
 
   if (dungeon.secretRoom) {
-    stateDynamic.secretRoom = dungeon.secretRoom as SecretRoom;
-    stateDynamic.secrets = dungeon.secretRoom
-      ? [{ ...dungeon.secretRoom, unlocked: false }]
+    const secretRoom = dungeon.secretRoom as SecretRoom;
+    stateDynamic.secretRoom = secretRoom;
+    stateDynamic.secrets = secretRoom
+      ? [{ ...secretRoom, unlocked: false }]
       : [];
-    map[dungeon.secretRoom.doorY][dungeon.secretRoom.doorX] = tileIndex.wall; // Keep secret room door as wall until unlocked
-    map[dungeon.secretRoom.y][dungeon.secretRoom.x] = tileIndex.empty; // Mark secret room center as empty for now
+
+    for (const tile of secretRoom.tiles) {
+      map[tile.y][tile.x] = tileIndex.wall;
+    }
+    map[secretRoom.doorY][secretRoom.doorX] = tileIndex.wall; // Keep secret room door as wall until unlocked
+    map[secretRoom.y][secretRoom.x] = tileIndex.wall; // Mark secret room center as empty for now
   }
   // Check if there's a secret condition for this floor and create hint tile if so
   const secret = allSecretConditions.find(
