@@ -11,7 +11,8 @@ export function floorSpriteLogic(
     map[y][x] !== tileIndex.secretDoor &&
     map[y][x] !== tileIndex.chest &&
     map[y][x] !== tileIndex.exit &&
-    map[y][x] !== tileIndex.healingRoom
+    map[y][x] !== tileIndex.healingRoom &&
+    map[y][x] !== tileIndex.treasureDoor
   )
     return null;
 

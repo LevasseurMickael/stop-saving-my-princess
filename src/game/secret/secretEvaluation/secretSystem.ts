@@ -10,6 +10,7 @@ import { map } from "../../map/map";
 import { allSecretConditions } from "../allSecretCondition";
 import { evaluateCondition } from "./secretEvaluator";
 import { tileIndex } from "../../../graphicContext/tile_index";
+import { revealTreasureRoom } from "../../map/secretRoom";
 
 export function handleGameEvent(event: GameEvent) {
   stateSecret.eventHistory.push(event);
@@ -52,6 +53,7 @@ function unlockSecret(secret: FloorSecret) {
   if (stateDynamic.secrets.length > 0) {
     const room = stateDynamic.secrets[0];
     map[room.y][room.x] = tileIndex.chest; // Unlock secret area on the map
+    revealTreasureRoom(); // Reveal the treasure room if it exists
   }
   console.log(`Secret for floor ${secret.floor} unlocked!`);
 }

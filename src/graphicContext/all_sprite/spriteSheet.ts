@@ -1,6 +1,6 @@
-import type { SpriteConfig } from "../lib/type";
+import type { SpriteConfig } from "../../lib/type";
 
-export const sprites: Record<string, SpriteConfig> = {
+export const mapSprites: Record<string, SpriteConfig> = {
   "stairs-down": {
     sheetSrc: "/map_sheet.png",
     x: 128,

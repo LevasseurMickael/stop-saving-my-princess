@@ -1,4 +1,5 @@
 import { clearFloorTileCache } from "../../graphicContext/floorTile/floorTileCache";
+import { markBackgroundDirty } from "../../main";
 import {
   stateDungeon,
   stateDynamic,
@@ -38,6 +39,7 @@ export function enterNextFloor() {
   statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = true;
 
   clearFloorTileCache();
+  markBackgroundDirty();
 
   loadMap();
 

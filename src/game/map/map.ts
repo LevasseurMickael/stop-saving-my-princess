@@ -7,12 +7,10 @@ import {
   stateStats,
 } from "../state";
 import { spawnEnemies } from "../enemy/enemy";
-import { findSecretRoom } from "./secretRoom";
 import { createHintTile } from "./hintTile";
 import { allSecretConditions } from "../secret/allSecretCondition";
 import { tileIndex } from "../../graphicContext/tile_index";
-import { createRoom } from "./healingRoom/healingRoom";
-import { rng } from "../rng";
+import type { HealingRoom, SecretRoom } from "../../lib/type";
 
 const TileSize = 24;
 const GridSize = 38;
@@ -35,12 +33,20 @@ export function loadMap() {
   map = dungeon.map;
 
   if (dungeon.healingRoom) {
-    stateDynamic.healingRoom = dungeon.healingRoom;
+    stateDynamic.healingRoom = dungeon.healingRoom as HealingRoom;
     map[dungeon.healingRoom.doorY][dungeon.healingRoom.doorX] =
       tileIndex.secretDoor; // Mark healing room door on the map
     map[dungeon.healingRoom.y][dungeon.healingRoom.x] = tileIndex.healingRoom; // Mark healing room center on the map
   }
 
+  if (dungeon.secretRoom) {
+    stateDynamic.secretRoom = dungeon.secretRoom as SecretRoom;
+    stateDynamic.secrets = dungeon.secretRoom
+      ? [{ ...dungeon.secretRoom, unlocked: false }]
+      : [];
+    map[dungeon.secretRoom.doorY][dungeon.secretRoom.doorX] = tileIndex.wall; // Keep secret room door as wall until unlocked
+    map[dungeon.secretRoom.y][dungeon.secretRoom.x] = tileIndex.empty; // Mark secret room center as empty for now
+  }
   // Check if there's a secret condition for this floor and create hint tile if so
   const secret = allSecretConditions.find(
     (s) => s.floor === stateDungeon.currentFloor + 1,
@@ -68,9 +74,9 @@ export function loadMap() {
   stateSecret.enemies = stateDynamic.enemies;
 
   // Find secret room and add to state
-  const rand = rng(stateDungeon.runSeed);
-  const secretRoom = createRoom(map, rand, "secretRoom");
-  stateDynamic.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];
+  // const rand = rng(stateDungeon.runSeed);
+  // const secretRoom = createRoom(map, rand, "secretRoom");
+  // stateDynamic.secrets = secretRoom ? [{ ...secretRoom, unlocked: false }] : [];
   return dungeon.rooms;
 }
 

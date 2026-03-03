@@ -154,7 +154,7 @@ export type SecretRoom = {
   doorX: number;
   doorY: number;
   isUnlocked: boolean;
-  doorLevel: number;
+  doorSecret: boolean;
 };
 
 export type SpriteConfig = {

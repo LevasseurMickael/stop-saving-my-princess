@@ -22,6 +22,7 @@ export async function preloadAllImage(): Promise<void> {
     "/MayanStone.png",
     "/chest.png",
     "/floorTile.png",
+    "/Slime.png",
   ];
   try {
     await Promise.all(imageSources.map((src) => loadImage(src)));

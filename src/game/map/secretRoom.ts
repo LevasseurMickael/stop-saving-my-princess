@@ -1,33 +1,19 @@
 import { tileIndex } from "../../graphicContext/tile_index";
+import { markBackgroundDirty } from "../../main";
+import { stateDynamic, stateStats } from "../state";
 
-export function findSecretRoom(map: number[][]) {
-  // Find all wall tiles adjacent to empty space, pick one randomly as secret room entrance
-  const canditates: { x: number; y: number }[] = [];
+import { map } from "./map";
 
-  // Check all wall tiles and see if they are adjacent to an empty tile
-  const directions = [
-    { dx: 0, dy: -1 },
-    { dx: 0, dy: 1 },
-    { dx: -1, dy: 0 },
-    { dx: 1, dy: 0 },
-  ];
+export function revealTreasureRoom() {
+  if (!stateDynamic.secretRoom) return;
 
-  // Start from 1 and end at length - 1 to avoid out of bounds
-  for (let y = 1; y < map.length - 1; y++) {
-    for (let x = 1; x < map[y].length - 1; x++) {
-      if (map[y][x] !== tileIndex.wall) continue; // Must be a wall
+  stateStats.secretUnlocked = true;
 
-      // Check if adjacent to empty space
-      for (const d of directions) {
-        if (map[y + d.dy][x + d.dx] === tileIndex.empty) {
-          canditates.push({ x, y });
-          break;
-        }
-      }
-    }
-  }
-  // If no candidates found, return null (shouldn't happen in a valid map)
-  if (canditates.length === 0) return null;
-  // Pick a random candidate as the secret room entrance
-  return canditates[Math.floor(Math.random() * canditates.length)];
+  // Reveal the secret room door and chest on the map
+  map[stateDynamic.secretRoom.doorY][stateDynamic.secretRoom.doorX] =
+    tileIndex.treasureDoor; // Mark secret room door on the map
+
+  // refresh the map to show the newly revealed door and chest
+
+  markBackgroundDirty();
 }

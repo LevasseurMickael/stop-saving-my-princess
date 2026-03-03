@@ -30,6 +30,16 @@ export function getEntitiesSprite(
         } else {
           spriteKey = "chest-open";
         }
+      } else if (map[y][x] === tileIndex.treasureDoor) {
+        if (stateStats.secretUnlocked) {
+          // Secret room door becomes visible if secret condition is validated
+          const secretRoom = stateDynamic.secretRoom;
+          if (secretRoom?.doorSecret) {
+            spriteKey = "door-open";
+          } else {
+            spriteKey = "door-closed";
+          }
+        }
       }
       // Escaliers (visibles selon canSeeExits)
       else if (map[y][x] === tileIndex.exit) {

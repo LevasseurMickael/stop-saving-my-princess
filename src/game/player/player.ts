@@ -73,6 +73,33 @@ window.addEventListener("keydown", (e) => {
           : handleGameEvent({ type: "wait", turns: 1 });
         acted = true;
       } else if (
+        map[newY][newX] === tileIndex.treasureDoor &&
+        !stateDynamic.secretRoom?.doorSecret
+      ) {
+        // Check if the player has unlocked the secret condition for this floor to open the secret room door
+        if (stateStats.secretUnlocked) {
+          if (!stateDynamic.secretRoom) {
+            return; // Just in case, should not happen
+          }
+          // Secret validated, open the door
+          if (stateStats.secretUnlocked) {
+            // If the secret is unlocked, unlock the door
+            stateDynamic.secretRoom.doorSecret = true;
+            statePlayer.x = newX;
+            statePlayer.y = newY;
+            handleGameEvent({
+              type: "move",
+              x: statePlayer.x,
+              y: statePlayer.y,
+            });
+            acted = true;
+          } else {
+            // Secret not unlocked, door remains closed and player waits for a turn
+            handleGameEvent({ type: "wait", turns: 1 });
+            acted = true;
+          }
+        }
+      } else if (
         map[newY][newX] !== tileIndex.wall &&
         map[newY][newX] !== tileIndex.hintWall &&
         (!isOccupied(newX, newY, stateDynamic.enemies) ||

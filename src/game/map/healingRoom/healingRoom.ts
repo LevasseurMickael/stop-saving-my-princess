@@ -80,7 +80,7 @@ export function createRoom(
       doorY,
       roomIndex: -1, // Will be set later when we find which room this is adjacent to
       isUnlocked: false,
-      doorLevel,
+      doorSecret: false,
     };
   }
   return null;

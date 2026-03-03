@@ -1,5 +1,5 @@
+import { allSpriteObject } from "./all_sprite/allSpriteObject";
 import { getCachedImage } from "./imageLoader";
-import { sprites } from "./spriteSheet";
 
 export function drawSprite(
   ctx: CanvasRenderingContext2D,
@@ -8,7 +8,7 @@ export function drawSprite(
   y: number,
   tileSize: number,
 ): void {
-  const sprite = sprites[spriteKey];
+  const sprite = allSpriteObject[spriteKey];
   if (!sprite) {
     console.warn(`Sprite with key "${spriteKey}" not found.`);
     return;

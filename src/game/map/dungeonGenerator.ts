@@ -103,13 +103,13 @@ export function generateDungeon(seed: number) {
 
   const healingRoom = createRoom(map, rand, "healingRoom");
 
-  // const secretRoom = createRoom(map, rand, "secretRoom");
+  const secretRoom = createRoom(map, rand, "secretRoom");
 
   return {
     map,
     spawn: { x: statePlayer.x, y: statePlayer.y },
     rooms,
     healingRoom,
-    // secretRoom,
+    secretRoom,
   };
 }

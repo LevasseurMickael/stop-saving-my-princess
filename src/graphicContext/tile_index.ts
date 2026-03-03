@@ -6,4 +6,5 @@ export const tileIndex = {
   hintWall: 4,
   secretDoor: 5,
   healingRoom: 6,
+  treasureDoor: 7,
 };
