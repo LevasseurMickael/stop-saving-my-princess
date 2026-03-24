@@ -36,8 +36,8 @@ export function generateDungeon(seed: number) {
     let attempts = 0;
 
     while (!placed && attempts < 10) {
-      const w = 4 + Math.floor(rand() * 4); // Room width 4-7
-      const h = 4 + Math.floor(rand() * 4); // Room height 4-7
+      const w = 4 + Math.floor(rand() * 3); // Room width 4-7
+      const h = 4 + Math.floor(rand() * 3); // Room height 4-7
       const x = 2 + Math.floor(rand() * (GridSizeWidth - w - 4)); // Ensure room fits within borders
       const y = 2 + Math.floor(rand() * (GridSize - h - 4));
 

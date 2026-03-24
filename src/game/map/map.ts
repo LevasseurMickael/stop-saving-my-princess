@@ -12,9 +12,9 @@ import { allSecretConditions } from "../secret/allSecretCondition";
 import { tileIndex } from "../../graphicContext/tile_index";
 import type { HealingRoom, SecretRoom } from "../../lib/type";
 
-const TileSize = 24;
-const GridSize = 38;
-const GridSizeWidth = 50; // For wider maps in later floors
+const TileSize = 32;
+const GridSize = 30;
+const GridSizeWidth = 40; // For wider maps in later floors
 
 let map: number[][] = [];
 

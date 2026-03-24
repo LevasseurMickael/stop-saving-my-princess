@@ -3,7 +3,7 @@ import type { SpriteConfig } from "../../../lib/type";
 export const floorSprites: Record<string, SpriteConfig> = {
   "floor-1": {
     sheetSrc: "/wall_props_32px.png",
-    x: 0,
+    x: 96,
     y: 256,
     width: 32,
     height: 32,
@@ -24,7 +24,7 @@ export const floorSprites: Record<string, SpriteConfig> = {
   },
   "floor-4": {
     sheetSrc: "/wall_props_32px.png",
-    x: 96,
+    x: 0,
     y: 256,
     width: 32,
     height: 32,
