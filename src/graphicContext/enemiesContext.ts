@@ -47,16 +47,16 @@ export function getEnemiesSprite(
         TileSize,
       );
     }
-    //multi-action marker
-    if (enemy.actionPerTurn > 1) {
-      ctx.fillStyle = "black";
-      ctx.fillRect(
-        enemy.x * TileSize + TileSize / 3,
-        enemy.y * TileSize + TileSize / 3,
-        TileSize / 3,
-        TileSize / 3,
-      );
-    }
+    // //multi-action marker
+    // if (enemy.actionPerTurn > 1) {
+    //   ctx.fillStyle = "black";
+    //   ctx.fillRect(
+    //     enemy.x * TileSize + TileSize / 3,
+    //     enemy.y * TileSize + TileSize / 3,
+    //     TileSize / 3,
+    //     TileSize / 3,
+    //   );
+    // }
 
     ctx.globalAlpha = 1; // Reset alpha after drawing the enemy
   }

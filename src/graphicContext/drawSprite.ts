@@ -1,4 +1,5 @@
 import { allSpriteObject } from "./all_sprite/allSpriteObject";
+import { getFacingDirection } from "./all_sprite/facingLogic";
 import { getCachedImage } from "./imageLoader";
 
 export function drawSprite(
@@ -7,6 +8,7 @@ export function drawSprite(
   x: number,
   y: number,
   tileSize: number,
+  facing?: string, // Optional facing parameter for directional sprites
 ): void {
   const sprite = allSpriteObject[spriteKey];
   if (!sprite) {
@@ -20,10 +22,12 @@ export function drawSprite(
     return;
   }
 
+  const spriteYFacing = facing ? getFacingDirection(facing) : sprite.y; // Default to 0 if facing is not provided
+
   ctx.drawImage(
     image,
     sprite.x,
-    sprite.y,
+    spriteYFacing,
     sprite.width,
     sprite.height,
     x * tileSize,

@@ -18,11 +18,15 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
 
 export async function preloadAllImage(): Promise<void> {
   const imageSources = [
-    "/map_sheet.png",
-    "/MayanStone.png",
-    "/chest.png",
-    "/floorTile.png",
-    "/Slime.png",
+    "/dragon_sprite_32px.png",
+    "/ghost_32px.png",
+    "/living_armour_32px.png",
+    "/mage_32px.png",
+    "/royal_knight_32px.png",
+    "/slime_32px.png",
+    "/vermin_32px.png",
+    "/undead_32px.png",
+    "/wall_props_32px.png",
   ];
   try {
     await Promise.all(imageSources.map((src) => loadImage(src)));
