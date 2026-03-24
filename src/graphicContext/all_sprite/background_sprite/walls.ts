@@ -94,8 +94,8 @@ export const wallSprites: Record<string, SpriteConfig> = {
   },
   wall: {
     sheetSrc: "/wall_props_32px.png",
-    x: 96,
-    y: 0,
+    x: 160,
+    y: 256,
     width: 32,
     height: 32,
   },

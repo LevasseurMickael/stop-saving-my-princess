@@ -21,7 +21,7 @@ import { createCanvasLayer } from "./graphicContext/canvasLayer";
 import { getWarFogSprite } from "./graphicContext/contexts/warFogContext";
 
 // Created canvas layers and their contexts
-const { layer, contexts } = createCanvasLayer(1200, 912);
+const { layer, contexts } = createCanvasLayer(1280, 912);
 
 // Created a global render function that will be called every frame
 let ctxBackground: CanvasRenderingContext2D;
@@ -42,7 +42,7 @@ export function markBackgroundDirty() {
 function renderBackground() {
   if (!backgroundDirty) return;
 
-  ctxBackground.clearRect(0, 0, 1200, 912);
+  ctxBackground.clearRect(0, 0, 1280, 912);
   getBackgroundSprite(ctxBackground, map, GridSize, GridSizeWidth, TileSize);
 
   backgroundDirty = false;
@@ -50,13 +50,13 @@ function renderBackground() {
 
 /// Render the entities layer (chests, doors, stairs) - needs to be called every frame because of dynamic elements like doors opening
 function renderEntities() {
-  ctxEntities.clearRect(0, 0, 1200, 912);
+  ctxEntities.clearRect(0, 0, 1280, 912);
   getEntitiesSprite(ctxEntities, map, GridSize, GridSizeWidth, TileSize);
 }
 
 // Render the characters layer (player, enemies, projectiles) - needs to be called every frame for movement and animations
 function renderCharacters() {
-  ctxCharacters.clearRect(0, 0, 1200, 912);
+  ctxCharacters.clearRect(0, 0, 1280, 912);
 
   // Draw player
   getPlayerSprite(ctxCharacters, statePlayer, TileSize);
@@ -69,13 +69,13 @@ function renderCharacters() {
 }
 
 function renderWarFog() {
-  ctxWarFog.clearRect(0, 0, 1200, 912);
+  ctxWarFog.clearRect(0, 0, 1280, 912);
   getWarFogSprite(ctxWarFog, GridSize, GridSizeWidth, TileSize);
 }
 
 // Render the UI layer (HUD, health bars, etc.) - needs to be called every frame for dynamic UI updates
 function renderUI() {
-  ctxUI.clearRect(0, 0, 1200, 912);
+  ctxUI.clearRect(0, 0, 1280, 912);
   getHudSprite(ctxUI);
 }
 
