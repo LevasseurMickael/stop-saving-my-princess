@@ -1,5 +1,6 @@
 import { tileIndex } from "../../../../graphicContext/tile_index";
 import type { Enemy } from "../../../../lib/type";
+import { updateEnemyFacing } from "../../../mechanics/enemyFacing";
 import { isOccupied } from "../../enemy";
 
 export function tryToMoveTowardsPlayer(
@@ -24,6 +25,9 @@ export function tryToMoveTowardsPlayer(
   if (map[newY][newX] === tileIndex.empty && !isOccupied(newX, newY, enemy)) {
     enemy.x = newX;
     enemy.y = newY;
+
+    updateEnemyFacing(enemy, dx, dy);
+
     return true;
   }
   return false;

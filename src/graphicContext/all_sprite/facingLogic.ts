@@ -5,7 +5,7 @@ export function getFacingDirection(
   attackWeapon?: string,
   charging?: number,
 ): number {
-  if (attackWeapon === "ranged" && charging && charging >= 1) {
+  if (attackWeapon === "ranged" && charging === 1) {
     switch (facing) {
       case "down":
         return 128;

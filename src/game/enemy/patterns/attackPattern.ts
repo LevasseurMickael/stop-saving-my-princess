@@ -1,4 +1,5 @@
 import type { Enemy } from "../../../lib/type";
+import { faceTowardsPlayer } from "../../mechanics/enemyFacing";
 import { knockbackPlayer } from "../../mechanics/knockback";
 import { isBlockedByShield } from "../../mechanics/shield";
 import { handleGameEvent } from "../../secret/secretEvaluation/secretSystem";
@@ -15,6 +16,8 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
   const distY = player.y - enemy.y;
   // If enemy
   if (Math.abs(distX) + Math.abs(distY) <= enemy.attackRange) {
+    faceTowardsPlayer(enemy, player);
+
     if (isBlockedByShield(enemy)) {
       handleGameEvent({ type: "enemy_hit", blocker: true });
       knockbackPlayer(enemy);

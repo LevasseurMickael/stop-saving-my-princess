@@ -1,5 +1,6 @@
 import { tileIndex } from "../../../graphicContext/tile_index";
 import type { Enemy } from "../../../lib/type";
+import { updateEnemyFacing } from "../../mechanics/enemyFacing";
 import { isOccupied } from "../enemy";
 
 // Monster with low hp or difficulty level run away from the player until being 4 tail away from the player, then they get back to their original pattern.
@@ -46,6 +47,7 @@ function tryMove(
   if (map[newY]?.[newX] === tileIndex.empty && !isOccupied(newX, newY, enemy)) {
     enemy.x = newX;
     enemy.y = newY;
+    updateEnemyFacing(enemy, stepX, stepY);
     return true;
   }
   return false;

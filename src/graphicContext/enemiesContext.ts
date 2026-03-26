@@ -14,6 +14,8 @@ export function getEnemiesSprite(
   for (const enemy of stateDynamic.enemies) {
     if (!enemy.alive) continue;
     let spriteKey: string | null = null;
+    let spriteAttackKey: string | null = null;
+    let spriteAttackChargeTurn: number | null = null;
 
     if (!dungeonmapFragment(enemy.x, enemy.y)) {
       continue; // Skip rendering if the tile is not visible on the map
@@ -22,6 +24,8 @@ export function getEnemiesSprite(
     // find the name of the current monster in the enemiesSprite object
     if (!enemy.name) return;
     spriteKey = enemy.name;
+    spriteAttackKey = enemy.attackWeapon;
+    spriteAttackChargeTurn = enemy.attackChargeTurn;
 
     const color =
       enemy.name !== undefined ? enemyColors[enemy.name] || "red" : "red";
@@ -31,7 +35,16 @@ export function getEnemiesSprite(
     }
 
     if (spriteKey) {
-      drawSprite(ctx, spriteKey, enemy.x, enemy.y, TileSize);
+      drawSprite(
+        ctx,
+        spriteKey,
+        enemy.x,
+        enemy.y,
+        TileSize,
+        enemy.facing,
+        spriteAttackKey,
+        spriteAttackChargeTurn,
+      );
     } else {
       ctx.fillStyle = color;
       ctx.fillRect(enemy.x * TileSize, enemy.y * TileSize, TileSize, TileSize);
@@ -47,16 +60,6 @@ export function getEnemiesSprite(
         TileSize,
       );
     }
-    // //multi-action marker
-    // if (enemy.actionPerTurn > 1) {
-    //   ctx.fillStyle = "black";
-    //   ctx.fillRect(
-    //     enemy.x * TileSize + TileSize / 3,
-    //     enemy.y * TileSize + TileSize / 3,
-    //     TileSize / 3,
-    //     TileSize / 3,
-    //   );
-    // }
 
     ctx.globalAlpha = 1; // Reset alpha after drawing the enemy
   }

@@ -1,5 +1,6 @@
 import { tileIndex } from "../../../graphicContext/tile_index";
 import type { Enemy } from "../../../lib/type";
+import { updateEnemyFacing } from "../../mechanics/enemyFacing";
 import { reducedEnemyActionSpeed } from "../../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { isOccupied } from "../enemy";
 
@@ -27,6 +28,8 @@ export function patrolPattern(enemy: Enemy, map: number[][]) {
       ) {
         enemy.x = newX;
         enemy.y = newY;
+
+        updateEnemyFacing(enemy, dir.dx, dir.dy);
       }
     } else {
       const moveOrNot = Math.random() < 0.2; // 20% chance to move
@@ -37,6 +40,7 @@ export function patrolPattern(enemy: Enemy, map: number[][]) {
       ) {
         enemy.x = newX;
         enemy.y = newY;
+        updateEnemyFacing(enemy, dir.dx, dir.dy);
       }
     }
   }

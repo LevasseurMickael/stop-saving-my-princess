@@ -9,6 +9,8 @@ export function drawSprite(
   y: number,
   tileSize: number,
   facing?: string, // Optional facing parameter for directional sprites
+  attackWeapon?: string, // Optional attack weapon for determining sprite state
+  charging?: number, // Optional charging state for determining sprite state
 ): void {
   const sprite = allSpriteObject[spriteKey];
   if (!sprite) {
@@ -22,7 +24,9 @@ export function drawSprite(
     return;
   }
 
-  const spriteYFacing = facing ? getFacingDirection(facing) : sprite.y; // Default to 0 if facing is not provided
+  const spriteYFacing = facing
+    ? getFacingDirection(facing, attackWeapon, charging)
+    : sprite.y; // Default to 0 if facing is not provided
 
   ctx.drawImage(
     image,
