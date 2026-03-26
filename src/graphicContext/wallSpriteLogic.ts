@@ -6,34 +6,60 @@ export function wallSpriteLogic(
   y: number,
 ): string | null {
   // Check if the current tile is a wall, if not return null
-  if (!x) {
-    return "wall";
-  }
-  if (!y) {
-    return "wall";
-  }
+  const isEmpty = (checkY: number, checkX: number): boolean => {
+    if (checkY < 0 || checkY >= map.length) return false;
+    if (checkX < 0 || !map[checkY] || checkX >= map[checkY].length)
+      return false;
+    return map[checkY][checkX] === tileIndex.empty;
+  };
+
+  const isWall = (checkY: number, checkX: number): boolean => {
+    if (checkY < 0 || checkY >= map.length) return true;
+    if (checkX < 0 || !map[checkY] || checkX >= map[checkY].length) return true;
+    return map[checkY][checkX] === tileIndex.wall;
+  };
+
+  const isHealingRoom = (checkY: number, checkX: number): boolean => {
+    if (checkY < 0 || checkY >= map.length) return false;
+    if (checkX < 0 || !map[checkY] || checkX >= map[checkY].length)
+      return false;
+    return map[checkY][checkX] === tileIndex.healingRoom;
+  };
+
+  const isSecretRoom = (checkY: number, checkX: number): boolean => {
+    if (checkY < 0 || checkY >= map.length) return false;
+    if (checkX < 0 || !map[checkY] || checkX >= map[checkY].length)
+      return false;
+    return map[checkY][checkX] === tileIndex.chest;
+  };
 
   // Check if adjacent tile is and tileIndex.empty to determine if we need to draw a wall sprite and which one, one for each direction (top, bottom, left, right, corners, isolated, dead-ends)
-  const topEmpty = map[y - 1] && map[y - 1][x] === tileIndex.empty;
-  const bottomEmpty = map[y + 1] && map[y + 1][x] === tileIndex.empty;
-  const leftEmpty = map[y][x - 1] === tileIndex.empty;
-  const rightEmpty = map[y][x + 1] === tileIndex.empty;
-  const topLeftEmpty = map[y - 1] && map[y - 1][x - 1] === tileIndex.empty;
-  const topRightEmpty = map[y - 1] && map[y - 1][x + 1] === tileIndex.empty;
-  const bottomLeftEmpty = map[y + 1] && map[y + 1][x - 1] === tileIndex.empty;
-  const bottomRightEmpty = map[y + 1] && map[y + 1][x + 1] === tileIndex.empty;
+  const topEmpty = isEmpty(y - 1, x);
+  const bottomEmpty = isEmpty(y + 1, x);
+  const leftEmpty = isEmpty(y, x - 1);
+  const rightEmpty = isEmpty(y, x + 1);
+  const topLeftEmpty = isEmpty(y - 1, x - 1);
+  const topRightEmpty = isEmpty(y - 1, x + 1);
+  const bottomLeftEmpty = isEmpty(y + 1, x - 1);
+  const bottomRightEmpty = isEmpty(y + 1, x + 1);
 
   //Check if adjacent tile is a wall to determine if we need to draw a continuation of the wall or a corner
-  const topWall = map[y - 1] && map[y - 1][x] === tileIndex.wall;
-  const bottomWall = map[y + 1] && map[y + 1][x] === tileIndex.wall;
-  const leftWall = map[y][x - 1] === tileIndex.wall;
-  const rightWall = map[y][x + 1] === tileIndex.wall;
+  const topWall = isWall(y - 1, x);
+  const bottomWall = isWall(y + 1, x);
+  const leftWall = isWall(y, x - 1);
+  const rightWall = isWall(y, x + 1);
 
   const healingAreaAdjacent =
-    (map[y - 1] && map[y - 1][x] === tileIndex.healingRoom) ||
-    (map[y + 1] && map[y + 1][x] === tileIndex.healingRoom) ||
-    map[y][x - 1] === tileIndex.healingRoom ||
-    map[y][x + 1] === tileIndex.healingRoom;
+    isHealingRoom(y - 1, x) ||
+    isHealingRoom(y + 1, x) ||
+    isHealingRoom(y, x - 1) ||
+    isHealingRoom(y, x + 1);
+
+  const chestAdjacent =
+    isSecretRoom(y - 1, x) ||
+    isSecretRoom(y + 1, x) ||
+    isSecretRoom(y, x - 1) ||
+    isSecretRoom(y, x + 1);
 
   // Determine the appropriate wall sprite based on adjacent empty tiles and walls
 
@@ -42,7 +68,8 @@ export function wallSpriteLogic(
     leftEmpty &&
     !bottomEmpty &&
     !rightEmpty &&
-    !healingAreaAdjacent
+    !healingAreaAdjacent &&
+    !chestAdjacent
   ) {
     return "wall-corner-top-left";
   } else if (
@@ -51,7 +78,8 @@ export function wallSpriteLogic(
     !bottomEmpty &&
     !rightEmpty &&
     bottomRightEmpty &&
-    !healingAreaAdjacent
+    !healingAreaAdjacent &&
+    !chestAdjacent
   ) {
     return "wall-corner-top-left";
   } else if (
@@ -59,7 +87,8 @@ export function wallSpriteLogic(
     rightEmpty &&
     !bottomEmpty &&
     !leftEmpty &&
-    !healingAreaAdjacent
+    !healingAreaAdjacent &&
+    !chestAdjacent
   ) {
     return "wall-corner-top-right";
   } else if (
@@ -68,7 +97,8 @@ export function wallSpriteLogic(
     !bottomEmpty &&
     !rightEmpty &&
     bottomLeftEmpty &&
-    !healingAreaAdjacent
+    !healingAreaAdjacent &&
+    !chestAdjacent
   ) {
     return "wall-corner-top-right";
   } else if (bottomEmpty && leftEmpty && !topEmpty && !rightEmpty) {
@@ -136,7 +166,7 @@ export function wallSpriteLogic(
     !leftEmpty &&
     !bottomEmpty &&
     !rightEmpty &&
-    healingAreaAdjacent
+    (healingAreaAdjacent || chestAdjacent)
   ) {
     return "wall-top";
   } else if (topEmpty && !leftEmpty && !bottomEmpty && !rightEmpty) {
