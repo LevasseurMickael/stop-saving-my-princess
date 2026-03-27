@@ -7,16 +7,14 @@
     <title>stop-saving-my-princess</title>
   </head>
   <body>
-    <div id="app"></div>
-
     <!-- Main menu -->
     <div id="menu-container" class="scene">
       <div class="menu-content">
         <h1>Stop Saving My Princess</h1>
-        <button id="start-button">Start Game</button>
-        <button id="continue-button">Continue</button>
-        <button id="options-button">Options</button>
-        <button id="quit-button">Quit</button>
+        <button id="btn-new-game">New Game</button>
+        <button id="btn-continue">Continue</button>
+        <button id="btn-options">Options</button>
+        <button id="btn-quit">Quit</button>
       </div>
     </div>
 
@@ -24,42 +22,44 @@
     <div id="game-container" class="scene" style="display: none">
       <canvas id="game-canvas"></canvas>
       <div id="hud"></div>
-      <button id="pause-button">Pause</button>
+      <button id="btn-pause">Pause</button>
     </div>
 
     <!-- Options menu -->
     <div id="options-container" class="scene" style="display: none">
       <h2>Options</h2>
+
       <div class="option">
         <label for="volume-master">Master Volume</label>
-        <input type="range" id="volume-master" min="0" max="100" value="50" />
+        <input type="range" id="volume-master" min="0" max="100" value="100" />
+        <span id="volume-master-value">100%</span>
       </div>
+
       <div class="option">
         <label for="volume-music">Music Volume</label>
-        <input type="range" id="volume-music" min="0" max="100" value="50" />
+        <input type="range" id="volume-music" min="0" max="100" value="70" />
+        <span id="volume-music-value">70%</span>
       </div>
+
       <div class="option">
         <label for="volume-sfx">SFX Volume</label>
         <input type="range" id="volume-sfx" min="0" max="100" value="50" />
+        <span id="volume-sfx-value">50%</span>
       </div>
-      <button id="back-button">Back</button>
+
+      <button id="btn-back">Back</button>
     </div>
 
     <!-- Pause menu -->
     <div id="pause-container" class="scene" style="display: none">
       <div class="pause-menu">
         <h2>Paused</h2>
-        <button id="resume-button">Resume</button>
-        <button id="options-pause-button">Options</button>
-        <button id="main-menu-button">Main Menu</button>
+        <button id="btn-resume">Resume</button>
+        <button id="btn-options-pause">Options</button>
+        <button id="btn-quit-menu">Main Menu</button>
       </div>
     </div>
-    <!-- <div id="game-over-container" class="scene" style="display: none">
-      <h2>Game Over</h2>
-    </div>
-    <div id="victory-container" class="scene" style="display: none">
-      <h2>Victory</h2>
-    </div> -->
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

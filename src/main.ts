@@ -5,7 +5,7 @@ import {
   GridSizeWidth,
   loadMap,
 } from "./game/map/map";
-import { stateDynamic, statePlayer } from "./game/state";
+import { stateDungeon, stateDynamic, statePlayer } from "./game/state";
 import "./game/player/player";
 import {
   getPlayerAttackSprite,
@@ -20,6 +20,7 @@ import { getEntitiesSprite } from "./graphicContext/contexts/entitiesContext";
 import { createCanvasLayer } from "./graphicContext/canvasLayer";
 import { getWarFogSprite } from "./graphicContext/contexts/warFogContext";
 import { audioManager } from "./audio/audioManager";
+import { sceneManager } from "./ui/sceneManager";
 
 // Created canvas layers and their contexts
 const { layer, contexts } = createCanvasLayer(1280, 960);
@@ -39,13 +40,16 @@ export function markBackgroundDirty() {
   backgroundDirty = true;
 }
 
+// Game loop control
+let gameLoopRunning = false;
+let animationFrameId: number | null = null;
+
 /// Render the background layer (floor, walls, hint walls) - only if dirty
 function renderBackground() {
   if (!backgroundDirty) return;
 
   ctxBackground.clearRect(0, 0, 1280, 960);
   getBackgroundSprite(ctxBackground, map, GridSize, GridSizeWidth, TileSize);
-
   backgroundDirty = false;
 }
 
@@ -89,10 +93,152 @@ function render() {
   renderUI(); // ← Every frame (HP change, etc.)
 }
 
+// ========================================
+// GAME LOOP
+// ========================================
+function startGameLoop() {
+  if (gameLoopRunning) return; // Prevent multiple loops from being started
+  gameLoopRunning = true;
+
+  function loop() {
+    render();
+    animationFrameId = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+function stopGameLoop() {
+  gameLoopRunning = false;
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+}
+
+// ========================================
+// GAME ACTIONS
+// ========================================
+function startNewGame() {
+  sceneManager.switchSceneTo("game");
+
+  stateDungeon.currentFloor = 0;
+  statePlayer.stat.hp = statePlayer.stat.maxHp;
+  statePlayer.deathCount = 0;
+
+  loadMap();
+  startGameLoop();
+  // audioManager.playMusic("dungeon_1_10");
+}
+
+function continueGame() {
+  sceneManager.switchSceneTo("game");
+  // loadSavedGame();
+  loadMap();
+  startGameLoop();
+
+  const floor = stateDungeon.currentFloor;
+  if (floor <= 10) {
+    // audioManager.playMusic("dungeon_1_10");
+  } else if (floor <= 20) {
+    // audioManager.playMusic("dungeon_11_20");
+  } else if (floor <= 30) {
+    // audioManager.playMusic("dungeon_21_30");
+  } else if (floor <= 40) {
+    // audioManager.playMusic("dungeon_31_40");
+  } else {
+    // audioManager.playMusic("dungeon_41_50");
+  }
+}
+
+function pauseGame() {
+  stopGameLoop();
+  sceneManager.switchSceneTo("pause");
+}
+
+function resumeGame() {
+  sceneManager.switchSceneTo("game");
+  startGameLoop();
+}
+
+function quitToMainMenu() {
+  stopGameLoop();
+  sceneManager.switchSceneTo("menu");
+  audioManager.playMusic("menu");
+}
+
+// ========================================
+// MENU SETUP
+// ========================================
+function setupMenuButtons() {
+  // "New Game" button
+  document.getElementById("btn-new-game")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    startNewGame();
+  });
+
+  // "Continue" button
+  document.getElementById("btn-continue")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    continueGame();
+  });
+
+  // "Options" button
+  document.getElementById("btn-options")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    sceneManager.switchSceneTo("options");
+  });
+
+  // "Quit" button
+  document.getElementById("btn-quit")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    window.close(); // Note: This may not work in all browsers due to security restrictions, consider showing a confirmation dialog instead or simply returning to the main menu
+  });
+}
+
+function setupOptionsButtons() {
+  // Volume Master
+  const masterSlider = document.getElementById(
+    "volume-master",
+  ) as HTMLInputElement;
+  const masterValue = document.getElementById("volume-master-value");
+
+  masterSlider.addEventListener("input", (e) => {
+    const value = (e.target as HTMLInputElement).valueAsNumber;
+    audioManager.setMasterVolume(value / 100);
+    if (masterValue) masterValue.textContent = `${value}%`;
+  });
+
+  // Volume Musique
+  const musicSlider = document.getElementById(
+    "volume-music",
+  ) as HTMLInputElement;
+  const musicValue = document.getElementById("volume-music-value");
+
+  musicSlider.addEventListener("input", (e) => {
+    const value = (e.target as HTMLInputElement).valueAsNumber;
+    audioManager.setMusicVolume(value / 100);
+    if (musicValue) musicValue.textContent = `${value}%`;
+  });
+
+  // Volume SFX
+  const sfxSlider = document.getElementById("volume-sfx") as HTMLInputElement;
+  const sfxValue = document.getElementById("volume-sfx-value");
+
+  sfxSlider.addEventListener("input", (e) => {
+    const value = (e.target as HTMLInputElement).valueAsNumber;
+    audioManager.setSfxVolume(value / 100);
+    if (sfxValue) sfxValue.textContent = `${value}%`;
+  });
+
+  // Bouton "Back"
+  document.getElementById("btn-back")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    sceneManager.goBack();
+  });
+}
+
 // Init function to load resources and start the game loop
 
-let gameLoopRunning = false;
-let animationFrameId: number | null = null;
 async function startGame() {
   console.log("Loading images...");
   await preloadAllImage();
