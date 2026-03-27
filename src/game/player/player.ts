@@ -22,6 +22,7 @@ import { isOccupied } from "../enemy/enemy";
 import { stunEnemyOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/stunEnemyOncePerFloor";
 import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/fireBreathOncePerFloor";
 import { tileIndex } from "../../graphicContext/tile_index";
+import { audioManager } from "../../audio/audioManager";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
@@ -188,6 +189,7 @@ window.addEventListener("keydown", (e) => {
   // Check for secret item or floor transition after moving
   if (map[newY][newX] === tileIndex.chest && stateStats.secretUnlocked) {
     stateStats.hasSecretItem = true;
+    audioManager.playSound("chest_open");
     unlockingSecretItem();
   }
 

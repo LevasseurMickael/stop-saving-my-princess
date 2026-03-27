@@ -19,6 +19,7 @@ import { getBackgroundSprite } from "./graphicContext/contexts/backgroundContext
 import { getEntitiesSprite } from "./graphicContext/contexts/entitiesContext";
 import { createCanvasLayer } from "./graphicContext/canvasLayer";
 import { getWarFogSprite } from "./graphicContext/contexts/warFogContext";
+import { audioManager } from "./audio/audioManager";
 
 // Created canvas layers and their contexts
 const { layer, contexts } = createCanvasLayer(1280, 960);
@@ -93,6 +94,11 @@ async function startGame() {
   console.log("Loading images...");
   await preloadAllImage();
   console.log("Images loaded!");
+
+  console.log("loading sounds...");
+  await audioManager.preloadSounds();
+  await audioManager.preloadMusic();
+  console.log("Sounds loaded!");
 
   // Assign contexts to global variables for use in render functions
   ctxBackground = contexts.background;

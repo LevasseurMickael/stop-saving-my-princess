@@ -15,6 +15,7 @@ import { areaDamageOnAttack } from "../secret/secretUnlock/itemEffect/passives/a
 import { getAttackOffset } from "./getAttackOffset";
 import { extraDamageWhenLowHp } from "../secret/secretUnlock/itemEffect/passives/extraDamageWhenLowHp";
 import { tileIndex } from "../../graphicContext/tile_index";
+import { audioManager } from "../../audio/audioManager";
 
 function getAttackTarget(x: number, y: number): TargetCondition {
   const tile = map[y]?.[x];
@@ -48,6 +49,7 @@ export default function attack() {
 
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {
+    audioManager.playSound("chest_open");
     if (!enemy.alive) return false;
 
     if (targetX === enemy.x && targetY === enemy.y) {
