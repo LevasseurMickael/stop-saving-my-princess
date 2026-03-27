@@ -90,6 +90,9 @@ function render() {
 }
 
 // Init function to load resources and start the game loop
+
+let gameLoopRunning = false;
+let animationFrameId: number | null = null;
 async function startGame() {
   console.log("Loading images...");
   await preloadAllImage();
