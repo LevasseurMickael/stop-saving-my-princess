@@ -45,28 +45,28 @@ class AudioManager {
 
   async preloadSounds() {
     const soundFiles: Record<SoundEffect, string> = {
-      attack: "/attack.wav",
-      hit: "/hit.wav",
-      heal: "/heal.wav",
-      death: "/death.wav",
-      pickup: "/pickup.wav",
-      door_open: "/door_open.wav",
-      chest_open: "/sounds/sfx/pick_chest.mp3",
-      player_hurt: "/player_hurt.wav",
-      enemy_attack_bow: "/enemy_attack_bow.wav",
-      enemy_attack_magic: "/enemy_attack_magic.wav",
-      enemy_attack_melee: "/enemy_attack_melee.wav",
-      enemy_death: "/enemy_death.wav",
-      footstep: "/footstep.wav",
-      shield_deploy: "/shield_deploy.wav",
-      shield_block: "/shield_block.wav",
-      shield_retract: "/shield_retract.wav",
-      skill_stun: "/skill_stun.wav",
-      skill_fire_breath: "/sounds/sfx/skill_fire_breath.mp3",
-      floor_transition: "/floor_transition.wav",
-      secret_unlocked: "/secret_unlocked.wav",
-      ui_click: "/ui_click.wav",
-      ui_hover: "/ui_hover.wav",
+      attack: "/sounds/sfx/attack.mp3", // Done
+      hit: "/sounds/sfx/hit.mp3", // Done
+      heal: "/sounds/sfx/heal.mp3", // Done
+      death: "/sounds/sfx/death.mp3",
+      pickup: "/sounds/sfx/pickup.mp3",
+      door_open: "/sounds/sfx/door_open.mp3",
+      chest_open: "/sounds/sfx/chest_open.mp3", // Done
+      player_hurt: "/sounds/sfx/player_hurt.mp3",
+      enemy_attack_bow: "/sounds/sfx/enemy_attack_bow.mp3",
+      enemy_attack_magic: "/sounds/sfx/enemy_attack_magic.mp3",
+      enemy_attack_melee: "/sounds/sfx/enemy_attack_melee.mp3",
+      enemy_death: "/sounds/sfx/enemy_death.mp3",
+      footstep: "/sounds/sfx/footstep.mp3", // Done
+      shield_deploy: "/sounds/sfx/shield_deploy.mp3",
+      shield_block: "/sounds/sfx/shield_block.mp3",
+      shield_retract: "/sounds/sfx/shield_retract.mp3",
+      skill_stun: "/sounds/sfx/skill_stun.mp3", // Done
+      skill_fire_breath: "/sounds/sfx/skill_fire_breath.mp3", // Done
+      floor_transition: "/sounds/sfx/floor_transition.mp3",
+      secret_unlocked: "/sounds/sfx/secret_unlocked.mp3",
+      ui_click: "/sounds/sfx/ui_click.mp3",
+      ui_hover: "/sounds/sfx/ui_hover.mp3",
     };
 
     for (const [key, path] of Object.entries(soundFiles)) {

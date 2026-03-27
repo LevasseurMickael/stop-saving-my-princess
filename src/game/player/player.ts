@@ -112,6 +112,7 @@ window.addEventListener("keydown", (e) => {
         statePlayer.x = newX;
         statePlayer.y = newY;
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
+        audioManager.playSound("footstep");
         acted = true;
       } else {
         handleGameEvent({ type: "wait", turns: 1 });
@@ -203,6 +204,7 @@ window.addEventListener("keydown", (e) => {
       statePlayer.stat.hp + healAmount,
       statePlayer.stat.maxHp,
     );
+    audioManager.playSound("heal");
     map[newY][newX] = 0; // Remove healing room center from map (it will be re-added when we enter the floor again)
     if (statePlayer.stat.hp === statePlayer.stat.maxHp) {
       stateSecret.healedAtFullHp = true;

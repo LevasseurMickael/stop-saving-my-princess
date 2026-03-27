@@ -3,6 +3,7 @@ import { stateDynamic, statePlayer } from "../../../../state";
 import { knockbackEnemy } from "../../../../mechanics/knockback";
 import { hasLineOfSight } from "../../../../enemy/patterns/pattern-helper/inAttackRange";
 import { map } from "../../../../map/map";
+import { audioManager } from "../../../../../audio/audioManager";
 
 export function stunEnemyOncePerFloor() {
   if (!statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor) {
@@ -22,4 +23,5 @@ export function stunEnemyOncePerFloor() {
   });
 
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = false; // Mark as used for this floor
+  audioManager.playSound("skill_stun");
 }

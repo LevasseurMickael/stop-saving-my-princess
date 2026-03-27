@@ -49,7 +49,7 @@ export default function attack() {
 
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {
-    audioManager.playSound("chest_open");
+    audioManager.playSound("attack");
     if (!enemy.alive) return false;
 
     if (targetX === enemy.x && targetY === enemy.y) {
