@@ -1,3 +1,4 @@
+import { audioManager } from "../../../audio/audioManager";
 import type { Enemy } from "../../../lib/type";
 import { reducedEnemyActionSpeed } from "../../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { attackPattern } from "./attackPattern";
@@ -16,12 +17,14 @@ export function meleePattern(
 
   if (isInAttackRange(enemy, player) && hasLineOfSight(enemy, player, map)) {
     attackPattern(enemy, player);
+    audioManager.playSound("enemy_attack_melee");
     return;
   }
 
   for (let i = 0; i < actions; i++) {
     if (isInAttackRange(enemy, player) && hasLineOfSight(enemy, player, map)) {
       attackPattern(enemy, player);
+      audioManager.playSound("enemy_attack_melee");
       return;
     }
     const distX = player.x - enemy.x;

@@ -1,3 +1,4 @@
+import { audioManager } from "../../../audio/audioManager";
 import type { Enemy } from "../../../lib/type";
 import { faceTowardsPlayer } from "../../mechanics/enemyFacing";
 import { knockbackPlayer } from "../../mechanics/knockback";
@@ -53,6 +54,7 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     // Check if player dies from the attack and reset position and HP if so
     if (statePlayer.stat.hp <= 0) {
       statePlayer.deathCount++;
+      audioManager.playSound("death");
       statePlayer.stat.hp = statePlayer.stat.maxHp;
       player.x = statePlayer.spawn.x;
       player.y = statePlayer.spawn.y;

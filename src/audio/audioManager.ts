@@ -48,14 +48,14 @@ class AudioManager {
       attack: "/sounds/sfx/attack.mp3", // Done
       hit: "/sounds/sfx/hit.mp3", // Done
       heal: "/sounds/sfx/heal.mp3", // Done
-      death: "/sounds/sfx/death.mp3",
+      death: "/sounds/sfx/death.mp3", // Done
       pickup: "/sounds/sfx/pickup.mp3",
       door_open: "/sounds/sfx/door_open.mp3",
       chest_open: "/sounds/sfx/chest_open.mp3", // Done
       player_hurt: "/sounds/sfx/player_hurt.mp3",
-      enemy_attack_bow: "/sounds/sfx/enemy_attack_bow.mp3",
-      enemy_attack_magic: "/sounds/sfx/enemy_attack_magic.mp3",
-      enemy_attack_melee: "/sounds/sfx/enemy_attack_melee.mp3",
+      enemy_attack_bow: "/sounds/sfx/enemy_attack_bow.mp3", // Done
+      enemy_attack_magic: "/sounds/sfx/enemy_attack_magic.mp3", // Done
+      enemy_attack_melee: "/sounds/sfx/enemy_attack_melee.mp3", // Done
       enemy_death: "/sounds/sfx/enemy_death.mp3",
       footstep: "/sounds/sfx/footstep.mp3", // Done
       shield_deploy: "/sounds/sfx/shield_deploy.mp3",

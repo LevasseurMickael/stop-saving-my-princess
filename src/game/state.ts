@@ -33,7 +33,7 @@ export const stateSecret = {
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
   stat: {
-    hp: 500,
+    hp: 1,
     maxHp: 500,
     attack: 99999,
     attackRange: 1,

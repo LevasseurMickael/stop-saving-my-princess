@@ -76,9 +76,6 @@ export default function attack() {
         // Increment kill count for the enemy's slug, defaulting to 0 if slug is undefined
         stateKillCount[enemy.slug || ""] =
           (stateKillCount[enemy.slug || ""] || 0) + 1;
-        console.log(
-          `Killed ${enemy.slug}. Total kills: ${stateKillCount[enemy.slug || ""]}`,
-        );
         handleGameEvent({ type: "enemy_kill" });
       }
 
