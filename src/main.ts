@@ -127,11 +127,13 @@ function startNewGame() {
 
   loadMap();
   startGameLoop();
+  // TODO activate music
   // audioManager.playMusic("dungeon_1_10");
 }
 
 function continueGame() {
   sceneManager.switchSceneTo("game");
+  // TODO activate loading game, verify game is saved correctly
   // loadSavedGame();
   loadMap();
   startGameLoop();
@@ -150,12 +152,20 @@ function continueGame() {
   }
 }
 
+let isPaused = false;
+
+export function getIsPaused() {
+  return isPaused;
+}
+
 function pauseGame() {
+  isPaused = true;
   stopGameLoop();
   sceneManager.switchSceneTo("pause");
 }
 
 function resumeGame() {
+  isPaused = false;
   sceneManager.switchSceneTo("game");
   startGameLoop();
 }
@@ -237,6 +247,50 @@ function setupOptionsButtons() {
   });
 }
 
+function setupPauseButtons() {
+  // "Resume" button
+  document.getElementById("btn-resume")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    resumeGame();
+  });
+
+  // "Options" button
+  document.getElementById("btn-options-pause")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    sceneManager.switchSceneTo("options");
+  });
+
+  // "Main Menu" button
+  document.getElementById("btn-quit-menu")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    quitToMainMenu();
+  });
+}
+
+function setupGameButtons() {
+  //  "Pause" button in game
+  document.getElementById("btn-pause")!.addEventListener("click", () => {
+    audioManager.playSound("ui_click");
+    pauseGame();
+  });
+}
+
+// ========================================
+// KEYBOARD SHORTCUTS
+// ========================================
+
+function setupKeyboardShortcuts() {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sceneManager.getCurrentScene() === "game") {
+      pauseGame();
+    }
+  });
+}
+
+// ========================================
+// INITIALIZATION
+// ========================================
+
 // Init function to load resources and start the game loop
 
 async function startGame() {
@@ -256,11 +310,14 @@ async function startGame() {
   ctxWarFog = contexts.warFog;
   ctxUI = contexts.ui;
 
-  // Load the initial map and set up the game state
-  loadMap();
+  setupMenuButtons();
+  setupOptionsButtons();
+  setupPauseButtons();
+  setupGameButtons();
+  setupKeyboardShortcuts();
 
-  // Start the game loop
-  gameLoop();
+  sceneManager.switchSceneTo("menu");
+  audioManager.playMusic("menu");
 }
 
 // Game loop using requestAnimationFrame for smooth rendering

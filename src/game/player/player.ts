@@ -23,9 +23,12 @@ import { stunEnemyOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/
 import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/fireBreathOncePerFloor";
 import { tileIndex } from "../../graphicContext/tile_index";
 import { audioManager } from "../../audio/audioManager";
+import { getIsPaused } from "../../main";
 
 // Handle player input
 window.addEventListener("keydown", (e) => {
+  // Ignore input if the game is paused
+  if (getIsPaused()) return;
   // Track if the player has taken an action (move, attack, or toggle shield) to determine if enemies should take their turn
   let acted = false;
 
