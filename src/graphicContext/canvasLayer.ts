@@ -1,14 +1,15 @@
+// src/graphicContext/canvasLayer.ts
+
+import { CanvasScaler } from "./canvasScaler";
+
 export interface GameLayers {
-  background: HTMLCanvasElement; // Floor, walls, hintwalls (static elements)
-  entities: HTMLCanvasElement; // Doors, chest, stair, props (dynamic static elements)
-  characters: HTMLCanvasElement; // Player, enemies, projectile, effects (dynamic elements)
-  warFog: HTMLCanvasElement; // Fog of war overlay
-  ui: HTMLCanvasElement; // HUD, health bars, damage numbers, and other UI elements
+  background: HTMLCanvasElement;
+  entities: HTMLCanvasElement;
+  characters: HTMLCanvasElement;
+  warFog: HTMLCanvasElement;
+  ui: HTMLCanvasElement;
 }
 
-/**
- * Rendering contexts for each layer
- */
 export interface GameContexts {
   background: CanvasRenderingContext2D;
   entities: CanvasRenderingContext2D;
@@ -17,46 +18,83 @@ export interface GameContexts {
   ui: CanvasRenderingContext2D;
 }
 
-export function createCanvasLayer(
-  width: number,
-  height: number,
-): {
-  layer: GameLayers;
-  contexts: GameContexts;
-} {
-  const container = document.createElement("div");
-  container.style.position = "relative";
-  container.style.width = `${width}px`;
-  container.style.height = `${height}px`;
-  document.body.appendChild(container);
+export function createCanvasLayer(width: number, height: number) {
+  const container = document.getElementById("game-canvas");
+  if (!container) {
+    throw new Error("Game canvas container not found");
+  }
 
-  const createLayer = (zIndex: number) => {
-    const canvas = document.createElement("canvas");
+  console.log("🎨 Creating canvas layers...");
+
+  container.innerHTML = "";
+  container.style.position = "relative";
+  container.style.width = "100%";
+  container.style.height = "100%";
+
+  // ✅ Créer les canvas
+  const layer: GameLayers = {
+    background: document.createElement("canvas"),
+    entities: document.createElement("canvas"),
+    characters: document.createElement("canvas"),
+    warFog: document.createElement("canvas"),
+    ui: document.createElement("canvas"),
+  };
+
+  console.log("  ✅ Canvas elements created");
+
+  // ✅ Configurer chaque canvas
+  Object.values(layer).forEach((canvas, index) => {
     canvas.width = width;
     canvas.height = height;
     canvas.style.position = "absolute";
-    canvas.style.top = "0";
-    canvas.style.left = "0";
-    canvas.style.zIndex = zIndex.toString();
+    canvas.style.top = "50%";
+    canvas.style.left = "50%";
+    canvas.style.transform = "translate(-50%, -50%)";
+    canvas.style.imageRendering = "pixelated";
+    canvas.style.zIndex = String(index);
     container.appendChild(canvas);
-    return canvas!;
-  };
+  });
 
-  const layer: GameLayers = {
-    background: createLayer(0), // For static elements like floor tiles, walls and hintwalls
-    entities: createLayer(1), // For dynamic static elements like door, chest, stair, props
-    characters: createLayer(2), // For player, enemies, projectile, effects
-    warFog: createLayer(3), // For fog of war overlay
-    ui: createLayer(4), // For HUD, health bars, damage numbers, and other UI elements
-  };
+  console.log("  ✅ Canvas styles applied");
 
+  // ✅ Créer le scaler
+  const scaler = new CanvasScaler(layer.background, width, height);
+
+  console.log("  ✅ Canvas scaler created");
+
+  // ✅ Créer les contextes
   const contexts: GameContexts = {
-    background: layer.background.getContext("2d")!,
-    entities: layer.entities.getContext("2d")!,
-    characters: layer.characters.getContext("2d")!,
-    warFog: layer.warFog.getContext("2d")!,
-    ui: layer.ui.getContext("2d")!,
+    background: layer.background.getContext("2d", { alpha: false })!,
+    entities: layer.entities.getContext("2d", { alpha: true })!,
+    characters: layer.characters.getContext("2d", { alpha: true })!,
+    warFog: layer.warFog.getContext("2d", { alpha: true })!,
+    ui: layer.ui.getContext("2d", { alpha: true })!,
   };
 
-  return { layer, contexts };
+  console.log("  ✅ Canvas contexts created");
+
+  // ✅ Fonction pour synchroniser l'échelle de tous les canvas
+  const updateAllCanvasScales = () => {
+    const { width: scaledWidth, height: scaledHeight } = scaler.getScaledSize();
+    
+    Object.values(layer).forEach((canvas) => {
+      canvas.style.width = `${scaledWidth}px`;
+      canvas.style.height = `${scaledHeight}px`;
+    });
+  };
+
+  // ✅ Appeler une première fois
+  updateAllCanvasScales();
+
+  // ✅ Mettre à jour sur resize
+  window.addEventListener("resize", updateAllCanvasScales);
+
+  console.log("  ✅ Resize listener added");
+
+  // ✅ RETOURNER LES RÉSULTATS
+  return {
+    layer,
+    contexts,
+    scaler,
+  };
 }
