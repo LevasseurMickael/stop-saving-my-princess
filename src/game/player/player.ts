@@ -24,11 +24,21 @@ import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills
 import { tileIndex } from "../../graphicContext/tile_index";
 import { audioManager } from "../../audio/audioManager";
 import { getIsPaused } from "../../main";
+import { actionDelay } from "../mechanics/actionDelay";
 
+
+let lastActionTime = 0;
+const ACTION_DELAY_MS = 150;
 // Handle player input
-window.addEventListener("keydown", (e) => {
+window.addEventListener("keydown", (e) => { 
+
+
   // Ignore input if the game is paused
   if (getIsPaused()) return;
+
+  if (Date.now() - lastActionTime < ACTION_DELAY_MS) {
+    return; // Ignore input if it's within the action delay period
+  }
   // Track if the player has taken an action (move, attack, or toggle shield) to determine if enemies should take their turn
   let acted = false;
 
@@ -184,6 +194,7 @@ window.addEventListener("keydown", (e) => {
 
   // After player acts, enemies take their turn
   if (acted && stateTurn.turn === "player") {
+    lastActionTime = Date.now();
     stateTurn.turn = "enemies";
     updateShieldState();
     enemiesTurn();
