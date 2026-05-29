@@ -24,11 +24,16 @@ import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills
 import { tileIndex } from "../../graphicContext/tile_index";
 import { audioManager } from "../../audio/audioManager";
 import { getIsPaused } from "../../main";
-import { actionDelay } from "../mechanics/actionDelay";
+import { startAttackAnimation, startMoveAnimation } from "./playerAnimation";
 
 
 let lastActionTime = 0;
 const ACTION_DELAY_MS = 150;
+
+let isAnimated = false;
+let animationStartTime = 0;
+const ANIMATION_DURATION = 100;
+
 // Handle player input
 window.addEventListener("keydown", (e) => { 
 
@@ -55,15 +60,19 @@ window.addEventListener("keydown", (e) => {
     if (e.key === "z") {
       newY--;
       statePlayer.facing = "up";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     } else if (e.key === "s") {
       newY++;
       statePlayer.facing = "down";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     } else if (e.key === "q") {
       newX--;
       statePlayer.facing = "left";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     } else if (e.key === "d") {
       newX++;
       statePlayer.facing = "right";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     }
 
     if (e.key === "a" && statePlayer.unlockedSkills.stunEnemyOncePerFloor) {
@@ -124,6 +133,11 @@ window.addEventListener("keydown", (e) => {
       ) {
         statePlayer.x = newX;
         statePlayer.y = newY;
+
+        // Trigger movement animation
+        isAnimated = true;
+        animationStartTime = Date.now();
+
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
         audioManager.playSound("footstep");
         acted = true;
@@ -136,22 +150,34 @@ window.addEventListener("keydown", (e) => {
     // directional attack
     if (e.key === "ArrowUp") {
       statePlayer.facing = "up";
+      startAttackAnimation();
       attack();
+      isAnimated = true;
+      animationStartTime = Date.now();
       acted = true;
     }
     if (e.key === "ArrowDown") {
       statePlayer.facing = "down";
+      startAttackAnimation();
       attack();
+      isAnimated = true;
+      animationStartTime = Date.now();
       acted = true;
     }
     if (e.key === "ArrowLeft") {
       statePlayer.facing = "left";
+      startAttackAnimation();
       attack();
+      isAnimated = true;
+      animationStartTime = Date.now();
       acted = true;
     }
     if (e.key === "ArrowRight") {
       statePlayer.facing = "right";
+      startAttackAnimation();
       attack();
+      isAnimated = true;
+      animationStartTime = Date.now();
       acted = true;
     }
   } else {

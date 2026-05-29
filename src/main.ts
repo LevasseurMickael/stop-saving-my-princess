@@ -20,6 +20,8 @@ import { createCanvasLayer } from "./graphicContext/canvasLayer";
 import { getWarFogSprite } from "./graphicContext/contexts/warFogContext";
 import { audioManager } from "./audio/audioManager";
 import { sceneManager } from "./ui/sceneManager";
+import { updatePlayerAnimation } from "./game/player/playerAnimation";
+import { updateEnemiesAnimation, updateEnemiesAttackAnimation } from "./game/enemy/enemyAnimation";
 
 console.log("📋 main.ts loading...");
 
@@ -81,6 +83,9 @@ function renderUI() {
 }
 
 function render() {
+  updatePlayerAnimation();
+  updateEnemiesAnimation(stateDynamic.enemies);
+  updateEnemiesAttackAnimation(stateDynamic.enemies);
   renderBackground();
   renderEntities();
   renderCharacters();

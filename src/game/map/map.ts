@@ -66,6 +66,8 @@ export function loadMap() {
   }
   statePlayer.x = dungeon.spawn.x;
   statePlayer.y = dungeon.spawn.y;
+  statePlayer.animX = statePlayer.x;
+  statePlayer.animY = statePlayer.y;
   stateDynamic.enemies = spawnEnemies(
     dungeon.rooms,
     {

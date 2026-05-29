@@ -101,6 +101,8 @@ export const statePlayer = {
   deathCount: 0,
   x: 0,
   y: 0,
+  animX: 0,
+  animY: 0,
   facing: "down" as Direction,
 };
 

@@ -2,6 +2,7 @@ import { tileIndex } from "../../../graphicContext/tile_index";
 import type { Enemy } from "../../../lib/type";
 import { updateEnemyFacing } from "../../mechanics/enemyFacing";
 import { isOccupied } from "../enemy";
+import { startEnemyAnimation } from "../enemyAnimation";
 
 // Monster with low hp or difficulty level run away from the player until being 4 tail away from the player, then they get back to their original pattern.
 export function runAwayPattern(
@@ -48,6 +49,7 @@ function tryMove(
     enemy.x = newX;
     enemy.y = newY;
     updateEnemyFacing(enemy, stepX, stepY);
+    startEnemyAnimation(enemy, enemy.x - stepX, enemy.y - stepY);
     return true;
   }
   return false;

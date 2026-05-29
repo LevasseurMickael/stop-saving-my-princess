@@ -1,4 +1,4 @@
-// This file contains the function to render the enemies on the canvas based on their state. It is imported in main.ts to keep the code organized and maintainable.
+
 
 import { getGhostVisionLevel } from "../game/secret/secretUnlock/itemEffect/items/ghostVisionLevel";
 import { dungeonmapFragment } from "../game/secret/secretUnlock/itemEffect/passives/dungeonmapFragment";
@@ -13,15 +13,15 @@ export function getEnemiesSprite(
 ) {
   for (const enemy of stateDynamic.enemies) {
     if (!enemy.alive) continue;
+
     let spriteKey: string | null = null;
     let spriteAttackKey: string | null = null;
     let spriteAttackChargeTurn: number | null = null;
 
     if (!dungeonmapFragment(enemy.x, enemy.y)) {
-      continue; // Skip rendering if the tile is not visible on the map
+      continue;
     }
 
-    // find the name of the current monster in the enemiesSprite object
     if (!enemy.name) return;
     spriteKey = enemy.name;
     spriteAttackKey = enemy.attackWeapon;
@@ -38,8 +38,8 @@ export function getEnemiesSprite(
       drawSprite(
         ctx,
         spriteKey,
-        enemy.x,
-        enemy.y,
+        enemy.animX ?? enemy.x,  
+        enemy.animY ?? enemy.y, 
         TileSize,
         enemy.facing,
         spriteAttackKey,
@@ -47,20 +47,25 @@ export function getEnemiesSprite(
       );
     } else {
       ctx.fillStyle = color;
-      ctx.fillRect(enemy.x * TileSize, enemy.y * TileSize, TileSize, TileSize);
+      ctx.fillRect(
+        (enemy.animX ?? enemy.x) * TileSize,  
+        (enemy.animY ?? enemy.y) * TileSize,  
+        TileSize,
+        TileSize
+      );
     }
 
     // Ranged marker
     if (enemy.attackRange >= 3) {
       ctx.strokeStyle = "yellow";
       ctx.strokeRect(
-        enemy.x * TileSize,
-        enemy.y * TileSize,
+        (enemy.animX ?? enemy.x) * TileSize,  
+        (enemy.animY ?? enemy.y) * TileSize,  
         TileSize,
         TileSize,
       );
     }
 
-    ctx.globalAlpha = 1; // Reset alpha after drawing the enemy
+    ctx.globalAlpha = 1;
   }
 }

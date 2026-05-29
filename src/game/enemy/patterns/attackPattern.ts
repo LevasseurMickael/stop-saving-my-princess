@@ -3,6 +3,7 @@ import type { Enemy } from "../../../lib/type";
 import { faceTowardsPlayer } from "../../mechanics/enemyFacing";
 import { knockbackPlayer } from "../../mechanics/knockback";
 import { isBlockedByShield } from "../../mechanics/shield";
+import { startAttackAnimation } from "../../player/playerAnimation";
 import { handleGameEvent } from "../../secret/secretEvaluation/secretSystem";
 import { damageEnemyOnFirstDamageTakenPerFloor } from "../../secret/secretUnlock/itemEffect/passives/damageEnemyOnFirstDamageTakenPerFloor";
 import { ghostDamageNegation } from "../../secret/secretUnlock/itemEffect/passives/ghostDamageNegation";
@@ -10,6 +11,7 @@ import { negateMagicOncePerFloor } from "../../secret/secretUnlock/itemEffect/pa
 import { reduceDamageOncePerFloor } from "../../secret/secretUnlock/itemEffect/passives/reduceDamageOncePerFloor";
 import { reducedDamage } from "../../secret/secretUnlock/itemEffect/reducedDamage";
 import { statePlayer, stateSecret } from "../../state";
+import { startEnemyAttackAnimation } from "../enemyAnimation";
 import { friendlyDamage } from "./pattern-helper/friendlyDamage";
 
 export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
@@ -18,6 +20,7 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
   // If enemy
   if (Math.abs(distX) + Math.abs(distY) <= enemy.attackRange) {
     faceTowardsPlayer(enemy, player);
+    startEnemyAttackAnimation(enemy);
 
     if (isBlockedByShield(enemy)) {
       handleGameEvent({ type: "enemy_hit", blocker: true });

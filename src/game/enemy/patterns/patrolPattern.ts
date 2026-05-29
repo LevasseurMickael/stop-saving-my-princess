@@ -3,6 +3,7 @@ import type { Enemy } from "../../../lib/type";
 import { updateEnemyFacing } from "../../mechanics/enemyFacing";
 import { reducedEnemyActionSpeed } from "../../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { isOccupied } from "../enemy";
+import { startEnemyAnimation } from "../enemyAnimation";
 
 export function patrolPattern(enemy: Enemy, map: number[][]) {
   const directions = [
@@ -28,7 +29,7 @@ export function patrolPattern(enemy: Enemy, map: number[][]) {
       ) {
         enemy.x = newX;
         enemy.y = newY;
-
+        startEnemyAnimation(enemy, enemy.x - dir.dx, enemy.y - dir.dy);
         updateEnemyFacing(enemy, dir.dx, dir.dy);
       }
     } else {
@@ -40,6 +41,7 @@ export function patrolPattern(enemy: Enemy, map: number[][]) {
       ) {
         enemy.x = newX;
         enemy.y = newY;
+        startEnemyAnimation(enemy, enemy.x - dir.dx, enemy.y - dir.dy);
         updateEnemyFacing(enemy, dir.dx, dir.dy);
       }
     }

@@ -8,6 +8,8 @@ import type { statePlayer } from "../game/state";
 export type Enemy = {
   x: number;
   y: number;
+  animX?: number;
+  animY?: number;
   stunnedTurns?: number; // number of turns the enemy is stunned
   maxHp: number;
   hp: number;
