@@ -22,10 +22,8 @@ import { audioManager } from "./audio/audioManager";
 import { sceneManager } from "./ui/sceneManager";
 import { updatePlayerAnimation } from "./game/player/playerAnimation";
 import { updateEnemiesAnimation, updateEnemiesAttackAnimation } from "./game/enemy/enemyAnimation";
+import { renderEffects, updateEffect } from "./graphicContext/animations/effectsAnimation";
 
-console.log("📋 main.ts loading...");
-
-// ❌ NE PAS créer les canvas ici !
 // const { layer, contexts } = createCanvasLayer(1280, 960);
 
 // Variables globales
@@ -86,11 +84,13 @@ function render() {
   updatePlayerAnimation();
   updateEnemiesAnimation(stateDynamic.enemies);
   updateEnemiesAttackAnimation(stateDynamic.enemies);
+  updateEffect();
   renderBackground();
   renderEntities();
   renderCharacters();
   renderWarFog();
   renderUI();
+  renderEffects(ctxUI, TileSize);
 }
 
 // ========================================

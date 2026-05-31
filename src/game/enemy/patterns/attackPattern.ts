@@ -1,4 +1,5 @@
 import { audioManager } from "../../../audio/audioManager";
+import { createHitEffect } from "../../../graphicContext/animations/effectsAnimation";
 import type { Enemy } from "../../../lib/type";
 import { faceTowardsPlayer } from "../../mechanics/enemyFacing";
 import { knockbackPlayer } from "../../mechanics/knockback";
@@ -46,10 +47,17 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
       `Damage from family ${enemy.monsterFamilly}:`,
       stateSecret.damageFromFamily[enemy.monsterFamilly!],
     );
+
+    const damageTaken = Math.max(1, enemy.attack - reducedDamage(enemy))
+    if (damageTaken >= 1) {
+      createHitEffect(statePlayer.x, statePlayer.y)
+    }
     statePlayer.stat.hp = Math.max(
       0,
-      statePlayer.stat.hp - Math.max(1, enemy.attack - reducedDamage(enemy)),
-    );
+      statePlayer.stat.hp - damageTaken,
+    );              
+    
+
 
     if (enemy.attackWeapon === "magic") {
       friendlyDamage(enemy);

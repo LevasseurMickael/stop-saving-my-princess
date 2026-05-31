@@ -30,9 +30,6 @@ import { startAttackAnimation, startMoveAnimation } from "./playerAnimation";
 let lastActionTime = 0;
 const ACTION_DELAY_MS = 150;
 
-let isAnimated = false;
-let animationStartTime = 0;
-const ANIMATION_DURATION = 100;
 
 // Handle player input
 window.addEventListener("keydown", (e) => { 
@@ -134,9 +131,7 @@ window.addEventListener("keydown", (e) => {
         statePlayer.x = newX;
         statePlayer.y = newY;
 
-        // Trigger movement animation
-        isAnimated = true;
-        animationStartTime = Date.now();
+
 
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
         audioManager.playSound("footstep");
@@ -152,32 +147,24 @@ window.addEventListener("keydown", (e) => {
       statePlayer.facing = "up";
       startAttackAnimation();
       attack();
-      isAnimated = true;
-      animationStartTime = Date.now();
       acted = true;
     }
     if (e.key === "ArrowDown") {
       statePlayer.facing = "down";
       startAttackAnimation();
       attack();
-      isAnimated = true;
-      animationStartTime = Date.now();
       acted = true;
     }
     if (e.key === "ArrowLeft") {
       statePlayer.facing = "left";
       startAttackAnimation();
       attack();
-      isAnimated = true;
-      animationStartTime = Date.now();
       acted = true;
     }
     if (e.key === "ArrowRight") {
       statePlayer.facing = "right";
       startAttackAnimation();
       attack();
-      isAnimated = true;
-      animationStartTime = Date.now();
       acted = true;
     }
   } else {
