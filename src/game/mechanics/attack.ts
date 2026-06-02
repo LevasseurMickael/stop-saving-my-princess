@@ -47,9 +47,11 @@ export default function attack() {
   areaDamageOnAttack(aoe);
   canPushEnemiesBehind(behindx, behindy);
 
+    audioManager.playSound("attack");
+
+
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {
-    audioManager.playSound("attack");
     if (!enemy.alive) return false;
 
     if (targetX === enemy.x && targetY === enemy.y) {

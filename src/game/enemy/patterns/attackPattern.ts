@@ -4,7 +4,6 @@ import type { Enemy } from "../../../lib/type";
 import { faceTowardsPlayer } from "../../mechanics/enemyFacing";
 import { knockbackPlayer } from "../../mechanics/knockback";
 import { isBlockedByShield } from "../../mechanics/shield";
-import { startAttackAnimation } from "../../player/playerAnimation";
 import { handleGameEvent } from "../../secret/secretEvaluation/secretSystem";
 import { damageEnemyOnFirstDamageTakenPerFloor } from "../../secret/secretUnlock/itemEffect/passives/damageEnemyOnFirstDamageTakenPerFloor";
 import { ghostDamageNegation } from "../../secret/secretUnlock/itemEffect/passives/ghostDamageNegation";

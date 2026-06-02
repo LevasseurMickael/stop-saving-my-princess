@@ -22,7 +22,7 @@ import { audioManager } from "./audio/audioManager";
 import { sceneManager } from "./ui/sceneManager";
 import { updatePlayerAnimation } from "./game/player/playerAnimation";
 import { updateEnemiesAnimation, updateEnemiesAttackAnimation } from "./game/enemy/enemyAnimation";
-import { renderEffects, updateEffect } from "./graphicContext/animations/effectsAnimation";
+import { renderEffects, updateEffects } from "./graphicContext/animations/effectsAnimation";
 
 // const { layer, contexts } = createCanvasLayer(1280, 960);
 
@@ -84,7 +84,7 @@ function render() {
   updatePlayerAnimation();
   updateEnemiesAnimation(stateDynamic.enemies);
   updateEnemiesAttackAnimation(stateDynamic.enemies);
-  updateEffect();
+  updateEffects();
   renderBackground();
   renderEntities();
   renderCharacters();

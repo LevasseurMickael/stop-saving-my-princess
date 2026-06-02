@@ -1,51 +1,72 @@
-export interface EffectAnimation {
+import type { Enemy } from "../../lib/type";
+
+export interface VisualEffect {
   x: number;
   y: number;
   type: "aoe" | "hit";
   startTime: number;
   duration: number;
-  range?: number
+  affectedTiles?: Array<{ x: number; y: number }>;
+  attackWeapon?: string; // ✅ AJOUTER : type d'attaque (magic, melee, ranged)
 }
 
-const activeEffects: EffectAnimation[] = [];
+const activeEffects: VisualEffect[] = [];
 
-export function createAOEEffect(centerX: number, centerY: number, duration: number = 200, range: number) {
+export function createAOEEffect(
+  centerX: number, 
+  centerY: number, 
+  duration: number = 200,
+  enemy: Enemy
+) {
+  
+  const affectedTiles: Array<{ x: number; y: number }> = [];
+  
+  if (enemy.attackWeapon === "magic") {
+    for (let x = centerX - enemy.attackRange; x <= centerX + enemy.attackRange; x++) {
+      for (let y = centerY - enemy.attackRange; y <= centerY + enemy.attackRange; y++) {
+        const dist = Math.abs(x - centerX) + Math.abs(y - centerY);
+        if (dist <= enemy.attackRange) {
+          affectedTiles.push({ x, y });
+        }
+      }
+    }
+  }
+  
   activeEffects.push({
     x: centerX,
     y: centerY,
     type: "aoe",
     startTime: Date.now(),
     duration,
-    range,
+    affectedTiles,
+    attackWeapon: enemy.attackWeapon, 
   });
 }
 
 export function createHitEffect(targetX: number, targetY: number, duration: number = 150) {
+  
   activeEffects.push({
     x: targetX,
     y: targetY,
     type: "hit",
     startTime: Date.now(),
-    duration
+    duration,
   });
 }
 
-export function updateEffect(): void {
+export function updateEffects(): void {
   const now = Date.now();
-
-  for(let i = activeEffects.length - 1; i>=0; i--) {
-    if(now - activeEffects[i].startTime > activeEffects[i].duration) {
-      activeEffects.splice(i, 1)
+  
+  for (let i = activeEffects.length - 1; i >= 0; i--) {
+    if (now - activeEffects[i].startTime > activeEffects[i].duration) {
+      activeEffects.splice(i, 1);
     }
   }
 }
 
-// src/graphicContext/animations/effectsAnimation.ts
-
 export function renderEffects(ctx: CanvasRenderingContext2D, tileSize: number): void {
   const now = Date.now();
 
-  // Dessiner les hit effects d'abord
   activeEffects.forEach((effect) => {
     if (effect.type === "hit") {
       const elapsed = now - effect.startTime;
@@ -54,9 +75,9 @@ export function renderEffects(ctx: CanvasRenderingContext2D, tileSize: number): 
     }
   });
 
-  // Puis les AOE effects (par-dessus)
   activeEffects.forEach((effect) => {
-    if (effect.type === "aoe") {
+    // ✅ NE DESSINER L'AOE QUE SI C'EST UNE ATTAQUE MAGIQUE
+    if (effect.type === "aoe" && effect.attackWeapon === "magic") {
       const elapsed = now - effect.startTime;
       const progress = Math.min(elapsed / effect.duration, 1);
       renderAOEEffect(ctx, effect, tileSize, progress);
@@ -64,33 +85,45 @@ export function renderEffects(ctx: CanvasRenderingContext2D, tileSize: number): 
   });
 }
 
-function renderAOEEffect(ctx: CanvasRenderingContext2D, effect: EffectAnimation, tileSize: number, progress: number): void {
-  const x = effect.x * tileSize + tileSize / 2;
-  const y = effect.y * tileSize + tileSize / 2;
-
-  const maxRadius = (effect.range || 3) * tileSize;
-  const radius = maxRadius * progress;
-
-  const opacity = 1 - progress;
-
-  ctx.fillStyle = `rgba(255, 100, 100, ${opacity * 0.6})`;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.stroke();
-}
-
-function renderHitEffect(ctx: CanvasRenderingContext2D, effect: EffectAnimation, tileSize: number, progress: number): void {
+function renderHitEffect(
+  ctx: CanvasRenderingContext2D,
+  effect: VisualEffect,
+  tileSize: number,
+  progress: number
+): void {
   const x = effect.x * tileSize;
   const y = effect.y * tileSize;
 
-  const opacity = (1 - progress) * 0.8;
+  const opacity = (1 - progress) * 0.3;
 
   ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
   ctx.fillRect(x, y, tileSize, tileSize);
 
-  const redOpacity = (1 - progress) * 0.5;
+  const redOpacity = (1 - progress) * 0.1;
   ctx.strokeStyle = `rgba(255, 0, 0, ${redOpacity})`;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(x - 2, y - 2, tileSize + 4, tileSize + 4)
+  ctx.lineWidth = 1;
+  ctx.strokeRect(x - 1, y - 1, tileSize + 2, tileSize + 2);
+}
+
+function renderAOEEffect(
+  ctx: CanvasRenderingContext2D,
+  effect: VisualEffect,
+  tileSize: number,
+  progress: number
+): void {
+  const opacity = 1 - progress;
+
+  effect.affectedTiles?.forEach((tile) => {
+    const x = tile.x * tileSize;
+    const y = tile.y * tileSize;
+
+    // Carré semi-transparent orange pour l'AOE magique
+    ctx.fillStyle = `rgba(255, 150, 0, ${opacity * 0.5})`;
+    ctx.fillRect(x, y, tileSize, tileSize);
+
+    // Bordure
+    ctx.strokeStyle = `rgba(255, 200, 0, ${opacity})`;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, tileSize, tileSize);
+  });
 }
