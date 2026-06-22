@@ -1,6 +1,7 @@
 // aoe in a cone where the player if facing with a range of 5, it can only be used once per floor and it stuns enemies for 1 turn, it can be unlocked by a secret item in the game
 
 import { audioManager } from "../../../../../audio/audioManager";
+import { createFireBreathEffect } from "../../../../../graphicContext/animations/effectsAnimation";
 import type { Enemy } from "../../../../../lib/type";
 import { map } from "../../../../map/map";
 import { stateDynamic, statePlayer } from "../../../../state";
@@ -12,6 +13,8 @@ export function fireBreathOncePerFloor() {
   if (!statePlayer.skillUsedThisFloor.fireBreathOncePerFloor) {
     return; // Skill already used this floor, do nothing
   }
+
+  createFireBreathEffect(statePlayer.x, statePlayer.y, statePlayer.facing, 5, 300)
 
   stateDynamic.enemies.forEach((enemy) => {
     if (!enemy.alive) {

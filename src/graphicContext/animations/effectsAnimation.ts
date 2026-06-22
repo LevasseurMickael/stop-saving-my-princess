@@ -3,14 +3,14 @@ import type { Enemy } from "../../lib/type";
 export interface VisualEffect {
   x: number;
   y: number;
-  type: "aoe" | "hit";
+  type: "aoe" | "hit" | "skill_stun" | "skill_fire";
   startTime: number;
   duration: number;
   affectedTiles?: Array<{ x: number; y: number }>;
-  attackWeapon?: string; // ✅ AJOUTER : type d'attaque (magic, melee, ranged)
+  attackWeapon?: string;
 }
 
-const activeEffects: VisualEffect[] = [];
+export const activeEffects: VisualEffect[] = [];
 
 export function createAOEEffect(
   centerX: number, 
@@ -54,6 +54,63 @@ export function createHitEffect(targetX: number, targetY: number, duration: numb
   });
 }
 
+export function createStunSkillEffect(centerX: number, centerY: number, range: number, duration: number) {
+  const affectedTiles : Array<{ x: number; y: number}> = [];
+
+  for (let x = centerX - range; x <= centerX + range; x++) {
+    for (let y = centerY - range; y <= centerY + range; y++) {
+      const dist = Math.abs(x - centerX) + Math.abs(y - centerY);
+      if(dist <= range) {
+        affectedTiles.push({ x, y });
+      }
+    }
+  }
+  activeEffects.push({
+    x: centerX,
+    y: centerY,
+    type: "skill_stun",
+    startTime: Date.now(),
+    duration,
+    affectedTiles
+  })
+};
+
+export function createFireBreathEffect(centerX: number, centerY: number, facing: string, range: number, duration: number) {
+  const affectedTiles: Array<{ x: number; y: number }> = [];
+
+  for (let dist = 1; dist <= range; dist++) {
+    for (let offset = -dist; offset <= dist; offset++) {
+      let x = centerX;
+      let y = centerY;
+
+      if (facing === "up") {
+        x = centerX + offset;
+        y = centerY - dist;
+      } else if (facing === "down") {
+        x = centerX + offset;
+        y = centerY + dist;
+      } else if (facing === "left") {
+        x = centerX - dist;
+        y = centerY + offset;
+      } else if (facing === "right") {
+        x = centerX + dist;
+        y = centerY + offset;
+      }
+
+      affectedTiles.push({ x, y})
+    }
+  }
+
+  activeEffects.push({
+    x: centerX,
+    y: centerY,
+    type: "skill_fire",
+    startTime: Date.now(),
+    duration,
+    affectedTiles
+  })
+};
+
 export function updateEffects(): void {
   const now = Date.now();
   
@@ -76,13 +133,29 @@ export function renderEffects(ctx: CanvasRenderingContext2D, tileSize: number): 
   });
 
   activeEffects.forEach((effect) => {
-    // ✅ NE DESSINER L'AOE QUE SI C'EST UNE ATTAQUE MAGIQUE
     if (effect.type === "aoe" && effect.attackWeapon === "magic") {
       const elapsed = now - effect.startTime;
       const progress = Math.min(elapsed / effect.duration, 1);
       renderAOEEffect(ctx, effect, tileSize, progress);
     }
   });
+
+  activeEffects.forEach((effect) => {
+    if (effect.type === "skill_stun") {
+      const elasped = now - effect.startTime;
+      const progress = Math.min(elasped / effect.duration, 1);
+      renderStunSkillEffect(ctx, effect, tileSize, progress);
+    }
+  });
+
+  activeEffects.forEach((effect) => {
+    if (effect.type === "skill_fire") {
+      const elapsed = now - effect.startTime;
+      const progress = Math.min(elapsed / effect.duration, 1)
+      renderFireBreathEffect(ctx, effect, tileSize, progress)
+    }
+  })
+
 }
 
 function renderHitEffect(
@@ -126,4 +199,45 @@ function renderAOEEffect(
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, tileSize, tileSize);
   });
+}
+
+function renderStunSkillEffect(ctx: CanvasRenderingContext2D, 
+  effect: VisualEffect, 
+  tileSize: number, 
+  progress: number
+): void {
+  const opacity = 1 - progress;
+
+  effect.affectedTiles?.forEach((tile) => {
+    const x = tile.x * tileSize;
+    const y = tile.y * tileSize;
+
+    ctx.fillStyle = `rgba(100, 150, 255, ${opacity * 0.5})`;
+    ctx.fillRect(x, y, tileSize, tileSize);
+
+    ctx.strokeStyle = `rgba(150, 200, 255, ${opacity})`;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, tileSize, tileSize);
+  });
+}
+
+function renderFireBreathEffect(
+  ctx: CanvasRenderingContext2D,
+  effect: VisualEffect,
+  tileSize: number,
+  progress: number
+): void {
+  const opacity = 1 - progress;
+
+  effect.affectedTiles?.forEach((tile) => {
+    const x = tile.x * tileSize;
+    const y = tile.y * tileSize;
+
+    ctx.fillStyle = `rgba(255, 100, 0, ${opacity * 0.6})`;
+    ctx.fillRect(x, y, tileSize, tileSize);
+
+    ctx.strokeStyle = `rgba(255, 150, 0, ${opacity})`;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, tileSize, tileSize)
+  })
 }
