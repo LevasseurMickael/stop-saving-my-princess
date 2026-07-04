@@ -118,6 +118,7 @@ export const stateDynamic = {
   enemies: [] as Enemy[],
   secrets: [] as { x: number; y: number; unlocked: boolean }[],
   healingRoom: null as HealingRoom | null,
+  healUsed: false, // Track if the healing room has been used for conditions that require it
   secretRoom: null as SecretRoom | null,
   chest: false, // Track if the chest on the current floor has been opened for conditions that require it
 };

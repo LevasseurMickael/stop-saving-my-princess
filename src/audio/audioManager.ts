@@ -2,10 +2,10 @@ type SoundEffect =
   | "attack"
   | "hit"
   | "heal"
-  | "death"
   | "pickup"
   | "door_open"
   | "chest_open"
+  | "death"
   | "player_hurt"
   | "enemy_attack_bow"
   | "enemy_attack_magic"
@@ -29,7 +29,6 @@ type MusicTrack =
   | "dungeon_21_30"
   | "dungeon_31_40"
   | "dungeon_41_50"
-  | "boss_1"
   | "game_over"
   | "victory";
 
@@ -48,8 +47,8 @@ class AudioManager {
       attack: "/sounds/sfx/attack.mp3", // Done
       hit: "/sounds/sfx/hit.mp3", // Done
       heal: "/sounds/sfx/heal.mp3", // Done
-      death: "/sounds/sfx/death.mp3", // Done
       pickup: "/sounds/sfx/pickup.mp3",
+      death: "/sounds/sfx/death.mp3",
       door_open: "/sounds/sfx/door_open.mp3",
       chest_open: "/sounds/sfx/chest_open.mp3", // Done
       player_hurt: "/sounds/sfx/player_hurt.mp3",
@@ -78,15 +77,14 @@ class AudioManager {
 
   async preloadMusic() {
     const musicFiles: Record<MusicTrack, string> = {
-      menu: "/menu.mp3",
-      dungeon_1_10: "/dungeon_1_10.mp3",
-      dungeon_11_20: "/dungeon_11_20.mp3",
-      dungeon_21_30: "/dungeon_21_30.mp3",
-      dungeon_31_40: "/dungeon_31_40.mp3",
-      dungeon_41_50: "/dungeon_41_50.mp3",
-      boss_1: "/boss_1.mp3",
-      game_over: "/game_over.mp3",
-      victory: "/victory.mp3",
+      menu: "/sounds/music/menu.mp3",
+      dungeon_1_10: "/sounds/music/dungeon_1_10.mp3",
+      dungeon_11_20: "/sounds/music/dungeon_11_20.mp3",
+      dungeon_21_30: "/sounds/music/dungeon_21_30.mp3",
+      dungeon_31_40: "/sounds/music/dungeon_31_40.mp3",
+      dungeon_41_50: "/sounds/music/dungeon_41_50.mp3",
+      game_over: "/sounds/music/game_over.mp3",
+      victory: "/sounds/music/victory.mp3",
     };
 
     for (const [key, path] of Object.entries(musicFiles)) {

@@ -117,7 +117,7 @@ function startGameLoop() {
   console.log("  ✅ Game loop started");
 }
 
-function stopGameLoop() {
+export function stopGameLoop() {
   console.log("⏸️ stopGameLoop() called");
   gameLoopRunning = false;
   
@@ -318,6 +318,28 @@ function setupKeyboardShortcuts() {
   });
 }
 
+function setupVictoryButtons() {
+  document.getElementById("btn-victory-menu")!.addEventListener("click", () => {
+    console.log("🏠 Victory -> Menu");
+    audioManager.playSound("ui_click");
+    quitToMainMenu();
+  });
+}
+
+function setupGameOverButtons() {
+  document.getElementById("btn-game-over-menu")!.addEventListener("click", () => {
+    console.log("🏠 Game Over -> Menu");
+    audioManager.playSound("ui_click");
+    quitToMainMenu();
+  });
+
+  document.getElementById("btn-game-over-retry")!.addEventListener("click", () => {
+    console.log("🔄 Retrying game");
+    audioManager.playSound("ui_click");
+    startNewGame();
+  });
+}
+
 // ========================================
 // INITIALIZATION
 // ========================================
@@ -353,6 +375,8 @@ async function startGame() {
     setupOptionsButtons();
     setupPauseButtons();
     setupGameButtons();
+    setupVictoryButtons();
+    setupGameOverButtons();
     setupKeyboardShortcuts();
     console.log("✅ All buttons set up!");
 

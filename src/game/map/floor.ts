@@ -1,5 +1,6 @@
 import { clearFloorTileCache } from "../../graphicContext/floorTile/floorTileCache";
 import { markBackgroundDirty } from "../../main";
+import { showVictoryScreen } from "../mechanics/finishGame";
 import {
   stateDungeon,
   stateDynamic,
@@ -12,6 +13,11 @@ import { loadMap } from "./map";
 
 export function enterNextFloor() {
   stateDungeon.currentFloor++;
+
+  if (stateDungeon.currentFloor >= 50) {
+    showVictoryScreen();
+    return;
+  }
 
   for (const key in stateKillCount) {
     if (Object.prototype.hasOwnProperty.call(stateKillCount, key)) {

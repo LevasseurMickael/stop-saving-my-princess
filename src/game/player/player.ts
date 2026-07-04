@@ -233,7 +233,7 @@ window.addEventListener("keydown", (e) => {
       statePlayer.stat.maxHp,
     );
     audioManager.playSound("heal");
-    map[newY][newX] = 0; // Remove healing room center from map (it will be re-added when we enter the floor again)
+    stateDynamic.healUsed = true;
     if (statePlayer.stat.hp === statePlayer.stat.maxHp) {
       stateSecret.healedAtFullHp = true;
     }

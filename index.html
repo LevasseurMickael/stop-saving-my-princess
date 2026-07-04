@@ -39,6 +39,11 @@
         z-index: 1000; /* Important pour passer au-dessus */
       }
 
+      #menu-container {
+        background:  url('/public/main_menu.png') center / contain no-repeat;
+        background-attachment: fixed;
+      }
+
       /* ✅ Conteneur du jeu */
       #game-container {
         position: fixed;
@@ -100,12 +105,44 @@
       .pause-menu {
         text-align: center;
         color: white;
-        padding: 40px;
-        background: rgba(0, 0, 0, 0.95);
+        padding: 30px;
         border: 2px solid white;
         border-radius: 10px;
         max-width: 600px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+      }
+
+      #victory-container {
+        background:  url('/public/ending_image.png') center/contain no-repeat;
+        background-attachment: fixed;
+      }
+
+      #game-over-container {
+        background: linear-gradient(135deg, rgba(100, 0, 0, 0.7), rgba(200, 0, 0, 0.7));
+      }
+
+      .victory-content,
+      .game-over-content {
+        text-align: center;
+        color: white;
+        padding: 60px;
+        background: rgba(0, 0, 0, 0.95);
+        border: 3px solid gold;
+        border-radius: 15px;
+        max-width: 700px;
+      }
+
+      .victory-content h1,
+      .game-over-content h1 {
+        font-size: 64px;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+
+      .victory-content p,
+      .game-over-content p {
+        font-size: 18px;
+        margin: 15px 0;
       }
 
       h1 {
@@ -170,7 +207,6 @@
     <!-- ✅ Menu principal -->
     <div id="menu-container" class="scene active">
       <div class="menu-content">
-        <h1>Stop Saving My Princess</h1>
         <button id="btn-new-game">New Game</button>
         <button id="btn-continue">Continue</button>
         <button id="btn-options">Options</button>
@@ -212,6 +248,33 @@
         <button id="btn-resume">Resume (ESC)</button>
         <button id="btn-options-pause">Options</button>
         <button id="btn-quit-menu">Main Menu</button>
+      </div>
+    </div>
+
+    <div id="victory-container" class="scene">
+      <div class="victory-content">
+        <h1>🎉 VICTORY! 🎉</h1>
+        <p>You have defeated the dungeon!</p>
+        <div class="stat-line">
+          <p id="victory-floor">Floor reached: -</p>
+          <p id="victory-kills">Total kills: -</p>
+          <p id="victory-deaths">Deaths: -</p>
+        </div>
+        <button id="btn-victory-menu">Return to Menu</button>
+      </div>
+    </div>
+
+    <div id="game-over-container" class="scene">
+      <div class="game-over-content">
+        <h1>💀 GAME OVER 💀</h1>
+        <p>You have fallen in the dungeon...</p>
+        <div class="stat-line">
+          <p id="game-over-floor">Floor reached: -</p>
+          <p id="game-over-kills">Total kills: -</p>
+          <p id="game-over-deaths">Deaths: -</p>
+        </div>
+        <button id="btn-game-over-menu">Return to Menu</button>
+        <button id="btn-game-over-retry">Retry</button>
       </div>
     </div>
 

@@ -69,6 +69,7 @@ export function createRoom(
     }
   }
   if (type === "healingRoom") {
+    map[healY][healX] = tileIndex.healingRoom; 
     return {
       x: healX,
       y: healY,

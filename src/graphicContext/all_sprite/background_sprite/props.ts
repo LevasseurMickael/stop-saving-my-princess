@@ -52,8 +52,15 @@ export const propSprites: Record<string, SpriteConfig> = {
   },
   "floor-healing": {
     sheetSrc: "/wall_props_32px.png",
-    x: 512,
-    y: 192,
+    x: 96,
+    y: 64,
+    width: 32,
+    height: 32,
+  },
+  "floor-healing-taken": {
+    sheetSrc: "/wall_props_32px.png",
+    x: 96,
+    y: 96,
     width: 32,
     height: 32,
   },

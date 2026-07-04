@@ -50,7 +50,11 @@ export function getEntitiesSprite(
       }
       // Healing room floor
       else if (map[y][x] === tileIndex.healingRoom) {
-        spriteKey = "floor-healing";
+        if (stateDynamic.healUsed) {
+          spriteKey = "floor-healing-taken";
+        } else {
+          spriteKey = "floor-healing";
+        }
         baseColor = "green";
       }
       // Portes (ouvertes/fermées)

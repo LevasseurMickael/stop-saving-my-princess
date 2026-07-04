@@ -2,6 +2,7 @@ import { audioManager } from "../../../audio/audioManager";
 import { createHitEffect } from "../../../graphicContext/animations/effectsAnimation";
 import type { Enemy } from "../../../lib/type";
 import { faceTowardsPlayer } from "../../mechanics/enemyFacing";
+import { showGameOverScreen } from "../../mechanics/finishGame";
 import { knockbackPlayer } from "../../mechanics/knockback";
 import { isBlockedByShield } from "../../mechanics/shield";
 import { handleGameEvent } from "../../secret/secretEvaluation/secretSystem";
@@ -61,8 +62,12 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     if (enemy.attackWeapon === "magic") {
       friendlyDamage(enemy);
     }
+    if (statePlayer.stat.hp <= 0 && statePlayer.stat.resurectionCount === 0) {
+      audioManager.playMusic("game_over");
+      showGameOverScreen();
+    }
     // Check if player dies from the attack and reset position and HP if so
-    if (statePlayer.stat.hp <= 0) {
+    else if (statePlayer.stat.hp <= 0) {
       statePlayer.deathCount++;
       audioManager.playSound("death");
       statePlayer.stat.hp = statePlayer.stat.maxHp;
