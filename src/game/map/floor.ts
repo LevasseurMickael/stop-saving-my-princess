@@ -1,3 +1,4 @@
+import { audioManager } from "../../audio/audioManager";
 import { clearFloorTileCache } from "../../graphicContext/floorTile/floorTileCache";
 import { markBackgroundDirty } from "../../main";
 import { showVictoryScreen } from "../mechanics/finishGame";
@@ -27,6 +28,7 @@ export function enterNextFloor() {
   stateStats.hasSecretItem = false;
   stateStats.secretUnlocked = false;
   stateDynamic.healingRoom!.isUnlocked = false;
+  stateDynamic.healUsed = false;
 
   stateSecret.eventHistory.length = 0;
   stateSecret.turnCounter = 0;

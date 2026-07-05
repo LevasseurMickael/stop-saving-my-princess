@@ -152,7 +152,7 @@ function startNewGame() {
   console.log("  ✅ Background marked dirty");
   
   startGameLoop();
-  audioManager.playMusic("dungeon_1_10");
+  audioManager.startDungeonMusicRotation();
 }
 
 function continueGame() {
@@ -166,18 +166,7 @@ function continueGame() {
   markBackgroundDirty();
   startGameLoop();
 
-  const floor = stateDungeon.currentFloor;
-  if (floor <= 10) {
-    audioManager.playMusic("dungeon_1_10");
-  } else if (floor <= 20) {
-    audioManager.playMusic("dungeon_11_20");
-  } else if (floor <= 30) {
-    audioManager.playMusic("dungeon_21_30");
-  } else if (floor <= 40) {
-    audioManager.playMusic("dungeon_31_40");
-  } else {
-    audioManager.playMusic("dungeon_41_50");
-  }
+  audioManager.startDungeonMusicRotation();
 }
 
 function pauseGame() {
@@ -198,6 +187,7 @@ function resumeGame() {
 
 function quitToMainMenu() {
   console.log("🏠 quitToMainMenu() called");
+  isPaused = false;
   stopGameLoop();
   sceneManager.switchSceneTo("menu");
   audioManager.playMusic("menu");

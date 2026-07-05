@@ -24,18 +24,20 @@ type SoundEffect =
 
 type MusicTrack =
   | "menu"
-  | "dungeon_1_10"
-  | "dungeon_11_20"
-  | "dungeon_21_30"
-  | "dungeon_31_40"
-  | "dungeon_41_50"
+  | "dungeon_1"
+  | "dungeon_2"
+  | "dungeon_3"
+  | "dungeon_4"
+  | "dungeon_5"
   | "game_over"
   | "victory";
+  
 
 class AudioManager {
   private sounds: Map<SoundEffect, HTMLAudioElement> = new Map();
   private music: Map<MusicTrack, HTMLAudioElement> = new Map();
   private currentMusic: HTMLAudioElement | null = null;
+  private currentMusicTrack: MusicTrack | null = null;
 
   private masterVolume: number = 1.0;
   private musicVolume: number = 0.5;
@@ -44,24 +46,24 @@ class AudioManager {
 
   async preloadSounds() {
     const soundFiles: Record<SoundEffect, string> = {
-      attack: "/sounds/sfx/attack.mp3", // Done
-      hit: "/sounds/sfx/hit.mp3", // Done
+      attack: "/sounds/sfx/attack.mp3", // TODO
+      hit: "/sounds/sfx/hit.mp3", // TODO
       heal: "/sounds/sfx/heal.mp3", // Done
       pickup: "/sounds/sfx/pickup.mp3",
       death: "/sounds/sfx/death.mp3",
       door_open: "/sounds/sfx/door_open.mp3",
-      chest_open: "/sounds/sfx/chest_open.mp3", // Done
+      chest_open: "/sounds/sfx/chest_open.mp3", // TODO
       player_hurt: "/sounds/sfx/player_hurt.mp3",
-      enemy_attack_bow: "/sounds/sfx/enemy_attack_bow.mp3", // Done
-      enemy_attack_magic: "/sounds/sfx/enemy_attack_magic.mp3", // Done
-      enemy_attack_melee: "/sounds/sfx/enemy_attack_melee.mp3", // Done
+      enemy_attack_bow: "/sounds/sfx/enemy_attack_bow.mp3", // TODO
+      enemy_attack_magic: "/sounds/sfx/enemy_attack_magic.mp3", // TODO
+      enemy_attack_melee: "/sounds/sfx/enemy_attack_melee.mp3", // TODO
       enemy_death: "/sounds/sfx/enemy_death.mp3",
-      footstep: "/sounds/sfx/footstep.mp3", // Done
+      footstep: "/sounds/sfx/footstep.mp3", // TODO
       shield_deploy: "/sounds/sfx/shield_deploy.mp3",
       shield_block: "/sounds/sfx/shield_block.mp3",
       shield_retract: "/sounds/sfx/shield_retract.mp3",
-      skill_stun: "/sounds/sfx/skill_stun.mp3", // Done
-      skill_fire_breath: "/sounds/sfx/skill_fire_breath.mp3", // Done
+      skill_stun: "/sounds/sfx/skill_stun.mp3", // TODO
+      skill_fire_breath: "/sounds/sfx/skill_fire_breath.mp3", // TODO
       floor_transition: "/sounds/sfx/floor_transition.mp3",
       secret_unlocked: "/sounds/sfx/secret_unlocked.mp3",
       ui_click: "/sounds/sfx/ui_click.mp3",
@@ -78,18 +80,17 @@ class AudioManager {
   async preloadMusic() {
     const musicFiles: Record<MusicTrack, string> = {
       menu: "/sounds/music/menu.mp3",
-      dungeon_1_10: "/sounds/music/dungeon_1_10.mp3",
-      dungeon_11_20: "/sounds/music/dungeon_11_20.mp3",
-      dungeon_21_30: "/sounds/music/dungeon_21_30.mp3",
-      dungeon_31_40: "/sounds/music/dungeon_31_40.mp3",
-      dungeon_41_50: "/sounds/music/dungeon_41_50.mp3",
+      dungeon_1: "/sounds/music/dungeon_1.mp3",
+      dungeon_2: "/sounds/music/dungeon_2.mp3",
+      dungeon_3: "/sounds/music/dungeon_3.mp3",
+      dungeon_4: "/sounds/music/dungeon_4.mp3",
+      dungeon_5: "/sounds/music/dungeon_5.mp3",
       game_over: "/sounds/music/game_over.mp3",
       victory: "/sounds/music/victory.mp3",
     };
 
     for (const [key, path] of Object.entries(musicFiles)) {
       const audio = new Audio(path);
-      audio.loop = true;
       audio.volume = this.musicVolume * this.masterVolume;
       this.music.set(key as MusicTrack, audio);
     }
@@ -106,6 +107,22 @@ class AudioManager {
         .play()
         .catch((e) => console.error(`Failed to play sound ${effect}:`, e));
     }
+  }
+
+  private dungeonMusics: MusicTrack[] = [
+    "dungeon_1",
+    "dungeon_2",
+    "dungeon_3",
+    "dungeon_4",
+    "dungeon_5",
+  ];
+
+  private currentMusicIndex: number = 0;
+  private isRotating: boolean = false;
+
+  getMusicForFloor(floor: number): MusicTrack {
+    const index = floor % this.dungeonMusics.length;
+    return this.dungeonMusics[index];
   }
 
   playMusic(track: MusicTrack, fadeInDuration: number = 1000) {
@@ -125,6 +142,47 @@ class AudioManager {
       .play()
       .catch((e) => console.error(`Failed to play music ${track}:`, e));
     this.fadeIn(this.currentMusic, fadeInDuration);
+
+    newMusic.onended = () => {
+      console.log(`🎵 Music "${track}" ended, playing next...`);
+      this.playNextDungeonMusic();
+    };
+  }
+
+  // ✅ AJOUTER : Démarrer la rotation de musique dungeon
+  startDungeonMusicRotation() {
+    console.log("🎵 Starting dungeon music rotation...");
+    if (this.currentMusic) {
+    this.currentMusic.pause();
+    this.currentMusic = null;
+  }
+    this.isRotating = true;
+    this.currentMusicIndex = 0;
+    setTimeout(() => {
+    if (this.isRotating) {
+      console.log("🎵 Playing first dungeon music...");
+      this.playMusic(this.dungeonMusics[0]);
+    }
+  }, 100);
+  }
+
+  // ✅ AJOUTER : Jouer la musique suivante
+  private playNextDungeonMusic() {
+    if (!this.isRotating) return;
+
+    this.currentMusicIndex = (this.currentMusicIndex + 1) % this.dungeonMusics.length;
+    const nextTrack = this.dungeonMusics[this.currentMusicIndex];
+    
+    console.log(`🎵 Playing next music: ${nextTrack} (${this.currentMusicIndex + 1}/5)`);
+    this.playMusic(nextTrack);
+  }
+
+  // ✅ AJOUTER : Arrêter la rotation
+  stopDungeonMusicRotation() {
+    console.log("⏹️ Stopping dungeon music rotation...");
+    this.isRotating = false;
+    this.stopMusic();
+    this.currentMusicIndex = 0;
   }
 
   stopMusic(fadeOutDuration: number = 1000) {

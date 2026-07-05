@@ -115,21 +115,26 @@
       #victory-container {
         background:  url('/public/ending_image.png') center/contain no-repeat;
         background-attachment: fixed;
+        align-items: flex-start;
+        padding-top: 10px;
       }
 
       #game-over-container {
-        background: linear-gradient(135deg, rgba(100, 0, 0, 0.7), rgba(200, 0, 0, 0.7));
+        background:  url('/public/game_over.png') center/contain no-repeat;
+        background-attachment: fixed;
+        align-items: flex-end;
+        padding-top: 10px;
       }
 
       .victory-content,
       .game-over-content {
         text-align: center;
         color: white;
-        padding: 60px;
+        padding: 20px;
         background: rgba(0, 0, 0, 0.95);
         border: 3px solid gold;
         border-radius: 15px;
-        max-width: 700px;
+        width: 70%;
       }
 
       .victory-content h1,
@@ -253,26 +258,12 @@
 
     <div id="victory-container" class="scene">
       <div class="victory-content">
-        <h1>🎉 VICTORY! 🎉</h1>
-        <p>You have defeated the dungeon!</p>
-        <div class="stat-line">
-          <p id="victory-floor">Floor reached: -</p>
-          <p id="victory-kills">Total kills: -</p>
-          <p id="victory-deaths">Deaths: -</p>
-        </div>
         <button id="btn-victory-menu">Return to Menu</button>
       </div>
     </div>
 
     <div id="game-over-container" class="scene">
       <div class="game-over-content">
-        <h1>💀 GAME OVER 💀</h1>
-        <p>You have fallen in the dungeon...</p>
-        <div class="stat-line">
-          <p id="game-over-floor">Floor reached: -</p>
-          <p id="game-over-kills">Total kills: -</p>
-          <p id="game-over-deaths">Deaths: -</p>
-        </div>
         <button id="btn-game-over-menu">Return to Menu</button>
         <button id="btn-game-over-retry">Retry</button>
       </div>
