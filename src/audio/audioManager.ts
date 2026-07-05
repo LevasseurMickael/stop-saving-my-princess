@@ -37,7 +37,6 @@ class AudioManager {
   private sounds: Map<SoundEffect, HTMLAudioElement> = new Map();
   private music: Map<MusicTrack, HTMLAudioElement> = new Map();
   private currentMusic: HTMLAudioElement | null = null;
-  private currentMusicTrack: MusicTrack | null = null;
 
   private masterVolume: number = 1.0;
   private musicVolume: number = 0.5;

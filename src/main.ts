@@ -349,7 +349,7 @@ async function startGame() {
 
     // ✅ CRÉER LES CANVAS APRÈS QUE LE DOM SOIT CHARGÉ
     console.log("🎨 Creating canvas layers...");
-    const { layer, contexts } = createCanvasLayer(1280, 960);
+    const {  contexts } = createCanvasLayer(1280, 960);
     console.log("✅ Canvas layers created!");
 
     // ✅ ASSIGNER LES CONTEXTES
