@@ -133,6 +133,7 @@ export function stopGameLoop() {
 
 function startNewGame() {
   console.log("🆕 startNewGame() called");
+  statePlayer.floor0StartTime = Date.now();
   
   sceneManager.switchSceneTo("game");
   console.log("  ✅ Scene switched to game");

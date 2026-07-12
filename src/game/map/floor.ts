@@ -52,4 +52,5 @@ export function enterNextFloor() {
 
   statePlayer.x = statePlayer.spawn.x;
   statePlayer.y = statePlayer.spawn.y;
+
 }

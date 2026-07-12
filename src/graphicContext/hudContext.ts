@@ -1,6 +1,7 @@
 // src/graphicContext/hudContext.ts
 
 import { statePlayer,  stateDungeon} from "../game/state";
+import { getCurrentHintMessage } from "../ui/hintMessageSystem";
 
 export function getHudSprite(ctx: CanvasRenderingContext2D) {
   ctx.clearRect(0, 0, 1280, 960);
@@ -16,6 +17,8 @@ export function getHudSprite(ctx: CanvasRenderingContext2D) {
 
   // ✅ Contrôles (bas-droit)
   drawControls(ctx, 1280, 960);
+
+  drawHintMessage(ctx, 640, 900);
 }
 
 // ===== STATS DU JOUEUR =====
@@ -131,4 +134,44 @@ function drawControls(ctx: CanvasRenderingContext2D, x: number, y: number) {
   ctx.fillText("[↑/↓/←/→] Attack", x - 10, y);
   y -= lineHeight;
   ctx.fillText("[Z/Q/S/D] Move", x - 10, y);
+}
+
+// ===== MESSAGE D'ASTUCE =====
+
+function drawHintMessage(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  const hintMessage = getCurrentHintMessage();
+  if (!hintMessage) return;
+
+  // Calculer l'opacité (fade out progressif)
+  const elapsed = Date.now() - hintMessage.showTime;
+  const fadeOutStart = hintMessage.duration - 1000; // Fade out dans la dernière seconde
+  let opacity = 1;
+
+  if (elapsed > fadeOutStart) {
+    const fadeProgress = (elapsed - fadeOutStart) / 1000;
+    opacity = Math.max(0, 1 - fadeProgress);
+  }
+
+  ctx.save();
+  ctx.globalAlpha = opacity;
+
+  // Fond semi-transparent
+  ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+  ctx.beginPath();
+  ctx.rect(x - 200, y - 25, 400, 50);
+  ctx.fill();
+
+  // Bordure
+  ctx.strokeStyle = "rgba(255, 200, 0, 0.8)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Texte
+  ctx.fillStyle = "rgba(255, 200, 0, 1)";
+  ctx.font = "14px monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(`💡 ${hintMessage.text}`, x, y);
+
+  ctx.restore();
 }

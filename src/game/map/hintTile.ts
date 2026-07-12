@@ -1,5 +1,6 @@
 import { tileIndex } from "../../graphicContext/tile_index";
 import type { Room, SecretHintWall } from "../../lib/type";
+import { showHintMessage } from "../../ui/hintMessageSystem";
 import { stateDynamic, stateSecret } from "../state";
 import { map } from "./map";
 
@@ -76,7 +77,7 @@ export function checkHintTile(
     ) {
       if (!wall.revealed) {
         wall.revealed = true;
-        console.log(`Hint: ${wall.hint}`);
+        showHintMessage(wall.hint, 5000); // Show the hint message for 5 seconds
       }
     }
   }

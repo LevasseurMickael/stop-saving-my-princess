@@ -39,6 +39,7 @@ export const statePlayer = {
     attackRange: 1,
     resurectionCount: 0,
   },
+  floor0StartTime: 0,
 
   // Track unlocked skills separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedSkills: {
