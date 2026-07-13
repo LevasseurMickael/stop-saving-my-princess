@@ -1,7 +1,7 @@
 import { GridSize, GridSizeWidth } from "./map";
 import { rng } from "../rng";
 import type { Room } from "../../lib/type";
-import { statePlayer, stateStats } from "../state";
+import { statePlayer } from "../state";
 import { createRoom } from "./healingRoom/healingRoom";
 import { tileIndex } from "../../graphicContext/tile_index";
 

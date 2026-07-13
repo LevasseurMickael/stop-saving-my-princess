@@ -1,9 +1,6 @@
 export function keyLevelLogic(
   statePlayer: any,
   stateDynamic: any,
-  map: number[][],
-  newX: number,
-  newY: number,
 ) {
   if (
     statePlayer.unlockedItems.keyLevel >= stateDynamic.healingRoom?.doorLevel!

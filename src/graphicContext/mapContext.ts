@@ -6,7 +6,7 @@ import { dungeonmapFragment } from "../game/secret/secretUnlock/itemEffect/passi
 import { stateDynamic, stateStats } from "../game/state";
 import { drawSprite } from "./drawSprite";
 import { floorSpriteLogic } from "./floorTile/floorSpriteLogic";
-import { getCachedImage } from "./imageLoader";
+// import { getCachedImage } from "./imageLoader";
 import { tileIndex } from "./tile_index";
 import { wallSpriteLogic } from "./wallSpriteLogic";
 
@@ -20,7 +20,7 @@ export function getMapSprite(
   for (let y = 0; y < GridSize; y++) {
     for (let x = 0; x < GridSizeWidth; x++) {
       let baseColor: string = "";
-      let tileImage: HTMLImageElement | null = null;
+      // let tileImage: HTMLImageElement | null = null;
       let spriteKey: string | null = null;
 
       if (map[y][x] === tileIndex.wall) {
@@ -31,7 +31,7 @@ export function getMapSprite(
 
         // treasure chest graphic logic
       } else if (map[y][x] === tileIndex.chest) {
-        tileImage = getCachedImage("/chest.png");
+        // tileImage = getCachedImage("/chest.png");
         baseColor = "gold";
       } else if (map[y][x] === tileIndex.exit) {
         const exitColor = canSeeExits();

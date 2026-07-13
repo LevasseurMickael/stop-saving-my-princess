@@ -89,7 +89,7 @@ window.addEventListener("keydown", (e) => {
         map[newY][newX] === tileIndex.secretDoor &&
         stateDynamic.healingRoom?.isUnlocked !== true
       ) {
-        keyLevelLogic(statePlayer, stateDynamic, map, newX, newY)
+        keyLevelLogic(statePlayer, stateDynamic)
           ? ""
           : handleGameEvent({ type: "wait", turns: 1 });
         acted = true;

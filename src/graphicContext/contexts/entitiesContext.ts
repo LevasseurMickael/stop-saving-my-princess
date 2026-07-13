@@ -16,7 +16,7 @@ export function getEntitiesSprite(
     for (let x = 0; x < GridSizeWidth; x++) {
       let spriteKey: string | null = null;
       let tileImage: HTMLImageElement | null = null;
-      let baseColor: string = "";
+
 
       // Dans le fog of war, ne rien dessiner
       if (!dungeonmapFragment(x, y)) {
@@ -55,7 +55,7 @@ export function getEntitiesSprite(
         } else {
           spriteKey = "floor-healing";
         }
-        baseColor = "green";
+
       }
       // Portes (ouvertes/fermées)
       else if (map[y][x] === tileIndex.secretDoor) {
@@ -69,7 +69,7 @@ export function getEntitiesSprite(
         if (hintWallColor === "white") {
           spriteKey = "hint-wall";
         }
-        baseColor = hintWallColor; // Fallback
+
       }
 
       // Dessiner
