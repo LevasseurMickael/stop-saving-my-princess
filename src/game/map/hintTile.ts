@@ -76,8 +76,8 @@ export function checkHintTile(
       (playerY === wall.y && Math.abs(playerX - wall.x) === 1)
     ) {
       if (!wall.revealed) {
-        wall.revealed = true;
         showHintMessage(wall.hint, 5000); // Show the hint message for 5 seconds
+        return;
       }
     }
   }

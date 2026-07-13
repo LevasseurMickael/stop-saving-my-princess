@@ -8,7 +8,7 @@ import {
 import { stateDungeon, stateDynamic, statePlayer, stateTurn } from "./game/state";
 import "./game/player/player";
 import {
-  getPlayerAttackSprite,
+  // getPlayerAttackSprite,
   getPlayerSprite,
 } from "./graphicContext/playerContext";
 import { getEnemiesSprite } from "./graphicContext/enemiesContext";
@@ -66,7 +66,7 @@ function renderEntities() {
 function renderCharacters() {
   ctxCharacters.clearRect(0, 0, 1280, 960);
   getPlayerSprite(ctxCharacters, statePlayer, TileSize);
-  getPlayerAttackSprite(ctxCharacters, statePlayer, TileSize);
+  // getPlayerAttackSprite(ctxCharacters, statePlayer, TileSize);
   getEnemiesSprite(ctxCharacters, stateDynamic, TileSize);
 }
 

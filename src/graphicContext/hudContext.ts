@@ -138,13 +138,23 @@ function drawControls(ctx: CanvasRenderingContext2D, x: number, y: number) {
 
 // ===== MESSAGE D'ASTUCE =====
 
+// src/graphicContext/hudContext.ts
+
 function drawHintMessage(ctx: CanvasRenderingContext2D, x: number, y: number) {
   const hintMessage = getCurrentHintMessage();
   if (!hintMessage) return;
 
+  // ✅ AJOUTER : Mesurer le texte
+  ctx.font = "14px monospace";
+  const textMetrics = ctx.measureText(`💡 ${hintMessage.text}`);
+  const textWidth = textMetrics.width;
+  const padding = 40;
+  const boxWidth = Math.min(textWidth + padding, 800); // Max 800px
+  const boxHeight = 50;
+
   // Calculer l'opacité (fade out progressif)
   const elapsed = Date.now() - hintMessage.showTime;
-  const fadeOutStart = hintMessage.duration - 1000; // Fade out dans la dernière seconde
+  const fadeOutStart = hintMessage.duration - 1000;
   let opacity = 1;
 
   if (elapsed > fadeOutStart) {
@@ -155,20 +165,17 @@ function drawHintMessage(ctx: CanvasRenderingContext2D, x: number, y: number) {
   ctx.save();
   ctx.globalAlpha = opacity;
 
-  // Fond semi-transparent
+  // ✅ MODIFIER : Fond dynamique
   ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-  ctx.beginPath();
-  ctx.rect(x - 200, y - 25, 400, 50);
-  ctx.fill();
+  ctx.fillRect(x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
 
-  // Bordure
+  // ✅ MODIFIER : Bordure dynamique
   ctx.strokeStyle = "rgba(255, 200, 0, 0.8)";
   ctx.lineWidth = 2;
-  ctx.stroke();
+  ctx.strokeRect(x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
 
   // Texte
   ctx.fillStyle = "rgba(255, 200, 0, 1)";
-  ctx.font = "14px monospace";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(`💡 ${hintMessage.text}`, x, y);

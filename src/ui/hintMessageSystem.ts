@@ -1,27 +1,37 @@
+// src/game/ui/hintMessageSystem.ts
+
 export interface HintMessage {
   text: string;
-  showTime: number; // timestamp
-  duration: number; // en ms
+  showTime: number;
+  duration: number;
 }
 
 let currentHintMessage: HintMessage | null = null;
+let lastDisplayedText: string = ""; 
 
 export function showHintMessage(text: string, duration: number = 5000) {
-  console.log(`💡 Hint: ${text}`);
-  currentHintMessage = {
-    text,
-    showTime: Date.now(),
-    duration,
-  };
+  if (text !== lastDisplayedText) {
+    console.log(`💡 Hint: ${text}`);
+    currentHintMessage = {
+      text,
+      showTime: Date.now(),
+      duration,
+    };
+    lastDisplayedText = text;
+  } else {
+    if (currentHintMessage) {
+      currentHintMessage.showTime = Date.now();
+    }
+  }
 }
 
 export function getCurrentHintMessage(): HintMessage | null {
   if (!currentHintMessage) return null;
 
-  // Vérifier si le message est expiré
   const elapsed = Date.now() - currentHintMessage.showTime;
   if (elapsed > currentHintMessage.duration) {
     currentHintMessage = null;
+    lastDisplayedText = "";
     return null;
   }
 
@@ -30,4 +40,5 @@ export function getCurrentHintMessage(): HintMessage | null {
 
 export function clearHintMessage() {
   currentHintMessage = null;
+  lastDisplayedText = "";
 }
