@@ -46,12 +46,12 @@ class AudioManager {
   async preloadSounds() {
     const soundFiles: Record<SoundEffect, string> = {
       attack: "sounds/sfx/attack.mp3", // TODO
-      hit: "sounds/sfx/hit.mp3", // TODO
+      hit: "sounds/sfx/hit.mp3", // Done
       heal: "sounds/sfx/heal.mp3", // Done
       pickup: "sounds/sfx/pickup.mp3",
       death: "sounds/sfx/death.mp3",
       door_open: "sounds/sfx/door_open.mp3",
-      chest_open: "sounds/sfx/chest_open.mp3", // TODO
+      chest_open: "sounds/sfx/chest_open.mp3", // Done
       player_hurt: "sounds/sfx/player_hurt.mp3",
       enemy_attack_bow: "sounds/sfx/enemy_attack_bow.mp3", // TODO
       enemy_attack_magic: "sounds/sfx/enemy_attack_magic.mp3", // TODO
@@ -64,9 +64,9 @@ class AudioManager {
       skill_stun: "sounds/sfx/skill_stun.mp3", // TODO
       skill_fire_breath: "sounds/sfx/skill_fire_breath.mp3", // TODO
       floor_transition: "sounds/sfx/floor_transition.mp3",
-      secret_unlocked: "sounds/sfx/secret_unlocked.mp3",
-      ui_click: "sounds/sfx/ui_click.mp3",
-      ui_hover: "sounds/sfx/ui_hover.mp3",
+      secret_unlocked: "sounds/sfx/secret_unlocked.mp3", // Done
+      ui_click: "sounds/sfx/ui_click.mp3", // Done
+      ui_hover: "sounds/sfx/ui_hover.mp3", // Done
     };
 
     for (const [key, path] of Object.entries(soundFiles)) {
