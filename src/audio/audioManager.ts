@@ -45,28 +45,28 @@ class AudioManager {
 
   async preloadSounds() {
     const soundFiles: Record<SoundEffect, string> = {
-      attack: "./sounds/sfx/attack.mp3", // TODO
-      hit: "./sounds/sfx/hit.mp3", // TODO
-      heal: "./sounds/sfx/heal.mp3", // Done
-      pickup: "./sounds/sfx/pickup.mp3",
-      death: "./sounds/sfx/death.mp3",
-      door_open: "./sounds/sfx/door_open.mp3",
-      chest_open: "./sounds/sfx/chest_open.mp3", // TODO
-      player_hurt: "./sounds/sfx/player_hurt.mp3",
-      enemy_attack_bow: "./sounds/sfx/enemy_attack_bow.mp3", // TODO
-      enemy_attack_magic: "./sounds/sfx/enemy_attack_magic.mp3", // TODO
-      enemy_attack_melee: "./sounds/sfx/enemy_attack_melee.mp3", // TODO
-      enemy_death: "./sounds/sfx/enemy_death.mp3",
-      footstep: "./sounds/sfx/footstep.mp3", // TODO
-      shield_deploy: "./sounds/sfx/shield_deploy.mp3",
-      shield_block: "./sounds/sfx/shield_block.mp3",
-      shield_retract: "./sounds/sfx/shield_retract.mp3",
-      skill_stun: "./sounds/sfx/skill_stun.mp3", // TODO
-      skill_fire_breath: "./sounds/sfx/skill_fire_breath.mp3", // TODO
-      floor_transition: "./sounds/sfx/floor_transition.mp3",
-      secret_unlocked: "./sounds/sfx/secret_unlocked.mp3",
-      ui_click: "./sounds/sfx/ui_click.mp3",
-      ui_hover: "./sounds/sfx/ui_hover.mp3",
+      attack: "/stop-saving-my-princess/sounds/sfx/attack.mp3", // TODO
+      hit: "/stop-saving-my-princess/sounds/sfx/hit.mp3", // TODO
+      heal: "/stop-saving-my-princess/sounds/sfx/heal.mp3", // Done
+      pickup: "/stop-saving-my-princess/sounds/sfx/pickup.mp3",
+      death: "/stop-saving-my-princess/sounds/sfx/death.mp3",
+      door_open: "/stop-saving-my-princess/sounds/sfx/door_open.mp3",
+      chest_open: "/stop-saving-my-princess/sounds/sfx/chest_open.mp3", // TODO
+      player_hurt: "/stop-saving-my-princess/sounds/sfx/player_hurt.mp3",
+      enemy_attack_bow: "/stop-saving-my-princess/sounds/sfx/enemy_attack_bow.mp3", // TODO
+      enemy_attack_magic: "/stop-saving-my-princess/sounds/sfx/enemy_attack_magic.mp3", // TODO
+      enemy_attack_melee: "/stop-saving-my-princess/sounds/sfx/enemy_attack_melee.mp3", // TODO
+      enemy_death: "/stop-saving-my-princess/sounds/sfx/enemy_death.mp3",
+      footstep: "/stop-saving-my-princess/sounds/sfx/footstep.mp3", // TODO
+      shield_deploy: "/stop-saving-my-princess/sounds/sfx/shield_deploy.mp3",
+      shield_block: "/stop-saving-my-princess/sounds/sfx/shield_block.mp3",
+      shield_retract: "/stop-saving-my-princess/sounds/sfx/shield_retract.mp3",
+      skill_stun: "/stop-saving-my-princess/sounds/sfx/skill_stun.mp3", // TODO
+      skill_fire_breath: "/stop-saving-my-princess/sounds/sfx/skill_fire_breath.mp3", // TODO
+      floor_transition: "/stop-saving-my-princess/sounds/sfx/floor_transition.mp3",
+      secret_unlocked: "/stop-saving-my-princess/sounds/sfx/secret_unlocked.mp3",
+      ui_click: "/stop-saving-my-princess/sounds/sfx/ui_click.mp3",
+      ui_hover: "/stop-saving-my-princess/sounds/sfx/ui_hover.mp3",
     };
 
     for (const [key, path] of Object.entries(soundFiles)) {
@@ -78,14 +78,14 @@ class AudioManager {
 
   async preloadMusic() {
     const musicFiles: Record<MusicTrack, string> = {
-      menu: "./sounds/music/menu.mp3",
-      dungeon_1: "./sounds/music/dungeon_1.mp3",
-      dungeon_2: "./sounds/music/dungeon_2.mp3",
-      dungeon_3: "./sounds/music/dungeon_3.mp3",
-      dungeon_4: "./sounds/music/dungeon_4.mp3",
-      dungeon_5: "./sounds/music/dungeon_5.mp3",
-      game_over: "./sounds/music/game_over.mp3",
-      victory: "./sounds/music/victory.mp3",
+      menu: "/stop-saving-my-princess/sounds/music/menu.mp3",
+      dungeon_1: "/stop-saving-my-princess/sounds/music/dungeon_1.mp3",
+      dungeon_2: "/stop-saving-my-princess/sounds/music/dungeon_2.mp3",
+      dungeon_3: "/stop-saving-my-princess/sounds/music/dungeon_3.mp3",
+      dungeon_4: "/stop-saving-my-princess/sounds/music/dungeon_4.mp3",
+      dungeon_5: "/stop-saving-my-princess/sounds/music/dungeon_5.mp3",
+      game_over: "/stop-saving-my-princess/sounds/music/game_over.mp3",
+      victory: "/stop-saving-my-princess/sounds/music/victory.mp3",
     };
 
     for (const [key, path] of Object.entries(musicFiles)) {
