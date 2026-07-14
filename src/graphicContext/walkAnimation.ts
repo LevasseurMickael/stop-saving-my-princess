@@ -2,21 +2,21 @@ import { drawSprite } from "./drawSprite";
 
 export const sprites = {
   "player-walk-1": {
-    sheetSrc: "/player_sheet.png",
+    sheetSrc: "./player_sheet.png",
     x: 0,
     y: 0,
     width: 64,
     height: 64,
   },
   "player-walk-2": {
-    sheetSrc: "/player_sheet.png",
+    sheetSrc: "./player_sheet.png",
     x: 64,
     y: 0,
     width: 64,
     height: 64,
   },
   "player-walk-3": {
-    sheetSrc: "/player_sheet.png",
+    sheetSrc: "./player_sheet.png",
     x: 128,
     y: 0,
     width: 64,
