@@ -1,3 +1,6 @@
+import { clearFloorTileCache } from "../../graphicContext/floorTile/floorTileCache";
+import { markBackgroundDirty } from "../../main";
+import { showVictoryScreen } from "../mechanics/finishGame";
 import {
   stateDungeon,
   stateDynamic,
@@ -6,10 +9,15 @@ import {
   stateSecret,
   stateStats,
 } from "../state";
-import { loadMap } from "./map";
+import { loadMap, map } from "./map";
 
 export function enterNextFloor() {
   stateDungeon.currentFloor++;
+
+  if (stateDungeon.currentFloor >= 50) {
+    showVictoryScreen();
+    return;
+  }
 
   for (const key in stateKillCount) {
     if (Object.prototype.hasOwnProperty.call(stateKillCount, key)) {
@@ -19,6 +27,7 @@ export function enterNextFloor() {
   stateStats.hasSecretItem = false;
   stateStats.secretUnlocked = false;
   stateDynamic.healingRoom!.isUnlocked = false;
+  stateDynamic.healUsed = false;
 
   stateSecret.eventHistory.length = 0;
   stateSecret.turnCounter = 0;
@@ -26,6 +35,11 @@ export function enterNextFloor() {
 
   stateDynamic.enemies.length = 0;
   stateDynamic.secrets.length = 0;
+  stateSecret.hintWall.forEach((hint) => {
+    if (hint.floor === stateDungeon.currentFloor) {
+      hint.revealed = false; 
+    }
+  });
 
   // Reset one-time passive effects for the new floor
   statePlayer.passiveOncePerFloorUsed.negateDamegeOncePerFloor = true;
@@ -36,8 +50,14 @@ export function enterNextFloor() {
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = true;
   statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = true;
 
+  console.log(map);
+
+  clearFloorTileCache();
+  markBackgroundDirty();
+
   loadMap();
 
   statePlayer.x = statePlayer.spawn.x;
   statePlayer.y = statePlayer.spawn.y;
+
 }

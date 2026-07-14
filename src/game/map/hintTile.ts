@@ -1,4 +1,6 @@
+import { tileIndex } from "../../graphicContext/tile_index";
 import type { Room, SecretHintWall } from "../../lib/type";
+import { showHintMessage } from "../../ui/hintMessageSystem";
 import { stateDynamic, stateSecret } from "../state";
 import { map } from "./map";
 
@@ -23,13 +25,13 @@ export function createHintTile(
   for (const room of rooms) {
     for (let x = room.x - 1; x <= room.x + room.w; x++) {
       for (let y = room.y - 1; y <= room.y + room.h; y++) {
-        if (map[y]?.[x] === 1) {
+        if (map[y]?.[x] === tileIndex.wall) {
           const adjacentEmpty = [
             map[y - 1]?.[x],
             map[y + 1]?.[x],
             map[y]?.[x - 1],
             map[y]?.[x + 1],
-          ].some((tile) => tile === 0);
+          ].some((tile) => tile === tileIndex.empty);
 
           if (adjacentEmpty) {
             // Exclude candidates that are in or adjacent to the healing room to avoid confusion for the player
@@ -47,7 +49,7 @@ export function createHintTile(
   const choice = candidates[Math.floor(Math.random() * candidates.length)];
 
   // Mark the chosen tile as a hint wall (using tile type 4) on the map
-  map[choice.y][choice.x] = 4;
+  map[choice.y][choice.x] = tileIndex.hintWall;
 
   // Create a new SecretHintWall object with the chosen coordinates, floor, hint text, tier, and revealed state, and add it to the stateSecret.hintWall array for tracking
   const newWall: SecretHintWall = {
@@ -74,8 +76,8 @@ export function checkHintTile(
       (playerY === wall.y && Math.abs(playerX - wall.x) === 1)
     ) {
       if (!wall.revealed) {
-        wall.revealed = true;
-        console.log(`Hint: ${wall.hint}`);
+        showHintMessage(wall.hint, 5000); // Show the hint message for 5 seconds
+        return;
       }
     }
   }

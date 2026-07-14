@@ -48,7 +48,7 @@ export const slime: Monster[] = [
     attackWeapon: "melee",
     specialFloor: "slime",
     facing: "down",
-    actionPerTurn: 2,
+    actionPerTurn: 1,
     attackChargeTurn: 0,
     attackChargeTurnMax: 0,
   },

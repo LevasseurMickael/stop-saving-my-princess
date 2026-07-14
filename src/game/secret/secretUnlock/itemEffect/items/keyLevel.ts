@@ -1,15 +1,14 @@
+import { audioManager } from "../../../../../audio/audioManager";
+
 export function keyLevelLogic(
   statePlayer: any,
   stateDynamic: any,
-  map: number[][],
-  newX: number,
-  newY: number,
 ) {
   if (
     statePlayer.unlockedItems.keyLevel >= stateDynamic.healingRoom?.doorLevel!
   ) {
     stateDynamic.healingRoom.isUnlocked = true;
-    map[newY][newX] = 0;
+    audioManager.playSound("door_open");
   } else {
     return false; // Player cannot pass through the door
   }

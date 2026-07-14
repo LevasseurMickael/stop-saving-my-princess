@@ -2,7 +2,8 @@ import { GridSize, GridSizeWidth } from "./map";
 import { rng } from "../rng";
 import type { Room } from "../../lib/type";
 import { statePlayer } from "../state";
-import { createHealingRoom } from "./healingRoom/healingRoom";
+import { createRoom } from "./healingRoom/healingRoom";
+import { tileIndex } from "../../graphicContext/tile_index";
 
 // Check if two rooms intersect (including a 1-tile buffer)
 function intersects(a: Room, b: Room) {
@@ -27,7 +28,7 @@ export function generateDungeon(seed: number) {
   const rooms: Room[] = [];
 
   // 3-5 rooms
-  const roomCount = 30 + Math.floor(rand() * 3);
+  const roomCount = 20 + Math.floor(rand() * 3);
 
   // Try to place rooms without overlap
   for (let i = 0; i < roomCount; i++) {
@@ -35,10 +36,10 @@ export function generateDungeon(seed: number) {
     let attempts = 0;
 
     while (!placed && attempts < 10) {
-      const w = 4 + Math.floor(rand() * 4); // Room width 4-7
-      const h = 4 + Math.floor(rand() * 4); // Room height 4-7
-      const x = 2 + Math.floor(rand() * (GridSizeWidth - w - 3)); // Ensure room fits within borders
-      const y = 2 + Math.floor(rand() * (GridSize - h - 3));
+      const w = 4 + Math.floor(rand() * 3); // Room width 4-7
+      const h = 4 + Math.floor(rand() * 3); // Room height 4-7
+      const x = 2 + Math.floor(rand() * (GridSizeWidth - w - 4)); // Ensure room fits within borders
+      const y = 2 + Math.floor(rand() * (GridSize - h - 4));
 
       const room = { x, y, w, h };
 
@@ -57,7 +58,7 @@ export function generateDungeon(seed: number) {
         // Carve out the room
         for (let ry = y; ry < y + h; ry++) {
           for (let rx = x; rx < x + w; rx++) {
-            map[ry][rx] = 0; // Empty space
+            map[ry][rx] = tileIndex.empty; // Empty space
           }
         }
         placed = true;
@@ -79,17 +80,17 @@ export function generateDungeon(seed: number) {
 
     // Horizontal corridor
     for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) {
-      map[ay][x] = 0;
+      map[ay][x] = tileIndex.empty; // Carve corridor
     }
     // Vertical corridor
     for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) {
-      map[y][bx] = 0;
+      map[y][bx] = tileIndex.empty; // Carve corridor
     }
   }
 
   // Place stairs in the last room
   const lastRoom = rooms[rooms.length - 1];
-  map[lastRoom.y + 1][lastRoom.x + 1] = 3;
+  map[lastRoom.y + 1][lastRoom.x + 1] = tileIndex.exit;
 
   // Place player in the first room
   const spawnPlayerRoom = rooms[0];
@@ -100,12 +101,15 @@ export function generateDungeon(seed: number) {
   statePlayer.y = spawnY;
   statePlayer.spawn = { x: spawnX, y: spawnY };
 
-  const healingRoom = createHealingRoom(map, rand);
+  const healingRoom = createRoom(map, rand, "healingRoom");
+
+  const secretRoom = createRoom(map, rand, "secretRoom");
 
   return {
     map,
     spawn: { x: statePlayer.x, y: statePlayer.y },
     rooms,
     healingRoom,
+    secretRoom,
   };
 }

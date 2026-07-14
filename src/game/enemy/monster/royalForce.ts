@@ -48,7 +48,7 @@ export const royalForce: Monster[] = [
     attackWeapon: "melee",
     specialFloor: "barracks",
     facing: "down",
-    actionPerTurn: 2,
+    actionPerTurn: 1,
     attackChargeTurn: 0,
     attackChargeTurnMax: 0,
   },

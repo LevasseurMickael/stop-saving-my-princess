@@ -1,3 +1,4 @@
+import { audioManager } from "../../../audio/audioManager";
 import type { Enemy } from "../../../lib/type";
 import { reducedEnemyActionSpeed } from "../../secret/secretUnlock/itemEffect/passives/reduceEnemyActionSpeed";
 import { attackPattern } from "./attackPattern";
@@ -21,6 +22,7 @@ export function rangedPattern(
     hasLineOfSight(enemy, player, map)
   ) {
     attackPattern(enemy, player);
+    audioManager.playSound("enemy_attack_bow");
     enemy.attackChargeTurn = enemy.attackChargeTurnMax; // Reset charge turn after attacking
     return;
   } else if (isInAttackRange(enemy, player) && enemy.attackChargeTurn > 0) {

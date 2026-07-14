@@ -31,7 +31,7 @@ export const mage: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "arcane",
     facing: "down",
-    actionPerTurn: 2,
+    actionPerTurn: 1,
     attackChargeTurn: 1,
     attackChargeTurnMax: 1,
   },

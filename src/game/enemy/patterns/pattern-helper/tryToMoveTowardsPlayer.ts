@@ -1,5 +1,8 @@
+import { tileIndex } from "../../../../graphicContext/tile_index";
 import type { Enemy } from "../../../../lib/type";
+import { updateEnemyFacing } from "../../../mechanics/enemyFacing";
 import { isOccupied } from "../../enemy";
+import { startEnemyAnimation } from "../../enemyAnimation";
 
 export function tryToMoveTowardsPlayer(
   enemy: Enemy,
@@ -20,9 +23,14 @@ export function tryToMoveTowardsPlayer(
     return false; // Out of bounds
   }
 
-  if (map[newY][newX] === 0 && !isOccupied(newX, newY, enemy)) {
+  if (map[newY][newX] === tileIndex.empty && !isOccupied(newX, newY, enemy)) {
     enemy.x = newX;
     enemy.y = newY;
+
+    startEnemyAnimation(enemy, enemy.x - dx, enemy.y - dy);
+
+    updateEnemyFacing(enemy, dx, dy);
+
     return true;
   }
   return false;

@@ -8,6 +8,8 @@ import type { statePlayer } from "../game/state";
 export type Enemy = {
   x: number;
   y: number;
+  animX?: number;
+  animY?: number;
   stunnedTurns?: number; // number of turns the enemy is stunned
   maxHp: number;
   hp: number;
@@ -145,6 +147,25 @@ export type HealingRoom = {
   doorY: number;
   isUnlocked: boolean;
   doorLevel: number; // 0 = no door, 1 = basic door, 2 = iron door, 3 = silver door, 4 = arcane seal, 5 = royal lock
+};
+
+export type SecretRoom = {
+  x: number;
+  y: number;
+  roomIndex: number;
+  doorX: number;
+  doorY: number;
+  isUnlocked: boolean;
+  doorSecret: boolean;
+  tiles: { x: number; y: number }[]; // Tiles that belong to the secret room for rendering and condition checks
+};
+
+export type SpriteConfig = {
+  sheetSrc: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
 
 // =======================

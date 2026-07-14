@@ -31,7 +31,7 @@ export const undead: Monster[] = [
     attackWeapon: "magic",
     specialFloor: "crypt",
     facing: "down",
-    actionPerTurn: 2,
+    actionPerTurn: 1,
     attackChargeTurn: 1,
     attackChargeTurnMax: 1,
   },

@@ -22,8 +22,8 @@ export function saveGame() {
       runSeed: stateDungeon.runSeed,
     },
     player: {
-      hp: statePlayer.hp,
-      maxHp: statePlayer.maxHp,
+      hp: statePlayer.stat.hp,
+      maxHp: statePlayer.stat.maxHp,
       deathCount: statePlayer.deathCount,
     },
     stats: {
@@ -42,8 +42,8 @@ export function loadGame() {
   stateDungeon.floorState = save.dungeon.floorState;
   stateDungeon.runSeed = save.dungeon.runSeed;
 
-  statePlayer.hp = save.player.hp;
-  statePlayer.maxHp = save.player.maxHp;
+  statePlayer.stat.hp = save.player.hp;
+  statePlayer.stat.maxHp = save.player.maxHp;
   statePlayer.deathCount = save.player.deathCount;
 
   stateStats.hasSecretItem = save.stats.hasSecretItem;

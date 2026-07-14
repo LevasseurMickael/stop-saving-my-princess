@@ -21,9 +21,27 @@ import { keyLevelLogic } from "../secret/secretUnlock/itemEffect/items/keyLevel"
 import { isOccupied } from "../enemy/enemy";
 import { stunEnemyOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/stunEnemyOncePerFloor";
 import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills/fireBreathOncePerFloor";
+import { tileIndex } from "../../graphicContext/tile_index";
+import { audioManager } from "../../audio/audioManager";
+import { getIsPaused } from "../../main";
+import { startAttackAnimation, startMoveAnimation } from "./playerAnimation";
+
+
+let lastActionTime = 0;
+const ACTION_DELAY_MS = 150;
+
+
 
 // Handle player input
-window.addEventListener("keydown", (e) => {
+window.addEventListener("keydown", (e) => { 
+
+
+  // Ignore input if the game is paused
+  if (getIsPaused()) return;
+
+  if (Date.now() - lastActionTime < ACTION_DELAY_MS) {
+    return; // Ignore input if it's within the action delay period
+  }
   // Track if the player has taken an action (move, attack, or toggle shield) to determine if enemies should take their turn
   let acted = false;
 
@@ -40,15 +58,19 @@ window.addEventListener("keydown", (e) => {
     if (e.key === "z") {
       newY--;
       statePlayer.facing = "up";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     } else if (e.key === "s") {
       newY++;
       statePlayer.facing = "down";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     } else if (e.key === "q") {
       newX--;
       statePlayer.facing = "left";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     } else if (e.key === "d") {
       newX++;
       statePlayer.facing = "right";
+      startMoveAnimation(statePlayer.x, statePlayer.y); // Start move animation from current position
     }
 
     if (e.key === "a" && statePlayer.unlockedSkills.stunEnemyOncePerFloor) {
@@ -63,14 +85,45 @@ window.addEventListener("keydown", (e) => {
 
     // movement
     if (newX !== statePlayer.x || newY !== statePlayer.y) {
-      if (map[newY][newX] === 5) {
-        keyLevelLogic(statePlayer, stateDynamic, map, newX, newY)
+      if (
+        map[newY][newX] === tileIndex.secretDoor &&
+        stateDynamic.healingRoom?.isUnlocked !== true
+      ) {
+        keyLevelLogic(statePlayer, stateDynamic)
           ? ""
           : handleGameEvent({ type: "wait", turns: 1 });
         acted = true;
       } else if (
-        map[newY][newX] !== 1 &&
-        map[newY][newX] !== 4 &&
+        map[newY][newX] === tileIndex.treasureDoor &&
+        !stateDynamic.secretRoom?.doorSecret
+      ) {
+        // Check if the player has unlocked the secret condition for this floor to open the secret room door
+        if (stateStats.secretUnlocked) {
+          if (!stateDynamic.secretRoom) {
+            return; // Just in case, should not happen
+          }
+          // Secret validated, open the door
+          if (stateStats.secretUnlocked) {
+            // If the secret is unlocked, unlock the door
+            audioManager.playSound("door_open");
+            stateDynamic.secretRoom.doorSecret = true;
+            statePlayer.x = newX;
+            statePlayer.y = newY;
+            handleGameEvent({
+              type: "move",
+              x: statePlayer.x,
+              y: statePlayer.y,
+            });
+            acted = true;
+          } else {
+            // Secret not unlocked, door remains closed and player waits for a turn
+            handleGameEvent({ type: "wait", turns: 1 });
+            acted = true;
+          }
+        }
+      } else if (
+        map[newY][newX] !== tileIndex.wall &&
+        map[newY][newX] !== tileIndex.hintWall &&
         (!isOccupied(newX, newY, stateDynamic.enemies) ||
           // Player can move onto enemy tiles if they are ghosts, but not other types of monsters
           stateDynamic.enemies.every(
@@ -79,7 +132,11 @@ window.addEventListener("keydown", (e) => {
       ) {
         statePlayer.x = newX;
         statePlayer.y = newY;
+
+
+
         handleGameEvent({ type: "move", x: statePlayer.x, y: statePlayer.y });
+        audioManager.playSound("footstep");
         acted = true;
       } else {
         handleGameEvent({ type: "wait", turns: 1 });
@@ -90,21 +147,25 @@ window.addEventListener("keydown", (e) => {
     // directional attack
     if (e.key === "ArrowUp") {
       statePlayer.facing = "up";
+      startAttackAnimation();
       attack();
       acted = true;
     }
     if (e.key === "ArrowDown") {
       statePlayer.facing = "down";
+      startAttackAnimation();
       attack();
       acted = true;
     }
     if (e.key === "ArrowLeft") {
       statePlayer.facing = "left";
+      startAttackAnimation();
       attack();
       acted = true;
     }
     if (e.key === "ArrowRight") {
       statePlayer.facing = "right";
+      startAttackAnimation();
       attack();
       acted = true;
     }
@@ -116,6 +177,7 @@ window.addEventListener("keydown", (e) => {
   // Getting out the shield to block enemy attacks
   if (e.key === " ") {
     if (stateShield.shield.state === "retracted") {
+      audioManager.playSound("shield_deploy");
       stateShield.shield.state = "deploying";
       const dx =
         statePlayer.facing === "right"
@@ -138,6 +200,7 @@ window.addEventListener("keydown", (e) => {
       });
       acted = true;
     } else if (stateShield.shield.state === "active") {
+      audioManager.playSound("shield_retract");
       stateShield.shield.state = "retracting";
       handleGameEvent({ type: "shield_retracting" });
       acted = true;
@@ -148,6 +211,7 @@ window.addEventListener("keydown", (e) => {
 
   // After player acts, enemies take their turn
   if (acted && stateTurn.turn === "player") {
+    lastActionTime = Date.now();
     stateTurn.turn = "enemies";
     updateShieldState();
     enemiesTurn();
@@ -155,13 +219,13 @@ window.addEventListener("keydown", (e) => {
   }
 
   // Check for secret item or floor transition after moving
-  if (map[newY][newX] === 2 && stateStats.secretUnlocked) {
+  if (map[newY][newX] === tileIndex.chest && stateStats.secretUnlocked) {
     stateStats.hasSecretItem = true;
+    audioManager.playSound("chest_open");
     unlockingSecretItem();
-    map[newY][newX] = 0; // Remove secret item from map
   }
 
-  if (map[newY][newX] === 6) {
+  if (map[newY][newX] === tileIndex.healingRoom) {
     // Player is healed ten percent of max HP when entering the healing room center
     const healAmount = Math.ceil(
       statePlayer.stat.maxHp *
@@ -171,14 +235,16 @@ window.addEventListener("keydown", (e) => {
       statePlayer.stat.hp + healAmount,
       statePlayer.stat.maxHp,
     );
-    map[newY][newX] = 0; // Remove healing room center from map (it will be re-added when we enter the floor again)
+    audioManager.playSound("heal");
+    stateDynamic.healUsed = true;
     if (statePlayer.stat.hp === statePlayer.stat.maxHp) {
       stateSecret.healedAtFullHp = true;
     }
   }
 
   // Floor transition
-  if (map[newY][newX] === 3) {
+  if (map[newY][newX] === tileIndex.exit) {
+    audioManager.playSound("floor_transition");
     setFloorResult(
       stateDungeon.currentFloor,
       stateStats.hasSecretItem ? "1" : "2",

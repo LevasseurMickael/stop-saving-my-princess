@@ -14,6 +14,8 @@ import { canPushEnemiesBehind } from "../secret/secretUnlock/itemEffect/passives
 import { areaDamageOnAttack } from "../secret/secretUnlock/itemEffect/passives/areaDamageOnAttack";
 import { getAttackOffset } from "./getAttackOffset";
 import { extraDamageWhenLowHp } from "../secret/secretUnlock/itemEffect/passives/extraDamageWhenLowHp";
+import { tileIndex } from "../../graphicContext/tile_index";
+import { audioManager } from "../../audio/audioManager";
 
 function getAttackTarget(x: number, y: number): TargetCondition {
   const tile = map[y]?.[x];
@@ -23,8 +25,8 @@ function getAttackTarget(x: number, y: number): TargetCondition {
   );
 
   if (hasEnemy) return "enemy";
-  if (tile === 3) return "stair";
-  if (tile === 4 || tile === 1) return "wall";
+  if (tile === tileIndex.exit) return "stair";
+  if (tile === tileIndex.hintWall || tile === tileIndex.wall) return "wall";
   return "empty";
 }
 
@@ -44,6 +46,9 @@ export default function attack() {
 
   areaDamageOnAttack(aoe);
   canPushEnemiesBehind(behindx, behindy);
+
+    audioManager.playSound("attack");
+
 
   // Check if attack hits any enemy
   const hitEnemy = stateDynamic.enemies.some((enemy) => {
@@ -69,13 +74,11 @@ export default function attack() {
 
       // Enemy dies if HP reaches 0
       if (enemy.hp <= 0) {
+        audioManager.playSound("enemy_death");
         enemy.alive = false;
         // Increment kill count for the enemy's slug, defaulting to 0 if slug is undefined
         stateKillCount[enemy.slug || ""] =
           (stateKillCount[enemy.slug || ""] || 0) + 1;
-        console.log(
-          `Killed ${enemy.slug}. Total kills: ${stateKillCount[enemy.slug || ""]}`,
-        );
         handleGameEvent({ type: "enemy_kill" });
       }
 
