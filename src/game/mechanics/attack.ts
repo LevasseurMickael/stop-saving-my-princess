@@ -74,6 +74,7 @@ export default function attack() {
 
       // Enemy dies if HP reaches 0
       if (enemy.hp <= 0) {
+        audioManager.playSound("enemy_death");
         enemy.alive = false;
         // Increment kill count for the enemy's slug, defaulting to 0 if slug is undefined
         stateKillCount[enemy.slug || ""] =

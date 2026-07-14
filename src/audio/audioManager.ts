@@ -1,12 +1,9 @@
 type SoundEffect =
   | "attack"
-  | "hit"
   | "heal"
-  | "pickup"
   | "door_open"
   | "chest_open"
   | "death"
-  | "player_hurt"
   | "enemy_attack_bow"
   | "enemy_attack_magic"
   | "enemy_attack_melee"
@@ -20,7 +17,6 @@ type SoundEffect =
   | "floor_transition"
   | "secret_unlocked"
   | "ui_click"
-  | "ui_hover";
 
 type MusicTrack =
   | "menu"
@@ -45,28 +41,24 @@ class AudioManager {
 
   async preloadSounds() {
     const soundFiles: Record<SoundEffect, string> = {
-      attack: "sounds/sfx/attack.mp3", // TODO
-      hit: "sounds/sfx/hit.mp3", // Done
+      attack: "sounds/sfx/attack.mp3", // Done
       heal: "sounds/sfx/heal.mp3", // Done
-      pickup: "sounds/sfx/pickup.mp3",
-      death: "sounds/sfx/death.mp3",
-      door_open: "sounds/sfx/door_open.mp3",
+      death: "sounds/sfx/death.mp3", // Done
+      door_open: "sounds/sfx/door_open.mp3", // Done
       chest_open: "sounds/sfx/chest_open.mp3", // Done
-      player_hurt: "sounds/sfx/player_hurt.mp3",
-      enemy_attack_bow: "sounds/sfx/enemy_attack_bow.mp3", // TODO
-      enemy_attack_magic: "sounds/sfx/enemy_attack_magic.mp3", // TODO
-      enemy_attack_melee: "sounds/sfx/enemy_attack_melee.mp3", // TODO
-      enemy_death: "sounds/sfx/enemy_death.mp3",
-      footstep: "sounds/sfx/footstep.mp3", // TODO
-      shield_deploy: "sounds/sfx/shield_deploy.mp3",
-      shield_block: "sounds/sfx/shield_block.mp3",
-      shield_retract: "sounds/sfx/shield_retract.mp3",
-      skill_stun: "sounds/sfx/skill_stun.mp3", // TODO
-      skill_fire_breath: "sounds/sfx/skill_fire_breath.mp3", // TODO
-      floor_transition: "sounds/sfx/floor_transition.mp3",
+      enemy_attack_bow: "sounds/sfx/enemy_attack_bow.mp3", // Done
+      enemy_attack_magic: "sounds/sfx/enemy_attack_magic.mp3", // Done
+      enemy_attack_melee: "sounds/sfx/enemy_attack_melee.mp3", // Done
+      enemy_death: "sounds/sfx/enemy_death.mp3", // Done
+      footstep: "sounds/sfx/footstep.mp3", // Done
+      shield_deploy: "sounds/sfx/shield_retract.mp3", // Done
+      shield_block: "sounds/sfx/shield_block.mp3", // Done
+      shield_retract: "sounds/sfx/shield_retract.mp3", // Done
+      skill_stun: "sounds/sfx/skill_stun.mp3", // Done
+      skill_fire_breath: "sounds/sfx/skill_fire_breath.mp3", // Done
+      floor_transition: "sounds/sfx/floor_transition.mp3", // Done
       secret_unlocked: "sounds/sfx/secret_unlocked.mp3", // Done
       ui_click: "sounds/sfx/ui_click.mp3", // Done
-      ui_hover: "sounds/sfx/ui_hover.mp3", // Done
     };
 
     for (const [key, path] of Object.entries(soundFiles)) {

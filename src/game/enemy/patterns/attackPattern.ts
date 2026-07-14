@@ -24,6 +24,7 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     startEnemyAttackAnimation(enemy);
 
     if (isBlockedByShield(enemy)) {
+      audioManager.playSound("shield_block");
       handleGameEvent({ type: "enemy_hit", blocker: true });
       knockbackPlayer(enemy);
       return;

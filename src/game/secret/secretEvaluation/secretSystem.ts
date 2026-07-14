@@ -1,4 +1,5 @@
 import type { FloorSecret, GameEvent } from "../../../lib/type";
+import { audioManager } from "../../../audio/audioManager";
 
 import {
   stateDungeon,
@@ -42,6 +43,7 @@ function evaluateCurrentFloorSecret() {
 }
 
 function unlockSecret(secret: FloorSecret) {
+  audioManager.playSound("secret_unlocked");
   stateStats.secretUnlocked = true;
   secret.unlocked = true;
 

@@ -105,6 +105,7 @@ window.addEventListener("keydown", (e) => {
           // Secret validated, open the door
           if (stateStats.secretUnlocked) {
             // If the secret is unlocked, unlock the door
+            audioManager.playSound("door_open");
             stateDynamic.secretRoom.doorSecret = true;
             statePlayer.x = newX;
             statePlayer.y = newY;
@@ -176,6 +177,7 @@ window.addEventListener("keydown", (e) => {
   // Getting out the shield to block enemy attacks
   if (e.key === " ") {
     if (stateShield.shield.state === "retracted") {
+      audioManager.playSound("shield_deploy");
       stateShield.shield.state = "deploying";
       const dx =
         statePlayer.facing === "right"
@@ -198,6 +200,7 @@ window.addEventListener("keydown", (e) => {
       });
       acted = true;
     } else if (stateShield.shield.state === "active") {
+      audioManager.playSound("shield_retract");
       stateShield.shield.state = "retracting";
       handleGameEvent({ type: "shield_retracting" });
       acted = true;
@@ -241,6 +244,7 @@ window.addEventListener("keydown", (e) => {
 
   // Floor transition
   if (map[newY][newX] === tileIndex.exit) {
+    audioManager.playSound("floor_transition");
     setFloorResult(
       stateDungeon.currentFloor,
       stateStats.hasSecretItem ? "1" : "2",
