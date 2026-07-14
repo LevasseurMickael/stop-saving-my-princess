@@ -54,7 +54,7 @@ export const statePlayer = {
     canSeeHintWalls: true, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
     dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
-    emptyChest: false, // TODO from Empty Chest, has no effect but is required for certain secrets
+    emptyChest: false,
     extraDamageWhenLowHp: false, // # From Ancient Dominance
     fearLowLevelEnemies: false, // # From Ancient Roar
     ghostDamageNegation: false, // # From Ethereal Scales

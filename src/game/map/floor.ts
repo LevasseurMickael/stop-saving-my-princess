@@ -9,7 +9,7 @@ import {
   stateSecret,
   stateStats,
 } from "../state";
-import { loadMap } from "./map";
+import { loadMap, map } from "./map";
 
 export function enterNextFloor() {
   stateDungeon.currentFloor++;
@@ -35,6 +35,11 @@ export function enterNextFloor() {
 
   stateDynamic.enemies.length = 0;
   stateDynamic.secrets.length = 0;
+  stateSecret.hintWall.forEach((hint) => {
+    if (hint.floor === stateDungeon.currentFloor) {
+      hint.revealed = false; 
+    }
+  });
 
   // Reset one-time passive effects for the new floor
   statePlayer.passiveOncePerFloorUsed.negateDamegeOncePerFloor = true;
@@ -44,6 +49,8 @@ export function enterNextFloor() {
   // Reset player state for the new floor
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = true;
   statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = true;
+
+  console.log(map);
 
   clearFloorTileCache();
   markBackgroundDirty();
