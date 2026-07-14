@@ -5,7 +5,15 @@ import {
   GridSizeWidth,
   loadMap,
 } from "./game/map/map";
-import { stateDungeon, stateDynamic, statePlayer, stateTurn } from "./game/state";
+import {
+  stateDungeon,
+  stateDynamic,
+  stateKillCount,
+  statePlayer,
+  stateSecret,
+  stateStats,
+  stateTurn,
+} from "./game/state";
 import "./game/player/player";
 import {
   // getPlayerAttackSprite,
@@ -138,6 +146,36 @@ function startNewGame() {
   sceneManager.switchSceneTo("game");
   console.log("  ✅ Scene switched to game");
 
+  if (stateDynamic.healingRoom) {
+    stateDynamic.healingRoom.isUnlocked = false;
+  }
+  if (stateDynamic.secretRoom) {
+    stateDynamic.secretRoom.isUnlocked = false;
+    stateDynamic.secretRoom.doorSecret = false;
+  }
+  if (stateStats.hasSecretItem) {
+    stateStats.hasSecretItem = false;
+  }
+  if (stateStats.secretUnlocked) {
+    stateStats.secretUnlocked = false;
+  }
+  
+  stateDynamic.healUsed = false;
+  stateDynamic.chest = false;
+
+  // Full reset of secret progression trackers for a fresh run.
+  for (const key in stateKillCount) {
+    if (Object.prototype.hasOwnProperty.call(stateKillCount, key)) {
+      stateKillCount[key] = 0;
+    }
+  }
+  stateSecret.eventHistory.length = 0;
+  stateSecret.turnCounter = 0;
+  stateSecret.damageFromFamily = {};
+  stateSecret.healedAtFullHp = false;
+  stateSecret.visitAllRoom = [];
+  stateSecret.cornersVisited.clear();
+
   stateDungeon.currentFloor = 0;
   statePlayer.stat.hp = statePlayer.stat.maxHp;
   statePlayer.deathCount = 0;
@@ -160,7 +198,22 @@ function continueGame() {
   console.log("▶️ continueGame() called");
   
   sceneManager.switchSceneTo("game");
-  // TODO activate loading game, verify game is saved correctly
+  if (stateDynamic.healingRoom) {
+    stateDynamic.healingRoom.isUnlocked = false;
+  }
+  if (stateDynamic.secretRoom) {
+    stateDynamic.secretRoom.isUnlocked = false;
+    stateDynamic.secretRoom.doorSecret = false;
+  }
+  if (stateStats.hasSecretItem) {
+    stateStats.hasSecretItem = false;
+  }
+  if (stateStats.secretUnlocked) {
+    stateStats.secretUnlocked = false;
+  }
+  
+  stateDynamic.healUsed = false;
+  stateDynamic.chest = false;
   // loadSavedGame();
   loadMap();
   
@@ -189,6 +242,20 @@ function resumeGame() {
 function quitToMainMenu() {
   console.log("🏠 quitToMainMenu() called");
   isPaused = false;
+
+  // Always reset transient secret/chest state when leaving the run.
+  stateStats.hasSecretItem = false;
+  stateStats.secretUnlocked = false;
+  stateDynamic.healUsed = false;
+  stateDynamic.chest = false;
+  if (stateDynamic.healingRoom) {
+    stateDynamic.healingRoom.isUnlocked = false;
+  }
+  if (stateDynamic.secretRoom) {
+    stateDynamic.secretRoom.isUnlocked = false;
+    stateDynamic.secretRoom.doorSecret = false;
+  }
+
   stopGameLoop();
   sceneManager.switchSceneTo("menu");
   audioManager.playMusic("menu");
@@ -327,6 +394,24 @@ function setupGameOverButtons() {
   document.getElementById("btn-game-over-retry")!.addEventListener("click", () => {
     console.log("🔄 Retrying game");
     audioManager.playSound("ui_click");
+    if (stateDynamic.healingRoom) {
+    stateDynamic.healingRoom.isUnlocked = false;
+  }
+  if (stateDynamic.secretRoom) {
+    stateDynamic.secretRoom.isUnlocked = false;
+    stateDynamic.secretRoom.doorSecret = false;
+  }
+  if (stateStats.hasSecretItem) {
+    stateStats.hasSecretItem = false;
+  }
+
+  if (stateStats.secretUnlocked) {
+    stateStats.secretUnlocked = false;
+  }
+  
+  
+  stateDynamic.healUsed = false;
+  stateDynamic.chest = false;
     startNewGame();
   });
 }

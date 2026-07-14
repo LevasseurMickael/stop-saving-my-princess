@@ -25,6 +25,8 @@ export function loadMap() {
   stateStats.secretUnlocked = false;
   stateDynamic.enemies = [];
   stateDynamic.secrets = [];
+  stateDynamic.secretRoom = null;
+  stateDynamic.healingRoom = null;
 
   // Generate a new dungeon layout for the current floor
   const dungeon = generateDungeon(stateDungeon.runSeed);

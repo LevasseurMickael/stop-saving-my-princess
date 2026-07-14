@@ -1,6 +1,7 @@
 import { sceneManager } from "../../ui/sceneManager";
 import { audioManager } from "../../audio/audioManager";
 import { stopGameLoop } from "../../main";
+import { stateStats } from "../state";
 
 export function showVictoryScreen() {
   stopGameLoop();
@@ -11,6 +12,9 @@ export function showVictoryScreen() {
 
 export function showGameOverScreen() {
   console.log("💀 Game Over!");
+
+  stateStats.hasSecretItem = false;
+  stateStats.secretUnlocked = false;
 
   // Arrêter la game loop
   stopGameLoop();

@@ -11,7 +11,7 @@ import { ghostDamageNegation } from "../../secret/secretUnlock/itemEffect/passiv
 import { negateMagicOncePerFloor } from "../../secret/secretUnlock/itemEffect/passives/negateMagicOncePerFloor";
 import { reduceDamageOncePerFloor } from "../../secret/secretUnlock/itemEffect/passives/reduceDamageOncePerFloor";
 import { reducedDamage } from "../../secret/secretUnlock/itemEffect/reducedDamage";
-import { statePlayer, stateSecret } from "../../state";
+import { statePlayer, stateSecret, stateStats } from "../../state";
 import { startEnemyAttackAnimation } from "../enemyAnimation";
 import { friendlyDamage } from "./pattern-helper/friendlyDamage";
 
@@ -71,6 +71,10 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     else if (statePlayer.stat.hp <= 0) {
       statePlayer.deathCount++;
       audioManager.playSound("death");
+      stateStats.hasSecretItem = false;
+      stateStats.secretUnlocked = false;
+      stateSecret.eventHistory.length = 0;
+      stateSecret.turnCounter = 0;
       statePlayer.stat.hp = statePlayer.stat.maxHp;
       player.x = statePlayer.spawn.x;
       player.y = statePlayer.spawn.y;
