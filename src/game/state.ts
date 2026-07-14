@@ -11,7 +11,7 @@ const MaxFloors = 50; // Maximum number of floors in the game, used for initiali
 
 // Dungeon related state, separated for clarity and potential future expansion
 export const stateDungeon = {
-  currentFloor: 47,
+  currentFloor: 0,
   floorState: "0".repeat(MaxFloors),
   runSeed: Date.now(), // Unique seed for each run
 };
@@ -33,9 +33,9 @@ export const stateSecret = {
 export const statePlayer = {
   spawn: { x: 0, y: 0 },
   stat: {
-    hp: 500,
-    maxHp: 500,
-    attack: 99999,
+    hp: 5,
+    maxHp: 5,
+    attack: 1,
     attackRange: 1,
     resurectionCount: 0,
   },
@@ -43,17 +43,17 @@ export const statePlayer = {
 
   // Track unlocked skills separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedSkills: {
-    stunEnemyOncePerFloor: true, // from Smoke Breath
-    fireBreathOncePerFloor: true, // from Dragon's Breath
+    stunEnemyOncePerFloor: false, // from Smoke Breath
+    fireBreathOncePerFloor: false, // from Dragon's Breath
   },
 
   unlockedPassives: {
     AreaDamageOnAttack: false, // # From Flame Pulse
     canPushEnemiesBehind: false, // # From Heavy Tail
-    canSeeExits: true, // # From True Sight Orb, allows player to see exit location on the map
-    canSeeHintWalls: true, // # From Owl Beak, allows player to see hint walls on the map
+    canSeeExits: false, // # From True Sight Orb, allows player to see exit location on the map
+    canSeeHintWalls: false, // # From Owl Beak, allows player to see hint walls on the map
     damageEnemyOnFirstDamageTakenPerFloor: false, // # From Vengeful Spirit
-    dungeonmapFragment: true, // # From Dungeon Map Fragment, reveals part of the map for the current floor
+    dungeonmapFragment: false, // # From Dungeon Map Fragment, reveals part of the map for the current floor
     emptyChest: false,
     extraDamageWhenLowHp: false, // # From Ancient Dominance
     fearLowLevelEnemies: false, // # From Ancient Roar
@@ -67,22 +67,22 @@ export const statePlayer = {
 
   // Track unlocked passives and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   passiveOncePerFloorUsed: {
-    negateDamegeOncePerFloor: true,
-    negateMagicOncePerFloor: true,
-    firstDamageTakenOncePerFloor: true,
+    negateDamegeOncePerFloor: false,
+    negateMagicOncePerFloor: false,
+    firstDamageTakenOncePerFloor: false,
   },
 
   // Track unlocked skills and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   skillUsedThisFloor: {
-    stunEnemyOncePerFloor: true,
-    fireBreathOncePerFloor: true,
+    stunEnemyOncePerFloor: false,
+    fireBreathOncePerFloor: false,
   },
 
   // Track unlocked items and their effects separately for clarity and potential future mechanics that interact with specific unlocks
   unlockedItems: {
-    keyLevel: 5, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
-    ghostVisionLevel: 5, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
-    moreHealFromSanctuary: 0.1, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
+    keyLevel: 0, // 0 = no keys, 1 = basic doors, 2 = iron doors, 3 = silver doors, 4 = arcane seals, 5 = royal locks
+    ghostVisionLevel: 0, // 0 = no ghost vision, 1 = see nearby ghosts from Spectral Lantern, 2 = see all ghosts in the same room from Spectral Eye, 3 = ghosts always visible from Phantom Lantern
+    moreHealFromSanctuary: 0, // 0 = no heal, 2 = heal 2 on new floor HP from Ancient Roost
   },
 
   // Track various types of damage reduction separately for clarity and potential future mechanics that interact with specific types
