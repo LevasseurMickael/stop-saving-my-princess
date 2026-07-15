@@ -7,7 +7,6 @@ class SceneManager {
   switchSceneTo(scene: Scene) {
     this.previousScene = this.currentScene;
     this.currentScene = scene;
-    console.log(`Switched to scene: ${scene}`);
 
     this.hideAllScenes();
 
@@ -45,7 +44,6 @@ class SceneManager {
     const container = document.getElementById(containerId);
 
     if (container) {
-      console.log(`Showing scene container: ${containerId}`);
       container.classList.add("active");
     } else {
       console.error(`Container for scene "${scene}" not found!`);

@@ -11,7 +11,6 @@ export function showVictoryScreen() {
 }
 
 export function showGameOverScreen() {
-  console.log("💀 Game Over!");
 
   stateStats.hasSecretItem = false;
   stateStats.secretUnlocked = false;

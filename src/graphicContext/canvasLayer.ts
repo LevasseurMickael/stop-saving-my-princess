@@ -24,8 +24,6 @@ export function createCanvasLayer(width: number, height: number) {
     throw new Error("Game canvas container not found");
   }
 
-  console.log("🎨 Creating canvas layers...");
-
   container.innerHTML = "";
   container.style.position = "relative";
   container.style.width = "100%";
@@ -40,8 +38,6 @@ export function createCanvasLayer(width: number, height: number) {
     ui: document.createElement("canvas"),
   };
 
-  console.log("  ✅ Canvas elements created");
-
   // ✅ Configurer chaque canvas
   Object.values(layer).forEach((canvas, index) => {
     canvas.width = width;
@@ -55,12 +51,8 @@ export function createCanvasLayer(width: number, height: number) {
     container.appendChild(canvas);
   });
 
-  console.log("  ✅ Canvas styles applied");
-
   // ✅ Créer le scaler
   const scaler = new CanvasScaler(layer.background, width, height);
-
-  console.log("  ✅ Canvas scaler created");
 
   // ✅ Créer les contextes
   const contexts: GameContexts = {
@@ -70,8 +62,6 @@ export function createCanvasLayer(width: number, height: number) {
     warFog: layer.warFog.getContext("2d", { alpha: true })!,
     ui: layer.ui.getContext("2d", { alpha: true })!,
   };
-
-  console.log("  ✅ Canvas contexts created");
 
   // ✅ Fonction pour synchroniser l'échelle de tous les canvas
   const updateAllCanvasScales = () => {
@@ -88,8 +78,6 @@ export function createCanvasLayer(width: number, height: number) {
 
   // ✅ Mettre à jour sur resize
   window.addEventListener("resize", updateAllCanvasScales);
-
-  console.log("  ✅ Resize listener added");
 
   // ✅ RETOURNER LES RÉSULTATS
   return {

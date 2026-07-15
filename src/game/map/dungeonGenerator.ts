@@ -21,7 +21,6 @@ export function generateDungeon(seed: number) {
   const map = Array.from({ length: GridSizeWidth }, () =>
     Array(GridSizeWidth).fill(1),
   );
-  console.log("Generating dungeon with seed:", seed);
 
   // Use a seeded RNG for consistent generation
   const rand = rng(seed);

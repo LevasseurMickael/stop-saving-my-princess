@@ -8,7 +8,6 @@ export function unlockingSecretItem() {
   );
 
   if (!secret) {
-    console.log("No secret item for this floor.");
     return;
   }
   //
@@ -30,5 +29,4 @@ export function unlockingSecretItem() {
   } else if (secret.type === "unlockedPassives") {
     (statePlayer as any)[secret.type][secret.effect] = secret.value;
   }
-  console.log("Secret item check complete. Current player state:", statePlayer);
 }

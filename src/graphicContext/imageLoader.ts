@@ -30,7 +30,6 @@ export async function preloadAllImage(): Promise<void> {
   ];
   try {
     await Promise.all(imageSources.map((src) => loadImage(src)));
-    console.log("All images preloaded successfully");
   } catch (error) {
     console.error("Error preloading images:", error);
   }

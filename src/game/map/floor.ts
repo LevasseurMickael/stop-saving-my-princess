@@ -9,7 +9,7 @@ import {
   stateSecret,
   stateStats,
 } from "../state";
-import { loadMap, map } from "./map";
+import { loadMap } from "./map";
 
 export function enterNextFloor() {
   stateDungeon.currentFloor++;
@@ -50,7 +50,6 @@ export function enterNextFloor() {
   statePlayer.skillUsedThisFloor.stunEnemyOncePerFloor = true;
   statePlayer.skillUsedThisFloor.fireBreathOncePerFloor = true;
 
-  console.log(map);
 
   clearFloorTileCache();
   markBackgroundDirty();

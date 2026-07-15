@@ -135,14 +135,12 @@ class AudioManager {
     this.fadeIn(this.currentMusic, fadeInDuration);
 
     newMusic.onended = () => {
-      console.log(`🎵 Music "${track}" ended, playing next...`);
       this.playNextDungeonMusic();
     };
   }
 
   // ✅ AJOUTER : Démarrer la rotation de musique dungeon
   startDungeonMusicRotation() {
-    console.log("🎵 Starting dungeon music rotation...");
     if (this.currentMusic) {
     this.currentMusic.pause();
     this.currentMusic = null;
@@ -151,7 +149,6 @@ class AudioManager {
     this.currentMusicIndex = 0;
     setTimeout(() => {
     if (this.isRotating) {
-      console.log("🎵 Playing first dungeon music...");
       this.playMusic(this.dungeonMusics[0]);
     }
   }, 100);
@@ -164,13 +161,11 @@ class AudioManager {
     this.currentMusicIndex = (this.currentMusicIndex + 1) % this.dungeonMusics.length;
     const nextTrack = this.dungeonMusics[this.currentMusicIndex];
     
-    console.log(`🎵 Playing next music: ${nextTrack} (${this.currentMusicIndex + 1}/5)`);
     this.playMusic(nextTrack);
   }
 
   // ✅ AJOUTER : Arrêter la rotation
   stopDungeonMusicRotation() {
-    console.log("⏹️ Stopping dungeon music rotation...");
     this.isRotating = false;
     this.stopMusic();
     this.currentMusicIndex = 0;

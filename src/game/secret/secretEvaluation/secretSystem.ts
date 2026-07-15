@@ -15,13 +15,6 @@ import { revealTreasureRoom } from "../../map/secretRoom";
 export function handleGameEvent(event: GameEvent) {
   stateSecret.eventHistory.push(event);
 
-  // DEBUG: Logger tous les événements
-  // console.log("Event:", event.type);
-  // console.log(
-  //   "History:",
-  //   stateSecret.eventHistory.map((e) => e.type),
-  // );
-
   if (stateSecret.eventHistory.length > 20) {
     stateSecret.eventHistory.shift(); // Keep only the last 20 events
   }
@@ -56,5 +49,4 @@ function unlockSecret(secret: FloorSecret) {
     map[room.y][room.x] = tileIndex.chest; // Unlock secret area on the map
     revealTreasureRoom(); // Reveal the treasure room if it exists
   }
-  console.log(`Secret for floor ${secret.floor} unlocked!`);
 }

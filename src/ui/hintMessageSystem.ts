@@ -11,7 +11,6 @@ let lastDisplayedText: string = "";
 
 export function showHintMessage(text: string, duration: number = 5000) {
   if (text !== lastDisplayedText) {
-    console.log(`💡 Hint: ${text}`);
     currentHintMessage = {
       text,
       showTime: Date.now(),

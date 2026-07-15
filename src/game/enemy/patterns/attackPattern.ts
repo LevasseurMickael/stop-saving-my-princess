@@ -44,10 +44,6 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     stateSecret.damageFromFamily[enemy.monsterFamilly!] =
       (stateSecret.damageFromFamily[enemy.monsterFamilly!] || 0) +
       Math.max(1, enemy.attack - reducedDamage(enemy));
-    console.log(
-      `Damage from family ${enemy.monsterFamilly}:`,
-      stateSecret.damageFromFamily[enemy.monsterFamilly!],
-    );
 
     const damageTaken = Math.max(1, enemy.attack - reducedDamage(enemy))
     if (damageTaken >= 1) {
