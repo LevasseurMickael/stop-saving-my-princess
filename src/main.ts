@@ -50,6 +50,8 @@ export function markBackgroundDirty() {
 let gameLoopRunning = false;
 let animationFrameId: number | null = null;
 let isPaused = false;
+let splashShown = false;
+let audioInitialized = false;
 
 export function getIsPaused() {
   return isPaused;
@@ -415,10 +417,9 @@ async function startGame() {
     setupVictoryButtons();
     setupGameOverButtons();
     setupKeyboardShortcuts();
+    setupSplashScreen();
 
-    // ✅ DÉMARRER SUR LE MENU
-    sceneManager.switchSceneTo("menu");
-    audioManager.playMusic("menu");
+
     
   } catch (error) {
     console.error("❌ Error during initialization:", error);
@@ -426,6 +427,33 @@ async function startGame() {
       console.error("Stack:", error.stack);
     }
   }
+}
+
+function setupSplashScreen() {
+  const initSplash = () => {
+    if (!splashShown) {
+      console.log("✨ Splash screen clicked!");
+      splashShown = true;
+      
+      // Passer au menu
+      sceneManager.switchSceneTo("menu");
+      
+      // Lancer la musique
+      if (!audioInitialized) {
+        console.log("🎵 Starting menu music...");
+        audioManager.playMusic("menu");
+        audioInitialized = true;
+      }
+      
+      // Retirer les listeners
+      document.removeEventListener("click", initSplash);
+      document.removeEventListener("keydown", initSplash);
+    }
+  };
+
+  // Attendre un clic ou une touche
+  document.addEventListener("click", initSplash, { once: true });
+  document.addEventListener("keydown", initSplash, { once: true });
 }
 
 startGame();

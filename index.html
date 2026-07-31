@@ -201,6 +201,50 @@
         margin-left: 10px;
         min-width: 50px;
       }
+
+    #splash-container {
+    background: #000;
+    display: flex;  /* Par défaut affichée */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+
+  /* ✅ AJOUTER : Quand pas active, vraiment cachée */
+  #splash-container:not(.active) {
+    display: none !important;
+    z-index: -1;
+  }
+
+  .splash-content {
+    text-align: center;
+    color: white;
+  }
+
+  .splash-logo {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+  }
+
+  .splash-content h1 {
+    font-size: 32px;
+    margin: 20px 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  .splash-click {
+    font-size: 14px;
+    margin-top: 60px;
+    color: rgba(255, 255, 255, 0.7);
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 0.7; }
+    100% { opacity: 1; }
+  }
     </style>
   </head>
   <body>
@@ -210,6 +254,14 @@
       <div id="hud"></div>
       <button id="btn-pause">Pause (ESC)</button>
     </div>
+
+    <div id="splash-container" class="scene active">
+  <div class="splash-content">
+    <img src="public/Stwompy_logo_600px.png" alt="Logo" class="splash-logo">
+    <h1>Game created by Stwompy</h1>
+    <p class="splash-click">Click anywhere to continue</p>
+  </div>
+</div>
 
     <!-- ✅ Menu principal -->
     <div id="menu-container" class="scene active">
