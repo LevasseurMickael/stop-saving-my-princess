@@ -26,4 +26,7 @@ export function magicPattern(enemy: Enemy, player: { x: number; y: number }) {
   ) {
     enemy.attackChargeTurn -= 1;
   }
+  else if (!isInMagicAoeRange(enemy, player)) {
+    enemy.attackChargeTurn = enemy.attackChargeTurnMax; // Reset charge turn if player is out of range
+  }
 }

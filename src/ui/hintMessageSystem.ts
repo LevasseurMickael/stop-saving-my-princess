@@ -1,5 +1,3 @@
-// src/game/ui/hintMessageSystem.ts
-
 export interface HintMessage {
   text: string;
   showTime: number;

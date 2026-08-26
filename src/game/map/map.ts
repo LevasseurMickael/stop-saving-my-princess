@@ -11,6 +11,8 @@ import { createHintTile } from "./hintTile";
 import { allSecretConditions } from "../secret/allSecretCondition";
 import { tileIndex } from "../../graphicContext/tile_index";
 import type { HealingRoom, SecretRoom } from "../../lib/type";
+import { clearChestMessage } from "../../ui/chestMessageSystem";
+import { clearHintMessage } from "../../ui/hintMessageSystem";
 
 const TileSize = 32;
 const GridSize = 30;
@@ -22,6 +24,9 @@ export function loadMap() {
   // Reset state for new floor
   stateSecret.eventHistory.length = 0;
   stateSecret.turnCounter = 0;
+  stateSecret.hintWall.length = 0;
+  clearHintMessage();
+  clearChestMessage();
   stateStats.secretUnlocked = false;
   stateDynamic.enemies = [];
   stateDynamic.secrets = [];

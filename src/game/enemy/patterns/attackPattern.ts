@@ -66,6 +66,7 @@ export function attackPattern(enemy: Enemy, player: { x: number; y: number }) {
     // Check if player dies from the attack and reset position and HP if so
     else if (statePlayer.stat.hp <= 0) {
       statePlayer.deathCount++;
+      statePlayer.stat.resurectionCount--;
       audioManager.playSound("death");
       stateStats.hasSecretItem = false;
       stateStats.secretUnlocked = false;

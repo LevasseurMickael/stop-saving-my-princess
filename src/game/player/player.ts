@@ -24,6 +24,8 @@ import { fireBreathOncePerFloor } from "../secret/secretUnlock/itemEffect/skills
 import { tileIndex } from "../../graphicContext/tile_index";
 import { audioManager } from "../../audio/audioManager";
 import { getIsPaused } from "../../main";
+import { allSecretItems } from "../secret/secretItem.ts/allFloor";
+import { showChestMessage } from "../../ui/chestMessageSystem";
 import { startAttackAnimation, startMoveAnimation } from "./playerAnimation";
 
 
@@ -220,9 +222,19 @@ window.addEventListener("keydown", (e) => {
 
   // Check for secret item or floor transition after moving
   if (map[newY][newX] === tileIndex.chest && stateStats.secretUnlocked) {
-    stateStats.hasSecretItem = true;
-    audioManager.playSound("chest_open");
-    unlockingSecretItem();
+    const currentSecretItem = allSecretItems.find(
+      (item) => item.floor === stateDungeon.currentFloor + 1,
+    );
+
+    if (currentSecretItem) {
+      stateStats.hasSecretItem = true;
+      audioManager.playSound("chest_open");
+      showChestMessage(
+        `${currentSecretItem.name}\n${currentSecretItem.description}`,
+        5000,
+      );
+      unlockingSecretItem();
+    }
   }
 
   if (map[newY][newX] === tileIndex.healingRoom) {

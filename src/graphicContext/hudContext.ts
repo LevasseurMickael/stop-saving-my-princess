@@ -1,7 +1,8 @@
 // src/graphicContext/hudContext.ts
 
-import { statePlayer,  stateDungeon} from "../game/state";
+import { statePlayer, stateDungeon } from "../game/state";
 import { getCurrentHintMessage } from "../ui/hintMessageSystem";
+import { getCurrentChestMessage } from "../ui/chestMessageSystem";
 
 export function getHudSprite(ctx: CanvasRenderingContext2D) {
   ctx.clearRect(0, 0, 1280, 960);
@@ -19,6 +20,7 @@ export function getHudSprite(ctx: CanvasRenderingContext2D) {
   drawControls(ctx, 1280, 960);
 
   drawHintMessage(ctx, 640, 900);
+  drawChestMessage(ctx, 640, 840);
 }
 
 // ===== STATS DU JOUEUR =====
@@ -182,3 +184,53 @@ function drawHintMessage(ctx: CanvasRenderingContext2D, x: number, y: number) {
 
   ctx.restore();
 }
+
+function drawChestMessage(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  const chestMessage = getCurrentChestMessage();
+  if (!chestMessage) return;
+
+  const lines = chestMessage.text.split("\n");
+  const lineHeight = 18;
+  ctx.font = "14px monospace";
+
+  const longestLine = lines.reduce((max, line) => {
+    return Math.max(max, ctx.measureText(line).width);
+  }, 0);
+
+  const padding = 40;
+  const boxWidth = Math.min(longestLine + padding, 800);
+  const boxHeight = lines.length * lineHeight + 26;
+
+  const elapsed = Date.now() - chestMessage.showTime;
+  const fadeOutStart = chestMessage.duration - 1000;
+  let opacity = 1;
+
+  if (elapsed > fadeOutStart) {
+    const fadeProgress = (elapsed - fadeOutStart) / 1000;
+    opacity = Math.max(0, 1 - fadeProgress);
+  }
+
+  ctx.save();
+  ctx.globalAlpha = opacity;
+
+  ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+  ctx.fillRect(x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
+
+  ctx.strokeStyle = "rgba(120, 255, 180, 0.8)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
+
+  ctx.fillStyle = "rgba(120, 255, 180, 1)";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  const startY = y - ((lines.length - 1) * lineHeight) / 2;
+  lines.forEach((line, index) => {
+    const lineY = startY + index * lineHeight;
+    ctx.fillText(line, x, lineY);
+  });
+
+  ctx.restore();
+}
+
+
